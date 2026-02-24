@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Panchang";
+  src:
+    url("/fonts/Panchang-Variable.woff2") format("woff2"),
+    url("/fonts/Panchang-Variable.woff") format("woff");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "SpaceGrotesk";
+  src:
+    url("/fonts/SpaceGrotesk-Variable.woff2") format("woff2"),
+    url("/fonts/SpaceGrotesk-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-bg: oklch(0.1408 0.0044 285.82); /* fondo general */
+  --color-surface: oklch(
+    0.18 0.0045 285.82
+  ); /* cards / superficies (ligero más claro) */
+
+  /* texto */
+  --color-text-primary: oklch(0.9249 0 0); /* textos principales (tu valor) */
+  --color-text-muted: oklch(
+    0.8711 0.0055 286.29
+  ); /* textos secundarios / iconos? (puede usarse) */
+
+  /* headings / títulos */
+  --color-heading: oklch(0.8421 0 0); /* título "Sobre mi" */
+
+  /* iconos y pequeños elementos */
+  --color-icon: oklch(0.8711 0.0055 286.29); /* iconos (valor que diste) */
+
+  /* acentos / botones */
+  --color-primary: oklch(0.7017 0.3225 328.36); /* magenta (gradiente start) */
+  --color-accent: oklch(0.6298 0.1201 225.75); /* cyan (gradiente end) */
+  --gradient-start: oklch(0.7017 0.3225 328.36);
+  --gradient-end: oklch(0.6298 0.1201 225.75);
+
+  /* texto claro (a veces usas blanco puro) */
+  --color-white: oklch(1 0 0);
+
+  /* bordes / separación */
+  --color-border: oklch(0.18 0.004 285.82);
+
+  /* overlay / sombras coloreadas */
+  --color-overlay: oklch(0.12 0.002 285.82);
+
+  /* tokens de estado (ejemplos) */
+  --color-success: oklch(0.58 0.18 140);
+  --color-warning: oklch(0.73 0.25 86);
+  --color-danger: oklch(0.6 0.25 30);
+
+  /* radii / spacing (opcional como token) */
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* fuentes */
+  --font-heading: "Panchang", sans-serif;
+  --font-body: "SpaceGrotesk", sans-serif;
+}
+
+@layer utilities {
+  .glow {
+    @apply absolute pointer-events-none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(600px, 70vw, 1100px);
+    height: clamp(600px, 70vw, 1100px);
+    filter: blur(clamp(200px, 25vw, 400px));
+    opacity: 0.7;
+    mix-blend-mode: screen;
+  }
+
+  .glow-left {
+    background: radial-gradient(
+      circle,
+      rgba(255, 0, 255, 0.8) 0%,
+      rgba(255, 0, 255, 0.4) 45%,
+      rgba(255, 0, 255, 0.1) 60%,
+      transparent 65%
+    );
+    transform: translate(-90%, -65%);
+  }
+
+  .glow-right {
+    background: radial-gradient(
+      circle,
+      rgba(0, 155, 192, 0.8) 0%,
+      rgba(0, 155, 192, 0.4) 45%,
+      rgba(0, 155, 192, 0.1) 60%,
+      transparent 65%
+    );
+    transform: translate(-10%, -65%);
+  }
+}
