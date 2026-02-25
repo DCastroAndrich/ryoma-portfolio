@@ -66,7 +66,72 @@
   --font-body: "SpaceGrotesk", sans-serif;
 }
 
+/* 
+  Esta sección redefine las variables para MODO CLARO
+  Se activa cuando el elemento HTML NO tiene la clase 'dark'
+  Solo necesitas redefinir las variables que realmente cambian entre modos
+  Las que son consistentes (como radii, fuentes, colores de estado) se heredan automáticamente
+*/
+@layer base {
+  :root:not(.dark) {
+    /* Fondos invertidos - ahora claros */
+    --color-bg: oklch(0.98 0.002 285.82);
+    --color-surface: oklch(0.95 0.0025 285.82);
+
+    /* Textos invertidos - ahora oscuros */
+    --color-text-primary: oklch(0.2 0.004 285.82);
+    --color-text-muted: oklch(0.45 0.0055 286.29);
+
+    /* Headings más oscuros para modo claro */
+    --color-heading: oklch(0.15 0.004 285.82);
+
+    /* Iconos con suficiente contraste en claro */
+    --color-icon: oklch(0.4 0.0055 286.29);
+
+    /* 
+      Los colores de acento pueden necesitar ajuste para mantener accesibilidad
+      En modo claro, a veces necesitas tonos ligeramente más oscuros o saturados
+      para mantener el contraste WCAG AA (ratio 4.5:1 para texto normal)
+    */
+    --color-primary: oklch(0.6 0.3225 328.36);
+    --color-accent: oklch(0.55 0.1201 225.75);
+    --gradient-start: oklch(0.6 0.3225 328.36);
+    --gradient-end: oklch(0.55 0.1201 225.75);
+
+    /* Bordes más visibles en modo claro */
+    --color-border: oklch(0.88 0.002 285.82);
+
+    /* Overlay ligeramente ajustado */
+    --color-overlay: oklch(0.92 0.001 285.82);
+
+    /* 
+      Nota: --color-white, radii, fuentes, y colores de estado
+      no necesitan redefinirse porque son consistentes entre modos
+    */
+  }
+
+  /* 
+    Aplicamos transiciones suaves solo a propiedades de color
+    Esto evita animaciones no deseadas en propiedades de layout
+  */
+  * {
+    transition-property: background-color, color, border-color;
+    transition-duration: 200ms;
+    transition-timing-function: ease-in-out;
+  }
+
+  /* 
+    Desactivamos transiciones en estados interactivos para que respondan inmediatamente
+    Esto previene que los hovers y focus se sientan lentos
+  */
+  *:active,
+  *:focus {
+    transition-duration: 0ms;
+  }
+}
+
 @layer utilities {
+  /* GLOW */
   .glow {
     @apply absolute pointer-events-none;
     top: 50%;
@@ -99,5 +164,145 @@
       transparent 65%
     );
     transform: translate(-10%, -65%);
+  }
+
+  /* BUTTON */
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-md);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  /* Button solid/primary */
+  .btn-solid {
+    color: var(--color-text-primary);
+    background-image: linear-gradient(
+      90deg,
+      var(--gradient-start),
+      var(--gradient-end)
+    );
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    transition:
+      background-image 200ms ease,
+      transform 120ms ease;
+  }
+
+  .btn-solid:hover {
+    background-image: linear-gradient(
+      90deg,
+      var(--gradient-end),
+      var(--gradient-start)
+    );
+  }
+
+  /* Button outline */
+  .btn-outline {
+    color: var(--color-text-primary);
+    border: 2px solid transparent;
+    background-image:
+      linear-gradient(90deg, var(--gradient-start), var(--gradient-end)),
+      linear-gradient(var(--color-bg), var(--color-bg));
+    background-origin: border-box, padding-box;
+    transition:
+      background-image 200ms ease,
+      color 120ms ease;
+  }
+
+  .btn-outline:hover {
+    background-image:
+      linear-gradient(90deg, var(--gradient-end), var(--gradient-start)),
+      linear-gradient(var(--color-bg), var(--color-bg));
+  }
+
+  /* Button ghost */
+  .btn-ghost {
+    color: var(--color-text-primary);
+    border: 1px solid transparent;
+    background-image:
+      linear-gradient(
+        90deg,
+        var(--gradient-start) / 0.2,
+        var(--gradient-end) / 0.2
+      ),
+      linear-gradient(var(--color-bg), var(--color-bg));
+    background-origin: border-box, padding-box;
+    background-clip: border-box, padding-box;
+    padding: 0.625rem 1.25rem;
+    transition:
+      background-image 200ms ease,
+      color 120ms ease,
+      box-shadow 120ms ease;
+  }
+
+  .btn-ghost:hover {
+    background-image:
+      linear-gradient(
+        90deg,
+        var(--gradient-end) / 0.35,
+        var(--gradient-start) / 0.35
+      ),
+      linear-gradient(var(--color-bg), var(--color-bg));
+  }
+
+  /* Button link */
+
+  .btn-link {
+    display: inline;
+    padding: 0;
+    background: transparent;
+    color: var(--color-text-primary);
+    position: relative;
+    line-height: 1;
+    background-image: linear-gradient(
+      90deg,
+      var(--color-text-primary),
+      var(--color-text-primary)
+    );
+    background-size: 100% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition:
+      background-image 200ms ease,
+      color 200ms ease;
+  }
+
+  .btn-link:hover {
+    background-image: linear-gradient(
+      90deg,
+      var(--gradient-end),
+      var(--gradient-start)
+    );
+    color: var(--color-text-primary);
+  }
+
+  /* helper para la flecha del boton link */
+  .btn-link .arrow {
+    margin-left: 0.5rem;
+    display: inline-block;
+    transform: translateX(0);
+    transition: transform 160ms ease;
+  }
+  .btn-link:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  /* TechIcon estilos auxiliares */
+  .icon-svg svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .chip {
+    backdrop-filter: blur(6px);
+  }
+  /* Fallback para tamaño fijo */
+  .tech-fixed {
+    width: 56px;
+    height: 56px;
   }
 }

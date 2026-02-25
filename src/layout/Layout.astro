@@ -1,7 +1,6 @@
 ---
 import "../styles/global.css";
 const { title = "Ryōma Portfolio", description = "Portafolio de Ryōma, desarrollador web. Explora mis proyectos y habilidades en desarrollo web y más." } = Astro.props;
-import Hero from "../pages/Hero.astro";
 ---
 
 <html lang="es">
@@ -15,6 +14,28 @@ import Hero from "../pages/Hero.astro";
 		<meta name="generator" content={Astro.generator} />
         <meta name="description" content={description} />
 		<title>{title}</title>
+		<script>
+			/* theme Init */
+			(function (){
+				try {
+					const stored = localStorage.getItem("theme")
+					if(stored === "dark"){
+						document.documentElement.classList.add("dark");
+						return
+					}
+					if(stored === "light"){
+						document.documentElement.classList.remove("dark");
+						return
+					}
+					const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+					if(prefersDark) document.documentElement.classList.add("dark");
+					else document.documentElement.classList.remove("dark")
+				} catch (e) {
+					
+				}
+			})()
+		</script>
+
 	</head>
 	<body class="min-h-screen bg-bg text-text-primary antialiased flex flex-col items-start justify-start">
 		<main id="main" class="flex flex-col items-center justify-center w-full gap-20 py-20 px-5">
