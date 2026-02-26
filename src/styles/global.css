@@ -131,6 +131,127 @@
 }
 
 @layer utilities {
+  /* NAVBAR */
+  #site-navbar {
+    background: transparent;
+    border-bottom: 1px solid transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    transition:
+      background-color 220ms ease,
+      border-color 220ms ease,
+      backdrop-filter 220ms ease,
+      box-shadow 220ms ease;
+  }
+
+  /* comportamiento navbar al scrollear */
+  #site-navbar.scrolled {
+    background-color: color-mix(in srgb, var(--color-surface) 86%, transparent);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--color-border) 40%, transparent);
+    box-shadow: 0 6px 18px
+      color-mix(in srgb, var(--color-overlay) 12%, transparent);
+  }
+
+  #site-navbar .mobile-menu {
+    position: fixed;
+    inset: 0 auto auto 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 48;
+    /* start hidden */
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
+    display: none; /* visible only when menu-open on small screens */
+  }
+
+  /* backdrop element (behind the panel) */
+  .mobile-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 46;
+    background-color: color-mix(in srgb, black 30%, transparent);
+    opacity: 0;
+    transition: opacity 220ms ease;
+    display: none;
+  }
+
+  /* When menu is open, reveal panel + backdrop */
+  #site-navbar.menu-open .mobile-menu {
+    display: block;
+    pointer-events: auto;
+    opacity: 1;
+    transform: translateY(0);
+    background-color: color-mix(in srgb, var(--color-surface) 92%, transparent);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+
+  #site-navbar.menu-open .mobile-backdrop {
+    display: block;
+    opacity: 1;
+  }
+
+  /* make sure the mobile panel content scrolls if long */
+  #site-navbar .mobile-menu > .max-w-300 {
+    max-height: calc(100vh - 64px);
+    overflow: auto;
+  }
+
+  /* Force ThemeToggle visible on small screens (mejora visibilidad) */
+  .theme-toggle {
+    display: inline-flex !important;
+  }
+
+  /* Slight spacing / full width CTA in mobile panel */
+  #site-navbar .mobile-menu .btn-ghost {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Hide the top-right CTA on small screens (already hidden via utility) */
+  /* You can override if needed: .nav-cta-mobile { display: block on mobile } */
+
+  /* Accessibility: focus styles inside mobile menu */
+  #site-navbar .mobile-menu a:focus,
+  #site-navbar .mobile-menu button:focus {
+    outline: 2px solid color-mix(in srgb, var(--color-primary) 60%, transparent);
+    outline-offset: 2px;
+  }
+
+  /* If you want a slightly different animation for menu content */
+  #site-navbar .mobile-menu nav a {
+    transition:
+      transform 160ms ease,
+      opacity 160ms ease;
+  }
+  #site-navbar.menu-open .mobile-menu nav a {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* enlaces de navegacion */
+  .nav-link {
+    color: color-mix(in srgb, var(--color-text-primary) 92%, transparent);
+    transition:
+      color 160ms ease,
+      opacity 160ms ease,
+      transform 160ms ease;
+    text-decoration: none;
+  }
+  .nav-link:hover,
+  .nav-link:focus {
+    color: var(--color-text-primary);
+    transform: translateY(-1px);
+  }
+
   /* GLOW */
   .glow {
     @apply absolute pointer-events-none;
@@ -223,6 +344,7 @@
   .btn-ghost {
     color: var(--color-text-primary);
     border: 1px solid transparent;
+    border-radius: 16px;
     background-image:
       linear-gradient(
         90deg,
@@ -232,7 +354,8 @@
       linear-gradient(var(--color-bg), var(--color-bg));
     background-origin: border-box, padding-box;
     background-clip: border-box, padding-box;
-    padding: 0.625rem 1.25rem;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
     transition:
       background-image 200ms ease,
       color 120ms ease,
