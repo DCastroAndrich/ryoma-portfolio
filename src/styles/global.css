@@ -428,4 +428,26 @@
     width: 56px;
     height: 56px;
   }
+
+  /* logo toggle: visibilidad por tema */
+  .logo-light {
+    transition: opacity 300ms ease;
+    opacity: 1;
+  }
+  .dark .logo-light {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .logo-dark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 300ms ease;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .dark .logo-dark {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }

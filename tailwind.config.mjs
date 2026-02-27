@@ -1,4 +1,4 @@
 export default {
   darkMode: "class",
-  content: ["./src/**/*.{html,js,jsx,ts,tsx}"],
+  content: ["./src/**/*.{html,astro,js,jsx,ts,tsx}"],
 };

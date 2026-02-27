@@ -1,8 +1,11 @@
 ---
 import Layout from "../layout/Layout.astro"
-import LogoLight from "/public/assets/logo-light.svg"
-import RyomaLogo from "/public/assets/Ryōma Logotipo Light.svg"
-import DevelLogo from "/public/assets/Development Logotipo Light.svg"
+import LogoLight from "../assets/logo-light.svg"
+import LogoDark from "../assets/logo-dark.svg"
+import RyomaLogoLight from "../assets/logotipo-ryōma-light.svg"
+import RyomaLogoDark from "../assets/logotipo-ryōma-dark.svg"
+import DevelLogoLight from "../assets/logotipo-development-light.svg"
+import DevelLogoDark from "../assets/logotipo-development-dark.svg"
 ---
 <Layout>
     <section class="max-w-7xl h-auto flex flex-col items-center justify-center gap-15 py-13">
@@ -18,15 +21,25 @@ import DevelLogo from "/public/assets/Development Logotipo Light.svg"
 
         <!-- logos -->
          <div class="flex flex-col items-center justify-center gap-10">
-            <LogoLight width={300} height={250}/>
+            <span class="relative inline-block w-75 h-62.5">
+                <LogoLight width={300} height={250} class="logo-dark" aria-hidden/>
+                <LogoDark width={300} height={250} class="logo-light" aria-hidden/>
+            </span>
 
             <div class="flex flex-col items-center justify-center gap-9">
                 <div class="flex flex-col items-center justify-center gap-5">
-                    <RyomaLogo width={469.23} height={84}/>
-                    <DevelLogo width={372.59} height={36}/>
+                    <span class="relative inline-block w-full">
+                        <RyomaLogoLight width={469.23} height={84} class="logo-dark" aria-hidden/>
+                        <RyomaLogoDark width={469.23} height={84} class="logo-light" aria-hidden/>
+                    </span>
+                    <span class="relative inline-block w-full">
+
+                        <DevelLogoLight width={372.59} height={36} class="logo-dark" aria-hidden/>
+                        <DevelLogoDark width={372.59} height={36} class="logo-light" aria-hidden/>
+                    </span>
     
                 </div>
-                <p class="font-heading font-semibold text-xl text-center text-white w-3xl">Soluciones digitales con precisión metódica. Entregando valor de alto rendimiento.</p>
+                <p class="font-heading font-semibold text-xl text-center hero-text w-3xl">Soluciones digitales con precisión metódica. Entregando valor de alto rendimiento.</p>
             </div>
 
          </div>

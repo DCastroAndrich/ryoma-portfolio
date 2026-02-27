@@ -16,29 +16,37 @@ const ThemeToggle: React.FC<{ className?: string }> = ({ className = "" }) => {
         }
     }
 
-    const [theme, setTheme] = useState<string>(() => (typeof window !== "undefined" ? getInitial() : "light"))
+    const [theme, setTheme] = useState<string>("light")
+    const [mounted, setMounted] = useState(false)
 
     useEffect(() => {
+        setTheme(getInitial())
+        setMounted(true)
+    }, [])
+
+
+    useEffect(() => {
+        if (!mounted) return;
         const root = document.documentElement;
         if (theme === "dark") root.classList.add("dark");
         else root.classList.remove("dark");
         try {
             localStorage.setItem("theme", theme)
         } catch { }
-    }, [theme])
+    }, [theme, mounted])
 
     /* Si el usuario cambia el tema y no tiene guardada ninguna preferencia */
 
     useEffect(() => {
-        if (typeof window === "undefined" || !window.matchMedia) return;
+        if (typeof window === "undefined" || !window.matchMedia || !mounted) return;
 
         const mq = window.matchMedia("(prefers-color-scheme: dark)")
         const onChange = (e: MediaQueryListEvent | MediaQueryList) => {
             try {
                 const stored = localStorage.getItem("theme");
                 if (stored === null) {
-                    const matches = "matches" in e ? (e as MediaQueryListEvent).matches : (mq.matches)
-                    setTheme(e.matches ? "dark" : "light")
+                    const matches = "matches" in e ? (e as MediaQueryListEvent).matches : mq.matches
+                    setTheme(matches ? "dark" : "light")
                 }
             } catch { }
         }
@@ -53,12 +61,28 @@ const ThemeToggle: React.FC<{ className?: string }> = ({ className = "" }) => {
                 } catch { }
             }
         }
-    }, []);
+    }, [mounted]);
 
-    const toggle = () => setTheme(prev => (prev === "dark" ? "light" : "dark"))
+    const toggle = () => setTheme((prev) => (prev === "dark" ? "light" : "dark"))
+
+    if (!mounted) {
+        return (
+            <button type="button" role="switch" aria-checked={false} aria-label="Alternar tema" disabled className={`realtive inline-flex items-center justify-center w-11 h-11 rounded-lg transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${className} `} style={{ touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }} >
+                <span className="relative inline-block w-6 h-6" />
+
+            </button>
+        )
+    }
 
     return (
-        <button type="button" role="switch" aria-checked={theme === "dark"} aria-label="Alternar tema" onClick={toggle} className={`relative inline-flex items-center justify-center w-11 h-11 rounded-lg transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${className} `} style={{ touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }} >
+        <button
+            type="button"
+            role="switch"
+            aria-checked={theme === "dark"}
+            aria-label="Alternar tema"
+            onClick={toggle}
+            className={`relative inline-flex items-center justify-center w-11 h-11 rounded-lg transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${className} `}
+            style={{ touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }} >
             {/* contenedor */}
             <span className="relative inline-block w-6 h-6">
                 {/* Moon */}
