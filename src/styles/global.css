@@ -302,7 +302,7 @@
   .btn-solid {
     color: var(--color-text-primary);
     background-image: linear-gradient(
-      90deg,
+      45deg,
       var(--gradient-start),
       var(--gradient-end)
     );
@@ -315,7 +315,7 @@
 
   .btn-solid:hover {
     background-image: linear-gradient(
-      90deg,
+      45deg,
       var(--gradient-end),
       var(--gradient-start)
     );

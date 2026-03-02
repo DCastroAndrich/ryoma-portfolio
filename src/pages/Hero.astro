@@ -1,49 +1,46 @@
 ---
 import Layout from "../layout/Layout.astro"
 import LogoLight from "../assets/logo-light.svg"
-import LogoDark from "../assets/logo-dark.svg"
 import RyomaLogoLight from "../assets/logotipo-ryōma-light.svg"
-import RyomaLogoDark from "../assets/logotipo-ryōma-dark.svg"
 import DevelLogoLight from "../assets/logotipo-development-light.svg"
-import DevelLogoDark from "../assets/logotipo-development-dark.svg"
+import Button from "../components/Button"
 ---
 <Layout>
     <section class="max-w-7xl h-auto flex flex-col items-center justify-center gap-15 py-13">
         <!-- glow -->
          <!-- glow-left -->
         <div class="glow glow-left">
-
         </div>
             <!-- glow-right -->
         <div class="glow glow-right">
-
         </div>
 
         <!-- logos -->
          <div class="flex flex-col items-center justify-center gap-10">
+            <!-- Ō logo -->
             <span class="relative inline-block w-75 h-62.5">
-                <LogoLight width={300} height={250} class="logo-dark" aria-hidden/>
-                <LogoDark width={300} height={250} class="logo-light" aria-hidden/>
+                <LogoLight width={300} height={250}  aria-hidden/>
             </span>
 
             <div class="flex flex-col items-center justify-center gap-9">
                 <div class="flex flex-col items-center justify-center gap-5">
-                    <span class="relative inline-block w-full">
-                        <RyomaLogoLight width={469.23} height={84} class="logo-dark" aria-hidden/>
-                        <RyomaLogoDark width={469.23} height={84} class="logo-light" aria-hidden/>
-                    </span>
-                    <span class="relative inline-block w-full">
-
-                        <DevelLogoLight width={372.59} height={36} class="logo-dark" aria-hidden/>
-                        <DevelLogoDark width={372.59} height={36} class="logo-light" aria-hidden/>
-                    </span>
-    
+                    <!-- Text logos -->
+                    <RyomaLogoLight width={469.23} height={84}  aria-hidden/>
+                    <DevelLogoLight width={372.59} height={36}  aria-hidden/>
                 </div>
                 <p class="font-heading font-semibold text-xl text-center hero-text w-3xl">Soluciones digitales con precisión metódica. Entregando valor de alto rendimiento.</p>
             </div>
+         </div>
+         <!-- CTA & Icons -->
+         <div class="flex flex-col items-center justify-start w-auto h-auto gap-15">
+            <!-- CTA -->
+            <div class="flex items-center justify-center gap-13 w-auto h-auto">
+                <Button label="HABLEMOS" size="large" as="a" href="#contact" variant="solid" />
+                <Button label="PROYECTOS" size="large" as="a" href="#projects" variant="outline" />
+
+            </div>
 
          </div>
-            
     </section>
 
 </Layout>
