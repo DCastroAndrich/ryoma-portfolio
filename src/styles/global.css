@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+/* Fuentes */
+
 @font-face {
   font-family: "Panchang";
   src:
@@ -19,119 +21,250 @@
   font-display: swap;
 }
 
+/* Tema - Tokens */
+
 @theme {
+  /* fondos */
   --color-bg: oklch(0.1408 0.0044 285.82); /* fondo general */
-  --color-surface: oklch(
-    0.18 0.0045 285.82
-  ); /* cards / superficies (ligero más claro) */
+  --color-surface: oklch(0.18 0.0045 285.82); /* cards / superficies  */
 
   /* texto */
-  --color-text-primary: oklch(0.9249 0 0); /* textos principales (tu valor) */
-  --color-text-muted: oklch(
-    0.8711 0.0055 286.29
-  ); /* textos secundarios / iconos? (puede usarse) */
+  --color-text-primary: oklch(0.9249 0 0); /* textos principales*/
+  --color-text-muted: oklch(0.8711 0.0055 286.29); /* textos secundarios  */
+  --color-heading: oklch(0.8421 0 0); /* títulos */
+  --color-white: oklch(1 0 0);
 
-  /* headings / títulos */
-  --color-heading: oklch(0.8421 0 0); /* título "Sobre mi" */
+  /* iconos */
+  --color-icon: oklch(0.8711 0.0055 286.29);
 
-  /* iconos y pequeños elementos */
-  --color-icon: oklch(0.8711 0.0055 286.29); /* iconos (valor que diste) */
-
-  /* acentos / botones */
+  /* acentos  */
   --color-primary: oklch(0.7017 0.3225 328.36); /* magenta (gradiente start) */
   --color-accent: oklch(0.6298 0.1201 225.75); /* cyan (gradiente end) */
   --gradient-start: oklch(0.7017 0.3225 328.36);
   --gradient-end: oklch(0.6298 0.1201 225.75);
-
-  /* texto claro (a veces usas blanco puro) */
-  --color-white: oklch(1 0 0);
-
-  /* bordes / separación */
+  /* acentos variables rgba */
+  --color-magenta: rgba(255, 0, 255, 1);
+  --color-magenta-80: rgba(255, 0, 255, 0.8);
+  --color-magenta-70: rgba(255, 0, 255, 0.7);
+  --color-magenta-60: rgba(255, 0, 255, 0.6);
+  --color-cyan: rgba(0, 151, 192, 1);
+  --color-cyan-70: rgba(0, 151, 192, 0.7);
+  --color-cyan-60: rgba(0, 151, 192, 0.6);
+  /* bordes y overlays */
   --color-border: oklch(0.18 0.004 285.82);
-
-  /* overlay / sombras coloreadas */
   --color-overlay: oklch(0.12 0.002 285.82);
 
-  /* tokens de estado (ejemplos) */
+  /* estados */
   --color-success: oklch(0.58 0.18 140);
   --color-warning: oklch(0.73 0.25 86);
   --color-danger: oklch(0.6 0.25 30);
-
-  /* radii / spacing (opcional como token) */
-  --radius-md: 8px;
-  --radius-lg: 12px;
 
   /* fuentes */
   --font-heading: "Panchang", sans-serif;
   --font-body: "SpaceGrotesk", sans-serif;
 }
 
-/* 
-  Esta sección redefine las variables para MODO CLARO
-  Se activa cuando el elemento HTML NO tiene la clase 'dark'
-  Solo necesitas redefinir las variables que realmente cambian entre modos
-  Las que son consistentes (como radii, fuentes, colores de estado) se heredan automáticamente
-*/
+/* Base token para modos claro/oscuro - "dark-first" */
 @layer base {
   :root:not(.dark) {
-    /* Fondos invertidos - ahora claros */
     --color-bg: oklch(0.98 0.002 285.82);
     --color-surface: oklch(0.95 0.0025 285.82);
-
-    /* Textos invertidos - ahora oscuros */
     --color-text-primary: oklch(0.2 0.004 285.82);
     --color-text-muted: oklch(0.45 0.0055 286.29);
-
-    /* Headings más oscuros para modo claro */
     --color-heading: oklch(0.15 0.004 285.82);
-
-    /* Iconos con suficiente contraste en claro */
     --color-icon: oklch(0.4 0.0055 286.29);
 
-    /* 
-      Los colores de acento pueden necesitar ajuste para mantener accesibilidad
-      En modo claro, a veces necesitas tonos ligeramente más oscuros o saturados
-      para mantener el contraste WCAG AA (ratio 4.5:1 para texto normal)
-    */
+    /* Acentos mas oscuros */
     --color-primary: oklch(0.6 0.3225 328.36);
     --color-accent: oklch(0.55 0.1201 225.75);
     --gradient-start: oklch(0.6 0.3225 328.36);
     --gradient-end: oklch(0.55 0.1201 225.75);
 
-    /* Bordes más visibles en modo claro */
     --color-border: oklch(0.88 0.002 285.82);
-
-    /* Overlay ligeramente ajustado */
     --color-overlay: oklch(0.92 0.001 285.82);
-
-    /* 
-      Nota: --color-white, radii, fuentes, y colores de estado
-      no necesitan redefinirse porque son consistentes entre modos
-    */
   }
 
-  /* 
-    Aplicamos transiciones suaves solo a propiedades de color
-    Esto evita animaciones no deseadas en propiedades de layout
-  */
-  * {
+  /* Transicion al cambiar de tema */
+
+  *:not(.btn):not(.btn-outline-wrapper):not(.btn-outline-inner) {
     transition-property: background-color, color, border-color;
     transition-duration: 200ms;
     transition-timing-function: ease-in-out;
   }
 
-  /* 
-    Desactivamos transiciones en estados interactivos para que respondan inmediatamente
-    Esto previene que los hovers y focus se sientan lentos
-  */
+  /* Transicion de los estados interactivos */
   *:active,
   *:focus {
     transition-duration: 0ms;
   }
 }
 
+/* Componentes */
+
+@layer components {
+  /* BUTTON - BASE */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    padding: 12px 32px;
+    border-radius: 16px;
+
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--color-white);
+    text-decoration: none;
+    white-space: nowrap;
+
+    cursor: pointer;
+    user-select: none;
+    border: none;
+    outline: none;
+
+    transition:
+      box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  /* BUTTON - PRIMARY */
+  .btn-primary {
+    background: none;
+    background-color: transparent;
+    position: relative;
+
+    isolation: isolate;
+
+    box-shadow:
+      inset 0 2px 6px rgba(0, 0, 0, 0.15),
+      0 0 14px var(--color-cyan-70),
+      0 0 6px var(--color-magenta-70);
+
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-primary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: linear-gradient(
+      115deg,
+      var(--color-magenta-80) 9%,
+      var(--color-cyan) 81%
+    );
+    opacity: 1;
+    z-index: -1;
+    transition: opacity 350ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: linear-gradient(
+      115deg,
+      var(--color-cyan) 9%,
+      var(--color-magenta-80) 81%
+    );
+    opacity: 0;
+    z-index: -1;
+    transition: opacity 350ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .btn-primary:hover:not(:disabled):not([aria-disabled="true"])::before {
+    opacity: 0;
+  }
+
+  .btn-primary:hover:not(:disabled):not([aria-disabled="true"])::after {
+    opacity: 1;
+  }
+
+  .btn-primary:hover:not(:disabled):not([aria-disabled="true"]) {
+    box-shadow:
+      inset 0 2px 6px rgba(0, 0, 0, 0.15),
+      0 0 18px rgba(0, 151, 192, 0.8),
+      0 0 10px rgba(255, 0, 255, 0.8);
+  }
+
+  /* BUTTON - OUTLINE */
+
+  .btn-outline-wrapper {
+    padding: 2px;
+    border-radius: 16px;
+    display: inline-flex;
+    text-decoration: none;
+    cursor: pointer;
+
+    background: linear-gradient(
+      90deg,
+      var(--color-cyan) 0%,
+      var(--color-magenta) 100%
+    );
+
+    box-shadow:
+      0 0 14px var(--color-cyan-60),
+      0 0 6px var(--color-magenta-60);
+
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-outline-wrapper:hover:not(:disabled):not([aria-disabled="true"]) {
+    box-shadow:
+      0 0 18px rgba(0, 151, 192, 0.8),
+      0 0 10px rgba(255, 0, 255, 0.8);
+  }
+
+  .btn-outline-wrapper:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  .btn-outline-wrapper:disabled,
+  .btn-outline-wrapper[aria-disabled="true"] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .btn-outline-inner {
+    border-radius: 14px;
+    background: var(--color-bg);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
+    transition: background 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .btn-outline-wrapper:hover:not(:disabled):not([aria-disabled="true"])
+    .btn-outline-inner {
+    background: linear-gradient(
+      115deg,
+      var(--color-magenta-80) 9%,
+      var(--color-cyan) 81%
+    );
+  }
+}
+
+/* Utilidades */
+
 @layer utilities {
   /* NAVBAR */
+
   #site-navbar {
     background: transparent;
     border-bottom: 1px solid transparent;
@@ -155,6 +288,7 @@
       color-mix(in srgb, var(--color-overlay) 12%, transparent);
   }
 
+  /* mobile */
   #site-navbar .mobile-menu {
     position: fixed;
     inset: 0 auto auto 0;
@@ -172,7 +306,6 @@
     display: none; /* visible only when menu-open on small screens */
   }
 
-  /* backdrop element (behind the panel) */
   .mobile-backdrop {
     position: fixed;
     inset: 0;
@@ -183,7 +316,6 @@
     display: none;
   }
 
-  /* When menu is open, reveal panel + backdrop */
   #site-navbar.menu-open .mobile-menu {
     display: block;
     pointer-events: auto;
@@ -199,34 +331,26 @@
     opacity: 1;
   }
 
-  /* make sure the mobile panel content scrolls if long */
   #site-navbar .mobile-menu > .max-w-300 {
     max-height: calc(100vh - 64px);
     overflow: auto;
   }
 
-  /* Force ThemeToggle visible on small screens (mejora visibilidad) */
   .theme-toggle {
     display: inline-flex !important;
   }
 
-  /* Slight spacing / full width CTA in mobile panel */
   #site-navbar .mobile-menu .btn-ghost {
     width: 100%;
     justify-content: center;
   }
 
-  /* Hide the top-right CTA on small screens (already hidden via utility) */
-  /* You can override if needed: .nav-cta-mobile { display: block on mobile } */
-
-  /* Accessibility: focus styles inside mobile menu */
   #site-navbar .mobile-menu a:focus,
   #site-navbar .mobile-menu button:focus {
     outline: 2px solid color-mix(in srgb, var(--color-primary) 60%, transparent);
     outline-offset: 2px;
   }
 
-  /* If you want a slightly different animation for menu content */
   #site-navbar .mobile-menu nav a {
     transition:
       transform 160ms ease,
@@ -287,14 +411,6 @@
     transform: translate(-10%, -65%);
   }
 
-  /* BUTTON */
-  .btn-primary-bg {
-    background: linear-gradient(
-      135deg,
-      color-mix(in srgb, #ff00ff 80%, transparent) 9%,
-      #0097c0 81%
-    );
-  }
   /* TechIcon estilos auxiliares */
   .icon-svg svg {
     width: 100%;

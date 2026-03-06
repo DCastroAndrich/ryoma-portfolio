@@ -13,6 +13,7 @@ type SharedProps = {
     icon?: ReactNode;
     isLoading?: boolean;
     loadingText?: string;
+    className?: string;
     children: ReactNode
 }
 
@@ -58,20 +59,36 @@ function Spinner() {
     )
 }
 
-/* Clases para variantes */
+/* Contenido interno (compartido) */
 
-const BASE =
-    //Layout y fuente
-    "inline-flex items-center justify-center gap-2" +
-    "px-8 py-3 rounded-2xl" + //padding y radius
-    "font-semibold text-base font-heading tracking-[0.06em]" + //fuente
-    //Comportamiento
-    "cursor-pointer select-none whitespace-nowrap" +
-    "transition-all duration-300 ease-in-out" +
-    //Accesibilidad
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[--color-primary]" +
-    //Disabled
-    "disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none"
+type ContentProps = {
+    isLoading: boolean;
+    loadingText?: string;
+    icon?: ReactNode;
+    children: ReactNode
+}
+
+function ButtonContent({ isLoading, loadingText, icon, children }: ContentProps) {
+    if (isLoading) {
+        return (
+            <>
+                <Spinner />
+                <span>{loadingText ?? children} </span>
+            </>
+        )
+    }
+    return (
+        <>
+            <span>{children} </span>
+            {icon && (
+                <span className="inline-flex items-center" aria-hidden="true" >
+                    {icon}
+                </span>
+            )}
+        </>
+    )
+
+}
 
 /* Componente principal */
 
@@ -81,39 +98,26 @@ export default function Button(props: ButtonComponentProps) {
         icon,
         isLoading = false,
         loadingText,
+        className = "",
         children,
         ...rest
     } = props;
 
-    const content = isLoading ? (
-        <>
-            <Spinner />
-            <span>{loadingText ?? children} </span>
-        </>
-    ) : (
-        <>
-            <span>{children} </span>
-            {icon && (
-                <span className="inline-flex items-center" aria-hidden="true" >{icon} </span>
-            )}
-        </>
+    const content = (
+        <ButtonContent isLoading={isLoading} loadingText={loadingText} icon={icon} >
+            {children}
+        </ButtonContent>
     );
 
-    /* Pirmary */
+    /* VARIANTE PRIMARY */
     if (variant === "primary") {
-        const primaryClasses =
-            BASE +
-            "bg-[linear-gradient(135deg, color-mix(in_srgb,#FF00FF_80%,transparent)_9%,#0097C0_81%)]" +
-            "text-white" +
-            "shadow-[inset_0_2px_6px_rgba(0,0,0,0.15),0_0_14px_rgba(0,151,192,0.7),0_0_6px_rgba(255,0,255,0.7)]" +
-            "hover:bg-[linear-gradient(135deg,#0097C0_9%,color-mix(in_srgb,#FF00FF_80%,transparent)_81%)]" +
-            "hover:shadow-[inset_0_2px_60x_rgba(0,0,0,0.15),0_0_18px_rgba(0,151,192,0.8),0_0_10px_rgba(255,0,255,0.8)]";
+        const classes = `btn btn-primary &{className}`.trim()
 
         //Si tiene href -> link
         if ("href" in props && props.href) {
             const { href, ...anchorRest } = rest as Omit<AnchorProps, keyof SharedProps>
             return (
-                <a href={href} className={primaryClasses} {...anchorRest} >
+                <a href={href} className={classes} {...anchorRest} >
                     {content}
                 </a>
             )
@@ -125,12 +129,45 @@ export default function Button(props: ButtonComponentProps) {
             <button
                 type={type}
                 disabled={disabled || isLoading}
-                className={primaryClasses}
-                aria-busy={isLoading}
+                className={classes}
+                aria-busy={isLoading || undefined}
                 {...buttonRest}
             >
                 {content}
             </button>
         )
     }
+
+    /* VARIANTE OUTLINE */
+
+    const wrapperClasses = `btn-outline-wrapper ${className}`.trim()
+    const innerClasses = "btn btn-outline-inner"
+
+    const outlineContent = (
+        <span className={innerClasses}>
+            {content}
+        </span>
+    )
+
+    if ("href" in props && props.href) {
+        const { href, ...anchorRest } = rest as Omit<AnchorProps, keyof SharedProps>
+        return (
+            <a href={href} className={wrapperClasses} {...anchorRest} >
+                {outlineContent}
+            </a>
+        )
+    }
+
+    const { type = "button", disabled, ...buttonRest } = rest as Omit<ButtonProps, keyof SharedProps>
+    return (
+        <button
+            type={type}
+            disabled={disabled || isLoading}
+            className={wrapperClasses}
+            aria-busy={isLoading || undefined}
+            {...buttonRest}
+        >
+            {outlineContent}
+        </button>
+    )
 }

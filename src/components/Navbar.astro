@@ -32,7 +32,9 @@ import Button from "./Button"
                 <ThemeToggle client:load className="theme-toogle" />
                 
                 <!-- CTA -->
-                 <Button client:load as="a" href="#contact" className="hidden md:inline-flex" variant="ghost" label="Hablemos"/>
+                 <Button client:load href="#contact" className="hidden md:inline-flex md:text-xs md:bg-transparent" variant="outline" >
+                    Hablemos
+                 </Button>
 
                  <!-- Menu hamburguesa -->
                   <button id="nav-toggle" aria-controls="mobile-menu" aria-expanded="false" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2" type="button">
@@ -73,7 +75,9 @@ import Button from "./Button"
              
              <div class="pt-2 border-t border-[rgba(255,255,255,0.04)] mt-2 flex flex-col gap-3">
                 <!-- CTA fullWidth -->
-                 <Button client:load as="a" href="#contact" className="w-full justify-center" variant="ghost" label="Hablemos" />
+                 <Button client:load href="#contact" className="w-full justify-center" variant="outline">
+                    Hablemos    
+                </Button> 
                  <!-- Theme toggle -->
                   <div class="flex items-center justify-start">
                     <ThemeToggle client:load className="theme-toggle" />
