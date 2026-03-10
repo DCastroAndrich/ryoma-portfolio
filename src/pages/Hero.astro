@@ -35,11 +35,17 @@ import Button from "../components/Button"
          <div class="flex flex-col items-center justify-start w-auto h-auto gap-15">
             <!-- CTA -->
             <div class="flex items-center justify-center gap-13 w-auto h-auto">
-                <Button href="#contact" variant="primary" client:load>
-                    HABLEMOS
+                <Button href="#contact" variant="primary" weight={500} client:load>
+                    PRIMARY
                 </Button>
-                <Button href="#contact" variant="outline" client:load>
-                    PROYECTOS
+                <Button href="#contact" variant="outline" weight={500}  client:load>
+                    OUTLINE
+                </Button>
+                <Button href="#contact" variant="ghost"  client:load>
+                    GHOST
+                </Button>
+                <Button href="#contact" variant="link" weight={400}  client:load>
+                    LINK
                 </Button>
 
             </div>
