@@ -1,39 +1,37 @@
-import React from "react";
+import type { ReactNode } from "react";
 
-type Props = {
+export interface TechIconProps {
     name: string;
-    src?: string;
-    size?: number;
-    rounded?: boolean;
-    className?: string;
-    children?: React.ReactNode;
+    icon: ReactNode | string;
+    size?: "sm" | "md" | "lg";
+    className?: string
 }
 
-const TechIcon: React.FC<Props> = ({ name, src, size = 40, rounded = true, className, children }) => {
-    const radiusClass = rounded ? "rounded-full" : "rounded-md";
-    const sizeClass = { width: size, height: size };
+function sizeClass(size: "sm" | "md" | "lg"): string {
+    return size === "md" ? "" : `tech-icon-${size}`
+}
+
+function isSvgString(str: string): boolean {
+    return str.trimStart().startsWith("<");
+}
+
+export function TechIcon({ name, icon, size = "md", className = "" }: TechIconProps) {
+    const classes = ["tech-icon", sizeClass(size), className].filter(Boolean).join(" ")
     return (
-        <div className={`group inline-flex flex-col items-center gap-2 ${className ?? ""} `} >
-            <div className={`relative flex items-center justify-center p-2 transition-all duration-200 ${radiusClass}`} style={sizeClass} aria-hidden >
-                {children ? (
-                    <span className="icon-svg text-text-primary transition-colors duration-200 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-b group-hover:from-(--gradient-start) group-hover:to-(--gradient-end)" style={{ lineHeight: 0 }}>
-                        {children}
-                    </span>
-                ) : (
-                    <>
-                        <img src={String(src)} alt={name} className="w-full h-full object-contain filter grayscale contrast-90 transition-all duration-200 group-hover:filter-none" />
-                        <span className="absolute inset-0 pointer-events-none rounded-full opacity-0 transition-opacity duration-200 group-hover:opacity-80 bg-linear-to-b from-(--gradient-start) to-(--gradient-end) mix-blend-screen" />
-                    </>
-                )}
-
-            </div>
-
-        /* chip */
-            <span className="chip transform translate-y-1 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-200 text-xs px-3 py-1 rounded-full bg-white/2 border border-white/4 text-text-muted" >
+        <div className={classes} role="img" aria-label={name}>
+            <span className="tech-icon-svg">
+                {
+                    typeof icon === "string" ? (
+                        isSvgString(icon) ? (<span dangerouslySetInnerHTML={{ __html: icon }} />) : (<img src={icon} alt="" aria-hidden="true" />)
+                    ) : (icon)
+                }
+            </span>
+            <span className="tech-icon-chip" aria-hidden="true" >
                 {name}
             </span>
+
+
         </div>
     )
 }
-
 export default TechIcon

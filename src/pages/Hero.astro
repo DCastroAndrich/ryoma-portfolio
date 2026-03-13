@@ -4,6 +4,33 @@ import LogoLight from "../assets/logo-light.svg"
 import RyomaLogoLight from "../assets/logotipo-ryōma-light.svg"
 import DevelLogoLight from "../assets/logotipo-development-light.svg"
 import Button from "../components/Button"
+import TechStack from "../components/TechStack"
+
+
+/* iconos */
+import astroIconRaw from "../assets/tech-icons/astro.svg"
+import nextJSIconRaw from "../assets/tech-icons/nextjs.svg"
+import nestJSIconRaw from "../assets/tech-icons/nestjs.svg"
+import tsIconRaw from "../assets/tech-icons/typescript.svg"
+import postgreSQLIconRaw from "../assets/tech-icons/postgresql.svg"
+import prismaIconRaw from "../assets/tech-icons/prisma.svg"
+import reactIconRaw from "../assets/tech-icons/react.svg"
+import nodeJSIconRaw from "../assets/tech-icons/nodejs.svg"
+import mongoIconRaw from "../assets/tech-icons/mongodb.svg"
+
+
+const techStack = [
+    {name: "ASTRO", icon: astroIconRaw},
+    {name: "NEXT JS", icon: nextJSIconRaw},
+    {name: "NEST JS", icon: nestJSIconRaw},
+    {name: "TYPESCRIPT", icon: tsIconRaw},
+    {name: "POSTGRESQL", icon: postgreSQLIconRaw},
+    {name: "PRISMA ORM", icon: prismaIconRaw},
+    {name: "REACT", icon: reactIconRaw},
+    {name: "NODE JS", icon: nodeJSIconRaw},
+    {name: "MONGO DB", icon: mongoIconRaw}
+]
+
 ---
 <Layout>
     <section class="max-w-7xl h-auto flex flex-col items-center justify-center gap-15 py-13">
@@ -36,19 +63,13 @@ import Button from "../components/Button"
             <!-- CTA -->
             <div class="flex items-center justify-center gap-13 w-auto h-auto">
                 <Button href="#contact" variant="primary" weight={500} client:load>
-                    PRIMARY
+                    HABLEMOS
                 </Button>
                 <Button href="#contact" variant="outline" weight={500}  client:load>
-                    OUTLINE
+                    PROYECTOS
                 </Button>
-                <Button href="#contact" variant="ghost"  client:load>
-                    GHOST
-                </Button>
-                <Button href="#contact" variant="link" weight={400}  client:load>
-                    LINK
-                </Button>
-
             </div>
+            <TechStack items={techStack} client:load/>
 
          </div>
     </section>
