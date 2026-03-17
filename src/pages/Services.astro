@@ -1,0 +1,71 @@
+---
+import ServiceCard from "../components/ServiceCard.astro";
+import Layout from "../layout/Layout.astro";
+import rocketIcon from "../assets/services-icons/rocket.svg?raw"
+import workflowIcon from "../assets/services-icons/workflow.svg?raw"
+import layersIcon from "../assets/services-icons/layers.svg?raw"
+import brainIcon from "../assets/services-icons/brain-circuit.svg?raw"
+
+
+---
+
+<Layout>
+    <section id="services" class="flex flex-col items-start justify-center h-auto px-10 pt-16 max-w-7xl gap-15 pb-18 ">
+        <!-- titulo -->
+        <div class="w-full h-auto gap-7.5 flex flex-col items-center justify-center text-heading  ">
+            <h2 class="text-4xl font-bold font-heading tracking-heading-lg leading-heading-lg">
+                Mis servicios
+            </h2>
+            <p class="text-lg font-light font-body tracking-subtitle leading-subtitle">Diseño, arquitectura y automatización pensadas para procesos reales.</p>
+
+        </div>
+        
+        <!-- tarjetas -->
+
+        <div class="flex flex-col h-auto gap-18 ">
+            <!-- featured -->
+            <div class="w-full" >
+                <ServiceCard
+                icon={rocketIcon}
+                title="Plataformas Web de Alto Rendimiento"
+                subtitle="Interfaces rápidas, estables y listas para producción."
+                description={["Diseño y construyo plataformas pensadas para usuarios y operaciones reales.", "Rendimiento primero, UX clara y código que soporta crecimiento sin sorpresas."]}
+                ctaLabel="EXPLORAR SERVICIO"
+                ctaHref="#servicios/web"
+                featured={true}
+                />
+
+            </div>
+            <div class="grid grid-cols-3 gap-6">
+                <ServiceCard
+                icon={workflowIcon}
+                title="Sistemas a Medida sin Ruido"
+                subtitle="Automatización real, sin improvisaciones."
+                description={["Analizo tu flujo y elimino tareas repetitivas con software hecho a medida.", "Menos errores, menos fricción y más tiempo útil para tu equipo."]}
+                ctaLabel="VER ENFOQUE"
+                ctaHref="#servicios/sistemas"
+                />
+                <ServiceCard
+                icon={layersIcon}
+                title="Backend diseñado para escalar"
+                subtitle="Seguridad y previsibilidad bajo carga."
+                description={["APIs modulares con NestJS y TypeScript, listas para crecer.", "Performance, tests y arquitectura que no se rompen cuando el tráfico aumenta."]}
+                ctaLabel="VER ARQUITECTURA"
+                ctaHref="#servicios/backend"
+                />
+                <ServiceCard
+                icon={brainIcon}
+                title="Integraciones que funcionan de verdad"
+                subtitle="Datos consistentes, procesos sincronizados."
+                description={["Conecto sistemas y diseño flujos automáticos confiables.", "Menos trabajo manual, menos errores y operaciones que se ejecutan solas."]}
+                ctaLabel="VER INTEGRACIONES"
+                ctaHref="#servicios/integraciones"
+                />
+
+            </div>
+
+        </div>
+
+    </section>
+
+</Layout>

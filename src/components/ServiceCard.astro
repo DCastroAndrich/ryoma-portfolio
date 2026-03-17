@@ -1,0 +1,35 @@
+---
+interface Props {
+    icon: string;
+    title: string;
+    subtitle: string;
+    description: string[];
+    ctaLabel: string;
+    ctaHref?: string;
+    featured?: boolean
+}
+const {
+    icon, title, subtitle, description, ctaLabel, ctaHref ="#", featured = false
+} = Astro.props
+
+---
+
+<article class={`service-card ${featured ? "service-card-featured" : ""}`} >
+    <span class="service-card-icon" set:html={icon} aria-hidden="true" />
+    <div class="service-card-content">
+        <div class="service-card-heading">
+            <h3 class="service-card-title">{title} </h3>
+            <p class="service-card-subtitle" >{subtitle} </p>
+        </div>
+        <div class="service-card-description">
+            {description.map((paragraph) =>(
+                <p>{paragraph} </p>
+            ))}
+        </div>
+        
+    </div>
+    <a href={ctaHref} class="btn btn-outline btn-sm service-card-cta" >
+        {ctaLabel} 
+    </a>
+
+</article>
