@@ -1,0 +1,95 @@
+---
+interface TechIcon {
+    icon: string;
+    name: string;
+}
+
+interface Props {
+    title: string;
+    subtitle: string;
+    description: string;
+    bullets: string[];
+    techIcons: TechIcon[];
+    image: string;
+    imageAlt?: string;
+    status: "web" | "mobile" | "en-proceso" | "completado";
+    statusLabel: string;
+    caseHref?: string;
+}
+
+const {
+    title,
+    subtitle,
+    description,
+    bullets,
+    techIcons,
+    image,
+    imageAlt ="",
+    status,
+    statusLabel,
+    caseHref ="#"
+} = Astro.props
+
+---
+<article class={`project-card project-card-${status}`} >
+    <!-- imagen de fondo con overlay -->
+     <div class="project-card-image" aria-hidden="true" >
+        <img src={image} alt={imageAlt} />
+     </div>
+
+     <!-- contenido principal -->
+      <div class="project-card-content">
+        <!-- badge -->
+         <span class="project-card-badge" >{statusLabel} </span>
+         <!-- titulo y subtitulo -->
+          <div class="project-card-heading">
+            <h3 class="project-card-title">{title} </h3>
+            <p class="project-card-subtitle" >{subtitle} </p>
+          </div>
+
+          <!-- descripcion y bullets -->
+           <div class="project-card-body">
+            <p class="project-card-description" >{description} </p>
+
+            <ul class="project-card-bullets" >
+                {bullets.map((bullet)=>(
+                    <li class="project-card-bullet">
+                        <svg class="project-card-check" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            {bullet}
+
+                    </li>
+                ))}
+
+            </ul>
+           </div>
+           
+           <!-- iconos -->
+           <div class="project-card-tech" aria-label="Tecnologías utilizadas">
+            {techIcons.map(({icon, name}, index)=>(
+                <>
+                <span 
+                class="project-card-tech-icon"
+                set:html={icon}
+                aria-label={name}
+                title={name}
+                />
+                {index < techIcons.length -1 && (
+                    <span class="project-card-tech-dot" aria-hidden="true" />
+                )}
+                
+                </>
+            ))}
+
+           </div>
+           <div class="project-card-spacer" />
+
+           <!-- CTA -->
+            <a href={caseHref} class="btn btn-ghost btn-sm project-card-cta" >
+                VER CASO →
+            </a>
+
+      </div>
+
+</article>

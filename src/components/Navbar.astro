@@ -1,20 +1,16 @@
 ---
 import ThemeToggle from "./ThemeToggle"
 import Button from "./Button"
+
+import logoIcon from "../assets/logo-o.svg?raw"
 ---
 <nav id="site-navbar" class="fixed top-0 left-0 w-full z-50" role="navigation" aria-label="Barra de navegación">
     <div class="w-full mx-auto px-6 sm:px-8 ">
         <div class="flex items-center justify-between h-20">
             <!-- logos -->
-             <a href="/" class="flex items-center gap-3 z-30">
-                <span class="relative inline-block h-8 w-auto">
-                    <!-- logo modo claro -->
-                    <img src="/src/assets/logo-dark.svg" alt="Ryōma" class="h-8 w-auto logo-light" />
-                    <!-- logo modo oscuro -->
-                    <img src="/src/assets/logo-light.svg" alt="Ryōma" class="h-8 w-auto logo-dark" />
-
-                </span>
-             </a>
+             <a href="/" class="flex items-center gap-3 z-30" aria-label="Ir al inicio">
+                <span class="block h-6 w-auto" style="aspect-ratio: 278 / 200;" set:html={logoIcon} aria-hidden="true" />
+            </a>
 
              <!-- Desktop links -->
               <ul class="hidden md:flex items-center gap-8 text-sm font-heading">
@@ -45,17 +41,15 @@ import Button from "./Button"
         </div>
     </div>
 
+    <!-- Meun movil -->
+
     <div id="mobile-menu" class="mobile-menu md:hidden" role="menu" aria-labelledby="nav-toggle" aria-hidden="true" >
         <div class="max-w-300 mx-auto px-6 sm:px-8 py-6 flex flex-col gap-4">
             <div class="flex items-center justify-between">
-                <a href="/" class="flex items-center gap-3">
-                    <span class="relative inline-block h-8 w-auto">
-                       <!-- logo modo claro -->
-                    <img src="/src/assets/logo-dark.svg" alt="Ryōma" class="h-8 w-auto logo-light" />
-                    <!-- logo modo oscuro -->
-                    <img src="/src/assets/logo-light.svg" alt="Ryōma" class="h-8 w-auto logo-dark" />
-
-                    </span>
+                <!-- Logo -->
+                <a href="/" >
+                    <span class="block h-6 w-auto" style="aspect-ratio: 278 / 200;" set:html={logoIcon} aria-hidden="true"/>
+                    
                  </a>
                  <button id="nav-close" class="inline-flex items-center justify-center w-10 h-10 rounded-lg focus:outline-none" aria-label="Cerrar menú">
                     <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden>

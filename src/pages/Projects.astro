@@ -1,0 +1,53 @@
+---
+import Layout from "../layout/Layout.astro";
+
+import greenGlowImg from "../assets/projects/greenglow-logo.webp"
+import ProjectCard from "../components/ProjectCard.astro";
+import astroIconRaw from "../assets/tech-icons/astro.svg?raw"
+import reactIconRaw from "../assets/tech-icons/react.svg?raw"
+import tsIconRaw from "../assets/tech-icons/typescript.svg?raw"
+import tailwindIconRaw from "../assets/tech-icons/tailwind.svg?raw"
+
+
+---
+
+<Layout>
+    <section id="projects" class="flex flex-col items-start justify-center h-auto px-10 pt-16 max-w-7xl gap-15 pb-18 ">
+         <!-- titulo -->
+        <div class="w-full h-auto gap-7.5 flex flex-col items-center justify-center text-heading  ">
+            <h2 class="text-4xl font-bold font-heading tracking-heading-lg leading-heading-lg">
+                Proyectos destacados
+            </h2>
+            <p class="text-lg font-light font-body tracking-subtitle leading-subtitle">Trabajo real, decisiones reales, resultados medibles.</p>
+
+        </div>
+
+        <!-- Carrusel -->
+        <div class="projects-carousel flex gap-6 overflow-x-auto scroll-smooth pb-4 md:overflow-visible md:grid md:grid-cols-2 md:pb-0 ">
+
+            <ProjectCard
+            title="GreenGlow"
+            subtitle="E-Commerce y Plataforma de Marca"
+            description="Plataforma enfocada en conversión y escalabilidad."
+            bullets={[
+                "UX orientada a catálogo y compra",
+                "Arquitectura Astro + React",
+                "Identidad natural con base científica"
+            ]}
+            techIcons={[
+                {icon: astroIconRaw, name: "Astro"},
+                {icon: reactIconRaw, name: "React"},
+                {icon: tsIconRaw, name: "Typescript"},
+                {icon: tailwindIconRaw, name: "Tailwindcss"},
+            ]}
+            image={greenGlowImg.src}
+            imageAlt="Logo GreenGlow"
+            status="web"
+            statusLabel="Web"
+            caseHref="#greenglow"
+            />
+
+        </div>
+
+    </section>
+</Layout>
