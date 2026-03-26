@@ -896,6 +896,7 @@
     display: inline-flex;
     align-items: center;
     align-self: flex-start;
+    margin-bottom: 0.5rem;
 
     font-family: var(--font-body);
     font-size: 0.75rem;
@@ -953,12 +954,13 @@
   .project-card-body {
     display: flex;
     flex-direction: column;
-    gap: 0.625rem;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
   }
   .project-card-description {
     font-family: var(--font-body);
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.18rem;
+    font-weight: 300;
     letter-spacing: 0.02em;
     line-height: 1.2;
     color: var(--color-text-primary);
@@ -966,7 +968,7 @@
   }
   .project-card-bullets {
     list-style: none;
-    padding: 0;
+    padding-left: 0.75rem;
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -975,10 +977,10 @@
   .project-card-bullet {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
 
     font-family: var(--font-body);
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 400;
     letter-spacing: 0.06em;
     line-height: 1.575;
@@ -992,6 +994,7 @@
   /* iconos */
   .project-card-tech {
     display: flex;
+    margin-top: 2rem;
     align-items: center;
     justify-content: center;
     gap: 0.625rem;
@@ -1001,8 +1004,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
+    width: 35px;
+    height: 35px;
     flex-shrink: 0;
   }
   .project-card-tech-icon svg {
