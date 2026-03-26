@@ -15,6 +15,7 @@ interface Props {
     status: "web" | "mobile" | "en-proceso" | "completado";
     statusLabel: string;
     caseHref?: string;
+    variant?: "default" | "upcoming"
 }
 
 const {
@@ -27,7 +28,8 @@ const {
     imageAlt ="",
     status,
     statusLabel,
-    caseHref ="#"
+    caseHref ="#",
+    variant = "default"
 } = Astro.props
 
 ---
@@ -83,13 +85,16 @@ const {
             ))}
 
            </div>
-           <div class="project-card-spacer" />
+           {variant === "default" && (
+            <>
+               <div class="project-card-spacer" />
+               <!-- CTA -->
+                <a href={caseHref} class="btn btn-ghost btn-sm project-card-cta" >
+                    VER CASO →
+                </a>
+            </>
 
-           <!-- CTA -->
-            <a href={caseHref} class="btn btn-ghost btn-sm project-card-cta" >
-                VER CASO →
-            </a>
-
+           )}
       </div>
 
 </article>
