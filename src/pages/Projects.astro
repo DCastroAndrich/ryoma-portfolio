@@ -1,10 +1,13 @@
 ---
 import Layout from "../layout/Layout.astro";
 
-import greenGlowImg from "../assets/projects/greenglow-logo.webp"
+import greenGlowImg from "../assets/projects/GreenGlow.jpg"
 import caAutomotoresImg from "../assets/projects/CAAutomotores.png"
 import c_aImg from "../assets/projects/C&A.png"
+
 import ProjectCard from "../components/ProjectCard.astro";
+import FeaturedProjectCard from "../components/FeaturedProjectCard.astro";
+
 import astroIconRaw from "../assets/tech-icons/astro.svg?raw"
 import reactIconRaw from "../assets/tech-icons/react.svg?raw"
 import tsIconRaw from "../assets/tech-icons/typescript.svg?raw"
@@ -14,15 +17,37 @@ import tailwindIconRaw from "../assets/tech-icons/tailwind.svg?raw"
 ---
 
 <Layout>
-    <section id="projects" class="flex flex-col items-start justify-center h-auto px-10 pt-16 max-w-7xl gap-15 pb-18 ">
+    <section id="projects" class="flex flex-col items-start justify-center h-auto px-10 pt-16 max-w-7xl gap-24 pb-18 ">
          <!-- titulo -->
         <div class="w-full h-auto gap-7.5 flex flex-col items-center justify-center text-heading  ">
             <h2 class="text-4xl font-bold font-heading tracking-heading-lg leading-heading-lg">
                 Proyecto destacado
             </h2>
             <p class="text-lg font-light font-body tracking-subtitle leading-subtitle">Trabajo real, decisiones reales, resultados medibles.</p>
-
         </div>
+        <FeaturedProjectCard
+            title="GreenGlow"
+            subtitle="E-commerce de productos sustentables para el hogar"
+            description="Plataforma enfocada en conversión y escalabilidad."
+            bullets={[
+                "UX orientada a catálogo y compra",
+                "Arquitectura Astro + React",
+                "Identidad natural con base científica"
+            ]}
+            techIcons={[
+                {icon: astroIconRaw, name: "Astro"},
+                {icon: reactIconRaw, name: "React"},
+                {icon: tsIconRaw, name: "Typescript"},
+                {icon: tailwindIconRaw, name: "Tailwindcss"},
+            ]}
+            screenshot={greenGlowImg.src}
+            screenshotAlt="Logo GreenGlow"
+            status="web"
+            statusLabel="Web"
+            caseHref="greenglow.com.ar"
+        />
+
+
         <div class="w-full h-auto gap-7.5 flex flex-col items-center justify-center text-heading  ">
             <h2 class="text-4xl font-bold font-heading tracking-heading-lg leading-heading-lg">
                 Próximos proyectos
@@ -37,11 +62,11 @@ import tailwindIconRaw from "../assets/tech-icons/tailwind.svg?raw"
             <ProjectCard
             title="C.A. Automotores"
             subtitle="Taller de Electromecánica General"
-            description="Plataforma enfocada en conversión y escalabilidad."
+            description="Desarrollo de una landing page orientada a mejorar la presencia digital y captar clientes locales."
             bullets={[
-                "UX orientada a catálogo y compra",
-                "Arquitectura Astro + React",
-                "Identidad natural con base científica"
+                "Estructura clara de servicios y contacto",
+                "Optimización SEO local",
+                "Diseño mobile-first"
             ]}
             techIcons={[
                 {icon: astroIconRaw, name: "Astro"},
@@ -50,20 +75,20 @@ import tailwindIconRaw from "../assets/tech-icons/tailwind.svg?raw"
                 {icon: tailwindIconRaw, name: "Tailwindcss"},
             ]}
             image={caAutomotoresImg.src}
-            imageAlt="Logo GreenGlow"
+            imageAlt="Logo C.A. Automotores"
             status="en-proceso"
             statusLabel="En Proceso"
-            caseHref="#greenglow"
+            caseHref="#caautomotores"
             variant="upcoming"
             />
             <ProjectCard
             title="C & A"
             subtitle="Contabilidad & Administración de Consorcios"
-            description="Plataforma enfocada en conversión y escalabilidad."
+            description="Landing institucional enfocada en transmitir confianza y profesionalizar la presencia digital"
             bullets={[
-                "UX orientada a catálogo y compra",
-                "Arquitectura Astro + React",
-                "Identidad natural con base científica"
+                "Jerarquía clara de servicios",
+                "Comunicación orientada a clientes",
+                "Diseño responsive y accesible"
             ]}
             techIcons={[
                 {icon: astroIconRaw, name: "Astro"},
@@ -72,10 +97,10 @@ import tailwindIconRaw from "../assets/tech-icons/tailwind.svg?raw"
                 {icon: tailwindIconRaw, name: "Tailwindcss"},
             ]}
             image={c_aImg.src}
-            imageAlt="Logo GreenGlow"
+            imageAlt="Logo C & A"
             status="en-proceso"
             statusLabel="En proceso"
-            caseHref="#greenglow"
+            caseHref="#c_a"
             variant="upcoming"
             />
             

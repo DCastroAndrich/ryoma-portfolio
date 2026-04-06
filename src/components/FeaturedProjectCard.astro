@@ -1,0 +1,116 @@
+---
+interface TechIcon {
+    icon: string;
+    name: string;
+}
+
+interface Props {
+    title: string;
+    subtitle: string;
+    description: string;
+    bullets: string[];
+    techIcons: TechIcon[];
+    image?: string;
+    imageAlt?: string;
+    screenshot?: string;
+    screenshotAlt?: string;
+    status: "web" | "mobile" | "en-proceso" | "finalizado";
+    statusLabel: string;
+    caseHref: string;
+}
+
+const {
+    title,
+    subtitle,
+    description,
+    bullets,
+    techIcons,
+    image,
+    imageAlt = "",
+    screenshot,
+    screenshotAlt = "Vista previa del proyecto",
+    status,
+    statusLabel,
+    caseHref = "#"
+} = Astro.props
+---
+
+<article class={`featured-card featured-card-${status}`} >
+
+       <!-- Grid Principal -->
+     <div class="featured-card-grid">
+        
+        <!-- izquierda -->
+         <div class="featured-card-info">
+            <span class="project-card-badge ">{statusLabel} </span>
+            
+            <div class="featured-card-heading">
+                <h3 class="featured-card-title">{title} </h3>
+                <p class="featured-card-subtitle">{subtitle} </p>
+            </div>
+
+            <div class="featured-card-body">
+                <p class="featured-card-description">{description}</p>
+                <ul class="project-card-bullets">
+                    {bullets.map((bullet)=>(
+                        <li class="project-card-bullet">
+                            <svg class="project-card-check" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                                <path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            {bullet}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            <!-- Iconos -->
+             <div class="project-card-tech" aria-label="Tecnologías utilizadas">
+                {techIcons.map(({icon, name},index)=>(
+                    <>
+                    <span class="project-card-tech-icon" set:html={icon} aria-label={name} title={name} />
+                    {index < techIcons.length -1 && (
+                        <span class="project-card-tech-dot" aria-hidden="true" />
+                    )}
+                    </>
+                ))}
+             </div>
+
+             <!-- Spacer -->
+              <div class="project-card-spacer" />
+
+              <a href={caseHref} class="btn btn-ghost btn-sm project-card-cta" >
+                VER CASO →
+              </a>
+         </div>
+
+         <!-- Derecha -->
+         <!-- browser widndow -->
+         <div class="featured-card-browser">
+            <div class="browser-bar">
+                <div class="browser-dots">
+                    <span class="browser-dot browser-dot-red" />
+                    <span class="browser-dot browser-dot-yellow" />
+                    <span class="browser-dot browser-dot-green" />
+                </div>
+                <div class="browser-url">
+                    <span class="browser-url-text">
+                        {caseHref !== "#" ? caseHref : "próximamente"}
+                    </span>
+                </div>
+            </div>
+
+            <!-- Screenshot -->
+             <div class="browser-viewport">
+                {screenshot ? (
+                    <img src={screenshot} alt={screenshotAlt} class="browser-screenshot" />
+                ): (
+                    /* placeholder */
+                    <div class="browser-placeholder">
+                        <span class="browser-placeholder-text">Preview disponible próximamente</span>
+                    </div>
+                )}
+             </div>
+         </div>
+
+     </div>
+</article>

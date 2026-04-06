@@ -1,0 +1,124 @@
+---
+import { number } from "astro:schema";
+import Layout from "../layout/Layout.astro";
+import { Compass, PenTool, Server, RefreshCw } from "lucide-react";
+
+const steps = [
+    {
+        number: "01",
+        title: "Descubrimiento",
+        icon: Compass,
+        description: "Descubrimos el contexto real: negocio, usuario y restricciones.",
+        bullets: [
+            "Workshops y entrevistas con stakeholders.",
+            "Mapeo de flujos y puntos de fricción.",
+            "Priorización de funcionalidades y definición de KPI."
+        ],
+        deliverable: "Priorización de funcionalidades y definición de KPI.",
+        caseHref: "#"
+    },
+    {
+        number: "02",
+        title: "Diseño & Prototipo",
+        icon: PenTool,
+        description: "Prototipos interactivos que validan la experiencia antes de codear.",
+        bullets: [
+            "Wireframes y prototipos testeables en Figma.",
+            "Flujos centrados en conversión y reducción de fricción.",
+            "Pruebas rápidas con usuarios o stakeholders."
+        ],
+        deliverable: "Pruebas rápidas con usuarios o stakeholders.",
+        caseHref: "#"
+    },
+    {
+        number: "03",
+        title: "Desarrollo & Deploy",
+        icon: Server,
+        description: "Arquitectura modular, código tipado y deploy seguro.",
+        bullets: [
+            "Implementación con componentes reutilizables (Typescript).",
+            "Pipelines básicos de CI/CD y staging.",
+            "Test básicos y revisión de performance."
+        ],
+        deliverable: "Repositorio, staging link y despliegue en producción.",
+        caseHref: "#"
+    },
+    {
+        number: "04",
+        title: "Mantenimiento & Escalado",
+        icon: RefreshCw,
+        description: "Soporte, documentación y roadmap para crecer sin rehacer.",
+        bullets: [
+            "Documentación de componentes y handover.",
+            "Plan de mejoras y monitorización (performance/errores).",
+            "Opciones de soporte mensual y sprints de mejora."
+        ],
+        deliverable: "Documentación, plan de roadmap y acuerdos de mantenimiento.",
+        caseHref: "#"
+    },
+]
+
+---
+
+<Layout>
+    <section id="process" class="flex flex-col items-start justify-center h-auto px-10 pt-10 max-w-7xl gap-24 pb-18">
+        <!-- titulo -->
+        <div class="w-full h-auto gap-7.5 flex flex-col items-center justify-center text-heading  ">
+            <h2 class="text-4xl font-bold font-heading tracking-heading-lg leading-heading-lg">
+                Proceso de trabajo
+            </h2>
+            <p class="text-lg font-light font-body tracking-subtitle leading-subtitle">Un método claro para minimizar riesgo, maximizar impacto y entregar valor desde el primer día.</p>
+        </div>
+        
+        <!-- Timeline -->
+        <div class="process-timeline">
+            {steps.map((step, index) => (
+                <div class="process-step">
+
+                    {/* Marcador */}
+                    <div class="process-marker">
+                        <span class="process-dot"/>
+                    </div>
+
+                    {/* Card paso */}
+                    <div class="process-card">
+
+                        {/* badge */}
+                        <span class="process-badge">Paso {step.number} </span>
+                        
+                        {/* icono y titulo */}
+                        <div class="process-heading">
+                            {/* <step.icon size={28} stroke="1.5" className="process-icon" client:load/> */}
+                            <h3 class="process-title">{step.title} </h3>
+                        </div>
+                            
+                        {/* descripcion */}
+                        <p class="process-description">{step.description} </p>
+
+                        {/* bullets */}
+                        <ul class="process-bullets">
+                            {step.bullets.map((bullet)=>(
+                                <li class="process-bullet" >• {bullet} </li>
+                            ))}
+                        </ul>
+
+                        {/* entregable */}
+                        <p class="process-deliverable">
+                            <strong>Entreglable: </strong> {step.deliverable}
+                        </p>
+
+                        {/* link */}
+                        <a class="btn-link btn-link-process" href={step.caseHref} >
+                            Ver como la aplicamos
+                            <span class="btn-link-icon" aria-hidden="true">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            ))}            
+        </div>
+    </section>
+</Layout>
