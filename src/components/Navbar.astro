@@ -13,7 +13,9 @@ import logoIcon from "../assets/logo-o.svg?raw"
             </a>
 
              <!-- Desktop links -->
-              <ul class="hidden md:flex items-center gap-8 text-sm font-heading">
+              <ul class="hidden md:flex items-center gap-8 text-sm font-heading" id="nav-container">
+                <span id="nav-pill"/>
+
                 <li><a href="#about" class="nav-link group relative px-1 py-2">Acerca de mí</a></li>
                 <li><a href="#services" class="nav-link group relative px-1 py-2">Servicios</a></li>
                 <li><a href="#projects" class="nav-link group relative px-1 py-2">Proyectos</a></li>
@@ -95,11 +97,99 @@ import logoIcon from "../assets/logo-o.svg?raw"
             const mobileBackdrop = document.getElementById("mobile-backdrop")
             const threshold = 16;
 
-            const onScroll = ()=>{
+            const navContainer = document.getElementById("nav-container");
+            const pill = document.getElementById("nav-pill");
+            const navLinks = navContainer?.querySelectorAll(".nav-link") || [];
+            const sections = document.querySelectorAll("section[id]");
+
+            let activeLink = null;
+
+
+
+            const movePill = (el) =>{
+                if (!el || !pill || !navContainer) return
+                const containerRect = navContainer.getBoundingClientRect()
+                const rect = el.getBoundingClientRect();
+                
+                const x = rect.left - containerRect.left
+
+                const currentX = pill._x || 0;
+                const distance = Math.abs(x - currentX);
+                const duration = Math.min(Math.max(distance * 0.4, 220), 420)
+
+                pill.style.transitionDuration = `${duration}ms`;
+                pill.style.width = `${rect.width}px`
+                pill.style.transform = `translateX(${x}px)`
+                pill.style.opacity = "1";
+
+                pill._x = x;
+            }
+            const hidePill = () =>{
+                if(!pill)return;
+                pill.style.opacity = "0";
+            }
+
+
+            const observer = new IntersectionObserver((entries)=>{
+                entries.forEach((entry) =>{
+                    if (entry.isIntersecting){
+                        const id = entry.target.getAttribute("id");
+                        
+                        const link = [...navLinks].find((l)=> l.getAttribute("href") === `#${id}`);
+
+                        if(link){
+                            activeLink = link;
+                            movePill(link);
+
+                            navLinks.forEach((l)=> l.classList.remove("active"))
+                            link.classList.add("active")
+
+                            document.querySelectorAll(".mobile-menu .nav-link").forEach((l)=>{
+                                l.classList.toggle("active", l.getAttribute("href") === `#${id}`)
+                            })
+                        }
+                    }
+                });
+            },{
+                rootMargin: "-45% 0px -50% 0px",
+                threshold: 0,
+            });
+            sections.forEach((section)=> observer.observe(section));
+
+            const handleScroll = () =>{
                 const y = window.scrollY || window.pageYOffset;
+
                 if (y > threshold) nav.classList.add("scrolled");
                 else nav.classList.remove("scrolled")
+
+                if(y < 80){
+                    activeLink = null;
+                    hidePill()
+                }else if (activeLink){
+                    movePill(activeLink)
+                }
             }
+
+            let hoverTimeout = null;
+
+            navLinks.forEach((link)=>{
+                link.addEventListener("mouseenter", ()=>{
+                    clearTimeout(hoverTimeout);
+                    hoverTimeout = setTimeout(()=>{
+
+                        movePill(link)
+                    }, 90)
+                })
+                link.addEventListener("mouseleave", ()=>{
+                    clearTimeout(hoverTimeout);
+
+                    hoverTimeout = setTimeout(()=>{
+
+                        if(activeLink)movePill(activeLink)
+                        else hidePill()
+                    }, 100)
+                })
+            })
 
             const openMenu = () => {
                 nav.classList.add("menu-open")
@@ -119,8 +209,8 @@ import logoIcon from "../assets/logo-o.svg?raw"
 
             /* inicio scrolled state */
             
-            onScroll();
-            window.addEventListener("scroll", onScroll, {passive: true})
+            handleScroll();
+            window.addEventListener("scroll", handleScroll, {passive: true})
 
             /* toggle events */
 

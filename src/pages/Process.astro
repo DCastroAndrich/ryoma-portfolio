@@ -1,13 +1,13 @@
 ---
-import { number } from "astro:schema";
 import Layout from "../layout/Layout.astro";
-import { Compass, PenTool, Server, RefreshCw } from "lucide-react";
+import ProcessIcon from "../components/ProcessIcon.tsx";
+
 
 const steps = [
     {
         number: "01",
         title: "Descubrimiento",
-        icon: Compass,
+        icon: "Compass",
         description: "Descubrimos el contexto real: negocio, usuario y restricciones.",
         bullets: [
             "Workshops y entrevistas con stakeholders.",
@@ -20,7 +20,7 @@ const steps = [
     {
         number: "02",
         title: "Diseño & Prototipo",
-        icon: PenTool,
+        icon: "PenTool",
         description: "Prototipos interactivos que validan la experiencia antes de codear.",
         bullets: [
             "Wireframes y prototipos testeables en Figma.",
@@ -33,7 +33,7 @@ const steps = [
     {
         number: "03",
         title: "Desarrollo & Deploy",
-        icon: Server,
+        icon: "Server",
         description: "Arquitectura modular, código tipado y deploy seguro.",
         bullets: [
             "Implementación con componentes reutilizables (Typescript).",
@@ -46,7 +46,7 @@ const steps = [
     {
         number: "04",
         title: "Mantenimiento & Escalado",
-        icon: RefreshCw,
+        icon: "RefreshCw",
         description: "Soporte, documentación y roadmap para crecer sin rehacer.",
         bullets: [
             "Documentación de componentes y handover.",
@@ -72,12 +72,16 @@ const steps = [
         
         <!-- Timeline -->
         <div class="process-timeline">
+            
             {steps.map((step, index) => (
                 <div class="process-step">
 
                     {/* Marcador */}
                     <div class="process-marker">
                         <span class="process-dot"/>
+                        
+                            <div class="process-line" aria-hidden="true" />
+                        
                     </div>
 
                     {/* Card paso */}
@@ -88,7 +92,7 @@ const steps = [
                         
                         {/* icono y titulo */}
                         <div class="process-heading">
-                            {/* <step.icon size={28} stroke="1.5" className="process-icon" client:load/> */}
+                            <ProcessIcon name={step.icon} size={28} strokeWidth={1.5} className="process-icon" client:load />
                             <h3 class="process-title">{step.title} </h3>
                         </div>
                             
