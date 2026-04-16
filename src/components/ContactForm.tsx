@@ -309,7 +309,7 @@ export default function ContactForm() {
                         aria-describedby={errors.privacyAccepted ? "privacy-error" : undefined}
                     />
                     <span className="contact-checkbox-label">
-                        Acepto que mis datos sean usados para contactarme la según la pólitica de privacidad.
+                        Acepto que mis datos sean usados para contactarme según la <a href="/privacy" target="_blank" className="underline underline-offset-2 decoration-1 hover:decoration-accent">Pólitica de privacidad.</a>
                     </span>
                 </label>
                 {errors.privacyAccepted && (

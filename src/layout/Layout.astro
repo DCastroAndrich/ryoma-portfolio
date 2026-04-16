@@ -65,6 +65,8 @@ import Modal from "../components/Modal.astro";
 		</Modal>
 			
 		<script>
+import { Image } from "astro:assets";
+
 			document.addEventListener("DOMContentLoaded", () => {
 				let lastFocused: HTMLElement | null = null;
 				let previousModal: HTMLElement | null = null;
@@ -144,6 +146,21 @@ import Modal from "../components/Modal.astro";
 						lightboxCounter.style.display = showNav ? "block" : "none"
 					}
 				}
+
+				function preloadImage(src: string){
+					if(!src) return;
+					const img: HTMLImageElement = document.createElement("img")
+					img.src = src
+
+					if(lightboxImages.length >1){
+						const nextIndex = (currentIndex +1) % lightboxImages.length
+						const prevIndex = (currentIndex -1 + lightboxImages.length) % lightboxImages.length
+
+						preloadImage(lightboxImages[nextIndex].src)
+						preloadImage(lightboxImages[prevIndex].src)
+					}
+				}
+				
 
 				function openLightboxAt(index: number){
 					if(!(lightbox instanceof HTMLElement)) return
