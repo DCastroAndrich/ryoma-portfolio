@@ -17,6 +17,7 @@ interface Props {
     status: "web" | "mobile" | "en-proceso" | "finalizado";
     statusLabel: string;
     caseHref: string;
+    modalId?: string;
 }
 
 const {
@@ -31,7 +32,8 @@ const {
     screenshotAlt = "Vista previa del proyecto",
     status,
     statusLabel,
-    caseHref = "#"
+    caseHref = "#",
+    modalId,
 } = Astro.props
 ---
 
@@ -78,9 +80,9 @@ const {
              <!-- Spacer -->
               <div class="project-card-spacer" />
 
-              <a href={caseHref} class="btn btn-ghost btn-sm project-card-cta" >
+              <button data-modal-open={modalId} class="btn btn-ghost btn-sm project-card-cta" >
                 VER CASO →
-              </a>
+              </button>
          </div>
 
          <!-- Derecha -->

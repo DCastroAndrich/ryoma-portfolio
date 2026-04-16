@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
 const { title = "Ryōma Portfolio", description = "Portafolio de Ryōma, desarrollador web. Explora mis proyectos y habilidades en desarrollo web y más." } = Astro.props;
+
+import Modal from "../components/Modal.astro";
 ---
 
 <html lang="es">
@@ -38,7 +40,233 @@ const { title = "Ryōma Portfolio", description = "Portafolio de Ryōma, desarro
 	</head>
 	<body class="min-h-screen bg-bg text-text-primary antialiased flex flex-col items-start justify-start">
 		<main id="main" class="flex flex-col items-center justify-center w-full gap-20 py-20 px-5">
-            <slot />
+			<slot />
         </main>
+		<Modal id="modal-lightbox" variant="lightbox" ariaLabel="Imagen ampliada">
+			<div class="modal-lightbox-content">
+				<div class="modal-lightbox-stage">
+					<button 
+						type="button" 
+						class="modal-lightbox-nav modal-lightbox-prev" 
+						data-lightbox-prev
+						aria-label="Imagen anterior"
+					>
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+					</button>
+
+					<img id="lightbox-img" class="modal-lightbox-img" src="" alt="" />
+
+					<button type="button" class="modal-lightbox-nav modal-lightbox-next" data-lightbox-next aria-label="Imagen siguiente" >
+						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>						
+					</button>
+				</div>
+				<div id="lightbox-counter" class="modal-lightbox-counter" />
+			</div>
+		</Modal>
+			
+		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				let lastFocused: HTMLElement | null = null;
+				let previousModal: HTMLElement | null = null;
+				
+				let lightboxImages: {src: string; alt: string}[] = []
+				let currentIndex = 0;
+				
+				const lightbox = document.getElementById("modal-lightbox")
+				const lightboxImg = document.getElementById("lightbox-img")
+				const lightboxPrevBtn = document.querySelector<HTMLButtonElement>("[data-lightbox-prev]");
+				const lightboxNextBtn = document.querySelector<HTMLButtonElement>("[data-lightbox-next]");
+				const lightboxCounter = document.getElementById("lightbox-counter")
+				
+				
+				function openModal(modal: HTMLElement) {
+					lastFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+					modal.classList.add("is-open");
+					document.documentElement.style.overflow = "hidden";
+					
+					const closeBtn = modal.querySelector<HTMLElement>("[data-modal-close]");
+					closeBtn?.focus();
+				}
+
+				function closeModal(modal: HTMLElement) {
+					modal.classList.remove("is-open");
+
+					if (modal.id === "modal-lightbox") {
+						document.documentElement.style.overflow = "hidden";
+
+						const img = document.getElementById("lightbox-img")
+						if(img instanceof HTMLImageElement){
+							img.src = "";
+							img.alt = ""
+						}
+						
+					}
+					
+					if(previousModal){
+						previousModal.classList.add("is-open")
+						document.documentElement.style.overflow = "hidden"
+
+						const prevCloseBtn = previousModal.querySelector<HTMLElement>("[data-modal-close]");
+							prevCloseBtn?.focus();
+	
+						previousModal = null;
+						return;
+					}
+
+					document.documentElement.style.overflow = "";
+					lastFocused?.focus();
+				}
+
+				function renderLightboxImage(){
+					if(!(lightboxImg instanceof HTMLImageElement)) return;
+					
+					const current = lightboxImages[currentIndex]
+					if(!current) return;
+
+
+					lightboxImg.classList.add("is-changing")
+
+					setTimeout(()=>{
+						lightboxImg.src = current.src;
+						lightboxImg.alt = current.alt || "";
+
+						lightboxImg.classList.remove("is-changing")
+						
+					}, 150)
+
+
+					const showNav = lightboxImages.length > 1;
+					if(lightboxPrevBtn)lightboxPrevBtn.hidden = !showNav
+					if(lightboxNextBtn)lightboxNextBtn.hidden = !showNav
+
+					if(lightboxCounter){
+						lightboxCounter.textContent = `${currentIndex + 1} / ${lightboxImages.length}`;
+						lightboxCounter.style.display = showNav ? "block" : "none"
+					}
+				}
+
+				function openLightboxAt(index: number){
+					if(!(lightbox instanceof HTMLElement)) return
+					if(!lightboxImages.length)return
+
+					currentIndex = (index + lightboxImages.length) % lightboxImages.length;
+
+					const open = document.querySelector<HTMLElement>(".modal-overlay.is-open")
+					if(open && open.id !== "modal-lightbox"){
+						previousModal = open
+						open.classList.remove("is-open")
+					}
+
+					renderLightboxImage()
+
+					lightbox.classList.add("is-open")
+					document.documentElement.style.overflow = "hidden";
+					document.documentElement.classList.add("lightbox-open")
+				}
+
+
+				document.querySelectorAll<HTMLElement>("[data-modal-open]").forEach((trigger) => {
+					trigger.addEventListener("click", (e) => {
+						e.preventDefault();
+
+						const id = trigger.dataset.modalOpen;
+						if (!id) return;
+
+						const modal = document.getElementById(id);
+						if (modal instanceof HTMLElement) openModal(modal);
+					});
+				});
+				
+				document.querySelectorAll<HTMLElement>("[data-modal]").forEach((modal) => {
+					const closeBtn = modal.querySelector<HTMLElement>("[data-modal-close]");
+						
+					closeBtn?.addEventListener("click", () => closeModal(modal));
+
+					modal.addEventListener("click", (e) => {
+						if (e.target === modal) closeModal(modal);
+					});
+				});
+
+				window.addEventListener("keydown", (e) => {
+					if (e.key === "Escape") {
+						const open = document.querySelector<HTMLElement>(".modal-overlay.is-open");
+						if (open) closeModal(open);
+						return
+					}
+					if(
+						e.key === "ArrowLeft" &&
+						lightbox instanceof HTMLElement &&
+						lightbox.classList.contains("is-open") &&
+						lightboxImages.length > 1
+					){
+						openLightboxAt(currentIndex - 1)
+					}
+					if(
+						e.key === "ArrowRight" &&
+						lightbox instanceof HTMLElement &&
+						lightbox.classList.contains("is-open") &&
+						lightboxImages.length > 1
+					){
+						openLightboxAt(currentIndex + 1)
+					}
+				});
+
+				document.addEventListener("click", (e) => {
+					if (!(e.target instanceof HTMLElement)) return;
+
+					const rawEl = e.target.closest("[data-lightbox-src]");
+					if (!(rawEl instanceof HTMLElement)) return;
+
+					const src = rawEl.dataset.lightboxSrc;
+					const alt = rawEl.dataset.lightboxAlt;
+					const group = rawEl.dataset.lightboxGroup
+
+					if(!src) return;
+
+					if(group){
+						const groupEls = document.querySelectorAll(`[data-lightbox-group="${group}"]`)
+
+						lightboxImages = Array.from(groupEls).map((el)=>{
+							const htmlEl = el as HTMLElement
+							return{
+								src: htmlEl.dataset.lightboxSrc || "",
+								alt: htmlEl.dataset.lightboxAlt || ""
+							}
+						}).filter((item)=> item.src)
+
+						currentIndex = lightboxImages.findIndex((item)=> item.src === src)
+						if(currentIndex < 0) currentIndex = 0;
+					}else{
+						lightboxImages = [{src, alt: alt || ""}]
+						currentIndex = 0
+					}
+					openLightboxAt(currentIndex)
+				});
+
+				if(lightboxPrevBtn){
+					lightboxPrevBtn.addEventListener("click", ()=>{
+						if(lightboxImages.length > 1)openLightboxAt(currentIndex - 1)
+					})
+				}
+				if(lightboxNextBtn){
+					lightboxNextBtn.addEventListener("click", ()=>{
+						if(lightboxImages.length > 1)openLightboxAt(currentIndex + 1)
+					})
+				}
+
+	
+				if(lightbox instanceof HTMLElement){
+					lightbox.addEventListener("click", (e)=>{
+						if(e.target === lightbox) closeModal(lightbox)
+					})
+				}
+				if(lightboxImg instanceof HTMLElement){
+					lightboxImg.addEventListener("click", ()=>{
+						closeModal(lightbox!)
+					})
+				}
+
+			});
+		</script>
 	</body>
 </html>
