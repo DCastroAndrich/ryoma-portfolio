@@ -6,6 +6,7 @@ import workflowIcon from "../assets/services-icons/workflow.svg?raw"
 import layersIcon from "../assets/services-icons/layers.svg?raw"
 import brainIcon from "../assets/services-icons/brain-circuit.svg?raw"
 
+import WebServiceModal from "../components/modal-services/WebServiceModal.astro";
 
 ---
 
@@ -31,7 +32,7 @@ import brainIcon from "../assets/services-icons/brain-circuit.svg?raw"
                 subtitle="Interfaces rápidas, estables y listas para producción."
                 description={["Diseño y construyo plataformas pensadas para usuarios y operaciones reales.", "Rendimiento primero, UX clara y código que soporta crecimiento sin sorpresas."]}
                 ctaLabel="EXPLORAR SERVICIO"
-                ctaHref="#servicios/web"
+                modalId="modal-web"
                 featured={true}
                 />
 
@@ -43,7 +44,7 @@ import brainIcon from "../assets/services-icons/brain-circuit.svg?raw"
                 subtitle="Automatización real, sin improvisaciones."
                 description={["Analizo tu flujo y elimino tareas repetitivas con software hecho a medida.", "Menos errores, menos fricción y más tiempo útil para tu equipo."]}
                 ctaLabel="VER ENFOQUE"
-                ctaHref="#servicios/sistemas"
+                
                 />
                 <ServiceCard
                 icon={layersIcon}
@@ -51,7 +52,7 @@ import brainIcon from "../assets/services-icons/brain-circuit.svg?raw"
                 subtitle="Seguridad y previsibilidad bajo carga."
                 description={["APIs modulares con NestJS y TypeScript, listas para crecer.", "Performance, tests y arquitectura que no se rompen cuando el tráfico aumenta."]}
                 ctaLabel="VER ARQUITECTURA"
-                ctaHref="#servicios/backend"
+                
                 />
                 <ServiceCard
                 icon={brainIcon}
@@ -59,7 +60,7 @@ import brainIcon from "../assets/services-icons/brain-circuit.svg?raw"
                 subtitle="Datos consistentes, procesos sincronizados."
                 description={["Conecto sistemas y diseño flujos automáticos confiables.", "Menos trabajo manual, menos errores y operaciones que se ejecutan solas."]}
                 ctaLabel="VER INTEGRACIONES"
-                ctaHref="#servicios/integraciones"
+                
                 />
 
             </div>
@@ -67,5 +68,6 @@ import brainIcon from "../assets/services-icons/brain-circuit.svg?raw"
         </div>
 
     </section>
+    <WebServiceModal/>
 
 </Layout>

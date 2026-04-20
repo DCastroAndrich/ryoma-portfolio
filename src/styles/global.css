@@ -2524,6 +2524,97 @@
     transform: scale(0.96);
   }
 
+  /* *** Variante: Service Modal */
+  .modal-service-card {
+    position: relative;
+    padding: 1rem;
+    border-radius: 12px;
+    overflow: hidden;
+
+    border: 1px solid color-mix(in srgb, var(--color-border) 40%, transparent);
+    background: color-mix(in srgb, var(--color-bg) 70%, transparent);
+
+    transition:
+      transform 200ms ease,
+      background 200ms ease,
+      border-color 200ms ease;
+  }
+  .modal-service-card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--color-cyan) 40%, transparent);
+  }
+  .modal-service-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at top left,
+      color-mix(in srgb, var(--color-cyan) 20%, transparent),
+      transparent 60%
+    );
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .modal-service-card h4 {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    margin-bottom: 0.35rem;
+  }
+  .modal-service-card p {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+  }
+  .modal-faq {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .modal-faq details {
+    border: 1px solid color-mix(in srgb, var(--color-border) 40%, transparent);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    background: color-mix(in srgb, var(--color-bg) 65%, transparent);
+    transition:
+      background 200ms ease,
+      border-color 200ms ease;
+  }
+  .modal-faq details[open] {
+    background: color-mix(in srgb, var(--color-bg) 80%, transparent);
+    border-color: color-mix(in srgb, var(--color-border) 50%, transparent);
+  }
+  .modal-faq summary {
+    cursor: pointer;
+    font-family: var(--font-heading);
+    list-style: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .modal-faq summary::after {
+    content: "+";
+    font-size: 1rem;
+    color: var(--color-cyan);
+    transition: transform 200ms ease;
+  }
+  .modal-faq details[open] summary::after {
+    transform: rotate(45deg);
+  }
+  .modal-faq p {
+    font-family: var(--font-body);
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
   /* Responsive */
   @media (max-width: 768px) {
     .modal-overlay {
@@ -2578,41 +2669,79 @@
 
   /* -------- LEGAL -------- */
   .legal-content {
+    width: 100%;
     max-width: 72ch;
     margin: 0 auto;
+  }
+  .legal-topbar {
+    margin-bottom: 2rem;
+  }
+  .legal-backlink {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+  .legal-backlink:hover {
+    color: var(--color-accent);
+  }
+
+  /* titulos */
+  .legal-header {
+    margin-bottom: 2rem;
+  }
+  .legal-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    columns: var(--font-heading);
+    margin: 0 0 0.75rem;
+  }
+  .legal-updated {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+  .legal-body {
     font-family: var(--font-body);
     color: var(--color-text-primary);
   }
-  /* titulos */
-  .legal-content h2 {
+  .legal-body h2 {
     font-family: var(--font-heading);
+    font-size: 1.375rem;
     font-weight: 600;
-    font-size: 1.5rem;
-    margin-top: 2.5rem;
-    margin-bottom: 1.75rem;
-    color: var(--color-cyan);
+    line-height: 1.2;
+    color: var(--color-text-primary);
+    margin: 2.25rem 0 0.75rem;
   }
   /* parrafos */
-  .legal-content p {
+  .legal-body p {
+    font-size: 0.9375rem;
     line-height: 1.7;
     color: var(--color-text-muted);
-    margin-bottom: 0.75rem;
+    margin: 0 0 0.9rem;
   }
-  .legal-content strong {
+  .legal-body strong {
     color: var(--color-text-primary);
   }
   /* listas */
-  .legal-content ul {
+  .legal-body ul {
     list-style: disc;
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
+    margin: 0.75rem 0 1.25rem;
     padding-left: 1.25rem;
   }
-  .legal-content ul li::marker {
+  .legal-body ul li::marker {
     color: var(--color-cyan);
   }
-  .legal-content li {
-    margin-bottom: 0.4rem;
+  .legal-body li {
+    margin-bottom: 0.5rem;
     font-style: italic;
   }
 }

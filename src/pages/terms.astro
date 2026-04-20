@@ -1,17 +1,9 @@
 ---
 import Layout from "../layout/Layout.astro";
+import LegalLayout from "../layout/LegalLayout.astro";
 ---
-<Layout>
-    <section class="flex flex-col items-center justify-center h-auto max-w-7xl gap-15 py-13">
-        
-        <!-- titulo -->
-        <div class="w-full h-auto gap-7.5 flex flex-col items-center justify-center text-heading  ">
-            <h1 class="text-4xl font-bold font-heading tracking-heading-lg leading-heading-lg">
-                Términos y Condiciones de Uso
-            </h1>
-            <p class="font-body text-xs"><strong>Última actualización:</strong> 16 de abril de 2026</p>
-            
-            <div class="legal-content">
+<LegalLayout title="Términos y Condiciones de Uso" description="Lee los términos y condiciones que rigen el uso de este sitio web, incluyendo aspectos de propiedad intelectual, servicios de mantenimiento, exclusión de responsabilidad y más." lastUpdated="16 de abril de 2026" backHref="/" backLabel="Volver al inicio">
+    
                 <p>El acceso y uso de este sitio web atribuye la condición de usuario, implicando la aceptación plena de las cláusulas aquí detalladas.
                 </p>
                 
@@ -39,9 +31,5 @@ import Layout from "../layout/Layout.astro";
                 <h2>5. Jurisdicción y Ley Aplicable</h2>
                 <p>Para cualquier controversia que surja en relación con estos términos, las partes se someten a la ley de la <strong>República Argentina</strong> y a la jurisdicción de los tribunales de la ciudad de <strong>La Plata, Buenos Aires</strong>.</p>
 
-            </div>
-
-        </div>
-
-    </section>
-</Layout>
+            
+</LegalLayout>

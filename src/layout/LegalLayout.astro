@@ -5,9 +5,11 @@ interface Props{
     title: string;
     description?: string;
     lastUpdated?: string;
+	backHref?: string;
+	backLabel?: string
 }
 
-const {title, description = "Información legal del sitio", lastUpdated} = Astro.props
+const {title, description = "Información legal del sitio", lastUpdated, backHref = "/", backLabel ="Volver al inicio"} = Astro.props
 ---
 
 <html lang="es">
@@ -44,23 +46,29 @@ const {title, description = "Información legal del sitio", lastUpdated} = Astro
     </head>
     
     <body class="min-h-screen bg-bg text-text-primary antialiased flex flex-col items-start justify-start">
-        <main id="main" class="flex flex-col items-center justify-center w-full gap-20 py-20 px-5" >
-            <header>
-                <h1 class="text-4xl font-bold font-heading tracking-heading-lg leading-heading-lg">{title} </h1>
-                {lastUpdated && (
-                    <p class="font-body text-xs text-text-muted">
-                        Última actualización: {lastUpdated}
+        
+		<main class="w-full flex-1 px-5 py-20" >
+			
+			<div class="legal-content">
+				
+				<div class="legal-topbar">
+					<a href={backHref} class="legal-backlink" >{backLabel} </a>
+				</div>
+				
+				<header class="legal-header">
+					<h1 class="legal-title">{title}</h1>
+					{lastUpdated && (
+						<p class="legal-updated">
+							Última actualización: {lastUpdated}
+						</p>
+					)}
+				</header>
+	
+				<section class="legal-body">
+					<slot/>
+				</section>
 
-                    </p>
-                )}
-
-            </header>
-            <section class="flex flex-col items-center justify-center h-auto max-w-7xl gap-15 py-13">
-                <div class="w-full h-auto gap-7.5 flex flex-col items-center justify-center text-heading  ">
-
-                    <slot/>
-                </div>
-            </section>
+			</div>
 
         </main>
     </body>

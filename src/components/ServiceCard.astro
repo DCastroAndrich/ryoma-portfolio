@@ -5,11 +5,11 @@ interface Props {
     subtitle: string;
     description: string[];
     ctaLabel: string;
-    ctaHref?: string;
+    modalId?: string;
     featured?: boolean
 }
 const {
-    icon, title, subtitle, description, ctaLabel, ctaHref ="#", featured = false
+    icon, title, subtitle, description, ctaLabel, modalId, featured = false
 } = Astro.props
 
 ---
@@ -28,8 +28,8 @@ const {
         </div>
         
     </div>
-    <a href={ctaHref} class="btn btn-outline btn-sm service-card-cta" >
+    <button type="button"  class="btn btn-outline btn-sm service-card-cta" data-modal-open={modalId} >
         {ctaLabel} 
-    </a>
+    </button>
 
 </article>
