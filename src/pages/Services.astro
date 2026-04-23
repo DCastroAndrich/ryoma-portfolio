@@ -7,6 +7,9 @@ import layersIcon from "../assets/services-icons/layers.svg?raw"
 import brainIcon from "../assets/services-icons/brain-circuit.svg?raw"
 
 import WebServiceModal from "../components/modal-services/WebServiceModal.astro";
+import BackendServiceModal from "../components/modal-services/BackendServiceModal.astro";
+import IntegrationsServiceModal from "../components/modal-services/IntegrationsServiceModal.astro";
+import SystemServiceModal from "../components/modal-services/SystemServiceModal.astro";
 
 ---
 
@@ -44,7 +47,7 @@ import WebServiceModal from "../components/modal-services/WebServiceModal.astro"
                 subtitle="Automatización real, sin improvisaciones."
                 description={["Analizo tu flujo y elimino tareas repetitivas con software hecho a medida.", "Menos errores, menos fricción y más tiempo útil para tu equipo."]}
                 ctaLabel="VER ENFOQUE"
-                
+                modalId="modal-system"
                 />
                 <ServiceCard
                 icon={layersIcon}
@@ -52,7 +55,7 @@ import WebServiceModal from "../components/modal-services/WebServiceModal.astro"
                 subtitle="Seguridad y previsibilidad bajo carga."
                 description={["APIs modulares con NestJS y TypeScript, listas para crecer.", "Performance, tests y arquitectura que no se rompen cuando el tráfico aumenta."]}
                 ctaLabel="VER ARQUITECTURA"
-                
+                modalId="modal-backend"
                 />
                 <ServiceCard
                 icon={brainIcon}
@@ -60,7 +63,7 @@ import WebServiceModal from "../components/modal-services/WebServiceModal.astro"
                 subtitle="Datos consistentes, procesos sincronizados."
                 description={["Conecto sistemas y diseño flujos automáticos confiables.", "Menos trabajo manual, menos errores y operaciones que se ejecutan solas."]}
                 ctaLabel="VER INTEGRACIONES"
-                
+                modalId="modal-integrations"
                 />
 
             </div>
@@ -69,5 +72,8 @@ import WebServiceModal from "../components/modal-services/WebServiceModal.astro"
 
     </section>
     <WebServiceModal/>
+    <BackendServiceModal/>
+    <IntegrationsServiceModal/>
+    <SystemServiceModal/>
 
 </Layout>

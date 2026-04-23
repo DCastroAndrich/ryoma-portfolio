@@ -2144,7 +2144,6 @@
   .modal-case-header {
     flex-shrink: 0;
     padding: 2rem 2.75rem 1.5rem;
-    position: relative;
     z-index: 1;
     border-bottom: 1px solid
       color-mix(in srgb, var(--color-border) 40%, transparent);
@@ -2185,6 +2184,19 @@
     line-height: 1.1;
     color: var(--color-text-primary);
     margin: 0 0 0.625rem;
+    position: relative;
+    padding-bottom: 0.6rem;
+  }
+  .modal-case-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40%;
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--color-magenta), var(--color-cyan));
+    opacity: 0.8;
   }
   .modal-case-intro {
     font-family: var(--font-body);
@@ -2556,20 +2568,23 @@
     pointer-events: none;
   }
   .modal-service-card h4 {
+    font-family: var(--font-heading);
     font-size: 0.75rem;
+    font-weight: 600;
     letter-spacing: 0.08em;
     color: var(--color-text-muted);
     margin-bottom: 0.35rem;
   }
   .modal-service-card p {
+    font-family: var(--font-body);
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 400;
     color: var(--color-text-primary);
   }
   .modal-faq {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.8rem;
   }
   .modal-faq details {
     border: 1px solid color-mix(in srgb, var(--color-border) 40%, transparent);
@@ -2609,7 +2624,8 @@
   }
   .modal-faq p {
     font-family: var(--font-body);
-    margin-top: 0.5rem;
+    margin-top: 0.8rem;
+    padding-left: 1rem;
     font-size: 0.85rem;
     color: var(--color-text-muted);
     line-height: 1.5;

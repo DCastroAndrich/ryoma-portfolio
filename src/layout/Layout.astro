@@ -89,7 +89,9 @@ import Modal from "../components/Modal.astro";
 					closeBtn?.focus();
 				}
 
-				function closeModal(modal: HTMLElement) {
+				function closeModal(modal: HTMLElement, options: {restoreFocus?: boolean}= {}) {
+					const {restoreFocus = true} = options;
+
 					modal.classList.remove("is-open");
 
 					if (modal.id === "modal-lightbox") {
@@ -108,14 +110,16 @@ import Modal from "../components/Modal.astro";
 						document.documentElement.style.overflow = "hidden"
 
 						const prevCloseBtn = previousModal.querySelector<HTMLElement>("[data-modal-close]");
-							prevCloseBtn?.focus();
+						prevCloseBtn?.focus();
 	
 						previousModal = null;
 						return;
 					}
 
 					document.documentElement.style.overflow = "";
-					lastFocused?.focus();
+					if(restoreFocus){
+						lastFocused?.focus();
+					}
 				}
 
 				function renderLightboxImage(){
@@ -194,14 +198,35 @@ import Modal from "../components/Modal.astro";
 				});
 				
 				document.querySelectorAll<HTMLElement>("[data-modal]").forEach((modal) => {
-					const closeBtn = modal.querySelector<HTMLElement>("[data-modal-close]");
-						
-					closeBtn?.addEventListener("click", () => closeModal(modal));
-
+					
 					modal.addEventListener("click", (e) => {
 						if (e.target === modal) closeModal(modal);
 					});
 				});
+
+				document.querySelectorAll<HTMLElement>("[data-modal-close]").forEach((trigger)=>{
+					trigger.addEventListener("click", (e)=>{
+						const modal = trigger.closest(".modal-overlay");
+						if(!(modal instanceof HTMLElement))return
+
+						const targetId = trigger.dataset.scrollTarget || (trigger.getAttribute("href")?.startsWith("#")? trigger.getAttribute("href")!.slice(1) : null)
+
+						if(trigger instanceof HTMLAnchorElement){
+							e.preventDefault();
+						}
+						
+						closeModal(modal, {restoreFocus: !targetId})
+
+						if(targetId){
+							history.pushState(null, "", `#${targetId}`);
+
+							requestAnimationFrame(()=>{
+								const target = document.getElementById(targetId)
+								target?.scrollIntoView({behavior: "smooth", block: "start"})
+							})
+						}
+					})
+				})
 
 				window.addEventListener("keydown", (e) => {
 					if (e.key === "Escape") {
