@@ -1,0 +1,41 @@
+---
+import Modal from "../Modal.astro";
+
+---
+<Modal id="modal-process" variant="document" ariaLabel="Proceso de trabajo">
+    
+    <div class="modal-layout-document">
+        
+        <!-- header -->
+        <div class="modal-document-header modal-process-header">
+            <span class="modal-process-badge" id="process-step-badge" />
+            <h2 class="modal-document-title modal-process-title" id="process-step-title"/>
+            <p class="modal-process-intro" id="process-step-intro"/>
+        </div>
+
+        <!-- body -->
+        <div class="modal-document-body modal-process-body">
+
+            <div class="modal-process-block is-problem">
+                <h2>El Problema</h2>
+                <p id="process-step-problem"/>
+            </div>
+            
+            <div class="modal-process-block is-actions">
+                <h2>Qué hicimos</h2>
+                <ul id="process-step-actions"/>
+            </div>
+            
+            <div class="modal-process-block is-decision">
+                <h2>Decisión clave</h2>
+                <p id="process-step-decision"/>
+            </div>
+            
+            <div class="modal-process-block is-impact">
+                <h2>Impacto</h2>
+                <p id="process-step-impact"/>
+            </div>
+
+        </div>
+    </div>
+</Modal>

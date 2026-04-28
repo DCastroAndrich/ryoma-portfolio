@@ -2,6 +2,8 @@
 import Layout from "../layout/Layout.astro";
 import ProcessIcon from "../components/ProcessIcon.tsx";
 
+import ProcessModal from "../components/modal-process/ProcessModal.astro";
+
 
 const steps = [
     {
@@ -112,7 +114,7 @@ const steps = [
                         </p>
 
                         {/* link */}
-                        <a class="btn-link btn-link-process" href={step.caseHref} >
+                        <a class="btn-link btn-link-process" href="#" data-process-open={index} >
                             Ver como la aplicamos
                             <span class="btn-link-icon" aria-hidden="true">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -124,5 +126,6 @@ const steps = [
                 </div>
             ))}            
         </div>
+        <ProcessModal/>
     </section>
 </Layout>
