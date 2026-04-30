@@ -8,9 +8,9 @@ import Modal from "../Modal.astro";
         
         <!-- header -->
         <div class="modal-document-header modal-process-header">
-            <span class="modal-process-badge" id="process-step-badge" />
-            <h2 class="modal-document-title modal-process-title" id="process-step-title"/>
-            <p class="modal-process-intro" id="process-step-intro"/>
+            <span class="modal-process-badge" id="process-step-badge" ></span>
+            <h2 class="modal-document-title modal-process-title" id="process-step-title"></h2>
+            <p class="modal-process-intro" id="process-step-intro"></p>
         </div>
 
         <!-- body -->
@@ -18,24 +18,41 @@ import Modal from "../Modal.astro";
 
             <div class="modal-process-block is-problem">
                 <h2>El Problema</h2>
-                <p id="process-step-problem"/>
+                <p id="process-step-problem"></p>
             </div>
             
             <div class="modal-process-block is-actions">
                 <h2>Qué hicimos</h2>
-                <ul id="process-step-actions"/>
+                <ul id="process-step-actions"></ul>
             </div>
             
             <div class="modal-process-block is-decision">
                 <h2>Decisión clave</h2>
-                <p id="process-step-decision"/>
+                <p id="process-step-decision"></p>
             </div>
             
             <div class="modal-process-block is-impact">
                 <h2>Impacto</h2>
-                <p id="process-step-impact"/>
+                <p id="process-step-impact"></p>
+            </div>
+        </div>
+
+        <!-- navegacion -->
+         <div class="modal-process-nav">
+            <button class="process-nav-btn" id="process-prev" type="button">
+                ← Paso anterior
+            </button>
+
+            <div class="process-nav-progress">
+                <span id="process-current"></span>
+                /
+                <span id="process-total"></span>
             </div>
 
-        </div>
+            <button class="process-nav-btn" id="process-next" type="button">
+                Siguiente paso →
+            </button>
+
+         </div>
     </div>
 </Modal>

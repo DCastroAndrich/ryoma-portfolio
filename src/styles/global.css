@@ -2430,69 +2430,95 @@
   .modal-document-process {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
   }
   .modal-process-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid
+      color-mix(in srgb, var(--color-border) 35%, transparent);
     position: relative;
   }
   .modal-process-header::after {
     content: "";
     position: absolute;
     left: 0;
-    bottom: 0;
-    width: 40%;
+    bottom: -1px;
+    width: 180px;
     height: 1px;
-    background: linear-gradient(to right, var(--color-cyan), transparent);
-    opacity: 0.4;
+    background: linear-gradient(90deg, var(--color-magenta), var(--color-cyan));
+    opacity: 0.45;
   }
   .modal-process-badge {
-    font-size: 0.75rem;
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 99px;
+    border: 1px solid color-mix(in srgb, var(--color-cyan) 45%, transparent);
+    background: color-mix(in srgb, var(--color-cyan) 10%, transparent);
     color: var(--color-cyan);
-    opacity: 0.8;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
   }
   .modal-process-title {
+    font-family: var(--font-heading);
     font-size: 1.75rem;
     font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    color: var(--color-heading);
+    margin: 0;
   }
   .modal-process-intro {
-    font-size: 0.95rem;
+    max-width: 60ch;
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    line-height: 1.65;
     color: var(--color-text-muted);
-    line-height: 1.6;
-    max-width: 85%;
+    margin: 0;
   }
   .modal-process-body {
     display: flex;
     flex-direction: column;
-    gap: 1.75rem;
+    gap: 1rem;
+    transition:
+      opacity 250ms ease,
+      transform 250ms ease;
+  }
+  .modal-process-body.is-changing {
+    opacity: 0;
+    transform: translateY(6px);
   }
   .modal-process-block {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 1.25rem 1.25rem 1.25rem 1.5rem;
-    border-radius: 0.75rem;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.2),
-      rgba(255, 255, 255, 0.1)
-    );
-    border: 1px solid color-mix(in srgb, var(--color-border) 25%, transparent);
-    transition: all 0.25s ease;
-    opacity: 0;
-    transform: translateY(10px);
-    animation: processFadeIn 0.4s ease forwards;
+    padding: 1rem 1.1rem 1rem 1.25rem;
+    border-radius: 14px;
+    border: 1px solid color-mix(in srgb, var(--color-border) 40%, transparent);
+    background: color-mix(in srgb, var(--color-surface) 82%, transparent);
+    overflow: hidden;
+    transition:
+      border-color 200ms ease,
+      transform 200ms ease,
+      background 200ms ease;
+    opacity: 1;
+    transform: none;
+    animation: none;
   }
   .modal-process-block:hover {
-    border-color: color-mix(in srgb, var(--color-cyan) 40%, transparent);
-    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--color-cyan) 35%, transparent);
+    transform: translateY(-1px);
   }
   .modal-process-block::before {
     content: "";
     position: absolute;
     left: 0;
-    top: 1rem;
-    bottom: 1rem;
+    top: 0.95rem;
+    bottom: 0.95rem;
     width: 2px;
     border-radius: 2px;
     background: linear-gradient(
@@ -2501,25 +2527,30 @@
       var(--color-cyan),
       transparent
     );
-    opacity: 0.4;
+    opacity: 0.45;
   }
   .modal-process-block h2 {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     font-family: var(--font-heading);
-    font-size: 1.5rem;
+    font-size: 1rem;
     font-weight: 600;
-    letter-spacing: 0.02em;
-    opacity: 0.85;
+    letter-spacing: 0.04em;
+    color: var(--color-heading);
+    margin: 0 0 0.5rem;
   }
   .modal-process-block p {
     font-family: var(--font-body);
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--color-text-primary);
+    margin: 0;
   }
   .modal-process-block ul {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: 0.4rem;
     padding-left: 0;
     margin: 0;
     list-style: none;
@@ -2529,14 +2560,14 @@
     position: relative;
     padding-left: 1rem;
     font-size: 0.9375rem;
-    line-height: 1.6;
+    line-height: 1.55;
     color: var(--color-text-primary);
   }
   .modal-process-block li::before {
     content: "";
     position: absolute;
     left: 0;
-    top: 0.55rem;
+    top: 0.62rem;
     width: 4px;
     height: 4px;
     border-radius: 50%;
@@ -2557,30 +2588,39 @@
   .modal-process-block.is-decision {
     background: linear-gradient(
       115deg,
-      rgba(0, 255, 255, 0.5),
-      rgba(255, 0, 255, 0.5)
+      color-mix(in srgb, var(--color-cyan) 8%, transparent),
+      color-mix(in srgb, var(--color-magenta) 8%, transparent)
     );
   }
   .modal-process-block.is-impact {
     border-color: color-mix(in srgb, var(--color-cyan) 40%, transparent);
   }
-  .modal-process-block:nth-child(1) {
-    animation-delay: 0.05s;
+  .modal-process-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid
+      color-mix(in srgb, var(--color-border) 30%, transparent);
   }
-  .modal-process-block:nth-child(2) {
-    animation-delay: 0.1s;
+  .process-nav-btn {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    transition: color 200ms ease;
   }
-  .modal-process-block:nth-child(3) {
-    animation-delay: 0.15s;
+  .process-nav-btn:hover {
+    color: var(--color-cyan);
   }
-  .modal-process-block:nth-child(4) {
-    animation-delay: 0.2s;
+  .process-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
   }
-  @keyframes processFadeIn {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .process-nav-progress {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
   }
 
   /* *** Variante: Lightbox *** */
