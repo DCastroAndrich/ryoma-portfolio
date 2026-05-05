@@ -13,6 +13,33 @@ const {
 } = Astro.props
 
 ---
+<article class={`flex flex-col justify-between rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md p-6 md:p-8 transition-all duration-300 hover:border-white/20 hover:shadow-lg ${featured ? "lg:p-10 lg:rounded-3xl" : ""}`} >
+    
+    <!-- icon -->
+     <div class="mb-4">
+        <span class="block w-10 h-10" set:html={icon} aria-hidden="true" />
+     </div>
+     
+     <!-- content -->
+      <div class="flex flex-col gap-4 flex-1">
+        
+        <div class="flex flex-col gap-1">
+            <h3 class="text-lg md:text-xl font-heading font-semibold">{title} </h3>
+            <p class="text-sm md:text-base text-white/70 font-body">{subtitle} </p>
+        </div>
+
+        <div class="flex flex-col gap-2 text-sm md:text-base text-white/80">
+            {description.map((paragraph)=>(
+                <p>{paragraph} </p>
+            ))}
+        </div>
+      </div>
+
+      <!-- CTA -->
+       <div></div>
+
+</article>
+
 
 <article class={`service-card ${featured ? "service-card-featured" : ""}`} >
     <span class="service-card-icon" set:html={icon} aria-hidden="true" />

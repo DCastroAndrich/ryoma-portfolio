@@ -5,33 +5,82 @@ import Layout from "../layout/Layout.astro";
 ---
 
 <Layout>
+    <section id="about" class="py-16 md:py-24">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-12 md:gap-16 items-stretch">
+                <!-- izquierda -->
+                 <div class="flex flex-col gap-4">
+                     <h2 class="font-heading text-2xl md:text-3xl font-bold">Sobre mí</h2>
+                    
+                    <p class="font-body text-base md:text-lg font-light leading-body">
+                        Desarrollo software con la precisión de un proceso y la claridad de un objetivo concreto.
+                    </p>
+                    <p class="font-body text-base md:text-lg font-light leading-body">
+                        Trabajo desde la arquitectura, no desde el ruido tecnológico.
+                    </p>
+                </div>
+
+                <!-- separador -->
+
+                <div class="hidden md:flex justify-center">
+                    <div class="relative w-1 h-full">
+                        <div class="absolute inset-0 bg-linear-to-b from-magenta-80 to-cyan-70"></div>
+                        <div class="absolute inset-0 blur-sm opacity-50 bg-linear-to-b from-magenta to-cyan"></div>
+                    </div>
+                </div>
+                 <!-- derecha -->
+                <div class="flex flex-col gap-8">
+                    
+                    <div class="flex flex-col gap-2">
+                        <h3 class="font-heading text-xl md:text-2xl font-bold">
+                            Quién soy
+                        </h3>
+                        <p class="font-body text-base md:text-lg font-light leading-body">
+                            Vengo de gestionar procesos complejos donde la precisión no era opcional. Esa experiencia definió mi forma de trabajar como desarrollador: sin rodeos, sin improvisar, siempre con foco en resolver el problema real.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <h3 class="font-heading text-xl md:text-2xl font-bold">
+                            Cómo pienso el software
+                        </h3>
+                        <p class="font-body text-base md:text-lg font-light leading-body">
+                            Antes de hablar de frameworks, miro qué estás intentando lograr: más clientes, menos tiempo perdido o una operación más clara. La tecnología es el medio; lo importante es el resultado.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <h3 class="font-heading text-xl md:text-2xl font-bold">
+                            Qué aporto
+                        </h3>
+                        <p class="font-body text-base md:text-lg font-light leading-body">
+                            Combino tu necesidad de negocio con una arquitectura sólida. Trabajo con Astro y Next.js para interfaces ultra rápidas, APIs modulares con NestJS, y bases de datos confiables como PostgreSQL con Prisma.
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col gap-2">
+                        <h3 class="font-heading text-xl md:text-2xl font-bold">
+                            Cómo trabajo
+                        </h3>
+                        <p class="font-body text-base md:text-lg font-light leading-body">
+                            Comunicación directa, plazos serios y entregas que se pueden usar desde el primer día. Si necesitás alguien que piense en precisión, rendimiento y claridad, estás en el lugar correcto.
+                        </p>
+                    </div>
+                  </div>
+            </div>
+        </div>
+    </section>
+
+
+
     <section id="about" class="flex items-start justify-center h-auto max-w-7xl gap-2.5 ">
         
-        <!-- Izquierda -->
-        <div class="flex flex-col items-start justify-start pl-2.5 pr-10 w-120.25 h-full gap-5">
-            <h3 class="font-heading text-3xl font-bold text-heading tracking-heading-md leading-heading-md " >Sobre mí</h3>
-            <p class="font-body text-lg font-light text-text-primary leading-body">Desarrollo software con la precisión de un proceso y la claridad de un objetivo concreto.</p>
-            <p class="font-body text-lg font-light text-text-primary leading-body">Trabajo desde la arquitectura, no desde el ruido tecnológico.</p>
-        </div>
+        
         
         <!-- Separador -->
-        <div class="w-0.75 self-stretch rounded-full bg-linear-to-b from-magenta/60 to-cyan/60"/>
         
-        <!-- Derecha -->
-        <div class="flex flex-col items-start justify-start pl-10 pr-2.5 w-180 h-full gap-5">
-            <h3 class="font-heading text-3xl font-bold text-heading tracking-heading-md leading-heading-md " >Quién soy</h3>
-            <p class="font-body text-lg font-light text-text-primary leading-body">Vengo de gestionar procesos complejos donde la precisión no era opcional. Esa experiencia definió mi forma de trabajar como desarrollador: sin rodeos, sin improvisar, siempre con foco en resolver el problema real.</p>
-
-            <h3 class="font-heading text-3xl font-bold text-heading tracking-heading-md leading-heading-md " >Cómo pienso el software</h3>
-            <p class="font-body text-lg font-light text-text-primary leading-body">Antes de hablar de frameworks, miro qué estás intentando lograr: más clientes, menos tiempo perdido o una operación más clara. La tecnología es el medio; lo importante es el resultado.</p>
-            
-            <h3 class="font-heading text-3xl font-bold text-heading tracking-heading-md leading-heading-md " >Qué aporto</h3>
-            <p class="font-body text-lg font-light text-text-primary leading-body">Combino tu necesidad de negocio con una arquitectura sólida. Trabajo con Astro y Next.js para interfaces ultra rápidas, APIs modulares con NestJS, y bases de datos confiables como PostgreSQL con Prisma.</p>
-            
-            <h3 class="font-heading text-3xl font-bold text-heading tracking-heading-md leading-heading-md " >Cómo trabajo</h3>
-            <p class="font-body text-lg font-light text-text-primary leading-body">Comunicación directa, plazos serios y entregas que se pueden usar desde el primer día. Si necesitás alguien que piense en precisión, rendimiento y claridad, estás en el lugar correcto.</p>
-
-        </div>
+     
 
 
     </section>

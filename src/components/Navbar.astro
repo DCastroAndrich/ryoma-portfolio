@@ -5,8 +5,8 @@ import Button from "./Button"
 import logoIcon from "../assets/logo-o.svg?raw"
 ---
 <nav id="site-navbar" class="fixed top-0 left-0 w-full z-50" role="navigation" aria-label="Barra de navegación">
-    <div class="w-full mx-auto px-6 sm:px-8 ">
-        <div class="flex items-center justify-between h-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 md:h-20">
             <!-- logos -->
              <a href="/" class="flex items-center gap-3 z-30" aria-label="Ir al inicio">
                 <span class="block h-6 w-auto" style="aspect-ratio: 278 / 200;" set:html={logoIcon} aria-hidden="true" />
@@ -45,7 +45,7 @@ import logoIcon from "../assets/logo-o.svg?raw"
 
     <!-- Meun movil -->
 
-    <div id="mobile-menu" class="mobile-menu md:hidden" role="menu" aria-labelledby="nav-toggle" aria-hidden="true" >
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-bg/95 backdrop-blur-lg opacity-0 pointer-events-none transition-all duration-300 md:hidden" role="menu" aria-labelledby="nav-toggle" aria-hidden="true" >
         <div class="max-w-300 mx-auto px-6 sm:px-8 py-6 flex flex-col gap-4">
             <div class="flex items-center justify-between">
                 <!-- Logo -->

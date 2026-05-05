@@ -3063,13 +3063,8 @@
 
   /* comportamiento navbar al scrollear */
   #site-navbar.scrolled {
-    background-color: color-mix(in srgb, var(--color-surface) 86%, transparent);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid
-      color-mix(in srgb, var(--color-border) 40%, transparent);
-    box-shadow: 0 6px 18px
-      color-mix(in srgb, var(--color-overlay) 12%, transparent);
+    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.6);
   }
 
   /* mobile */
@@ -3106,14 +3101,9 @@
     display: none;
   }
 
-  #site-navbar.menu-open .mobile-menu {
-    display: block;
-    pointer-events: auto;
+  #site-navbar.menu-open #mobile-menu {
     opacity: 1;
-    transform: translateY(0);
-    background-color: color-mix(in srgb, var(--color-surface) 92%, transparent);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
+    pointer-events: auto;
   }
 
   #site-navbar.menu-open .mobile-backdrop {
