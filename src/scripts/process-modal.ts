@@ -65,17 +65,17 @@ const processCases: ProcessCase[] = [
 ];
 
 let currentStep = 0;
+let direction: "next" | "prev" = "next";
 
-const body = document.querySelector(
-  ".modal-process-body",
-) as HTMLElement | null;
+const modal = document.getElementById("modal-process");
 
 function renderStep(index: number) {
   const data = processCases[index];
 
-  if (!data || !body) return;
+  if (!data || !modal) return;
 
-  body.classList.add("is-changing");
+  modal?.setAttribute("data-direction", direction);
+  modal?.classList.add("is-switching");
 
   setTimeout(() => {
     (document.getElementById("process-step-badge") as HTMLElement).textContent =
@@ -114,8 +114,8 @@ function renderStep(index: number) {
 
     updateNav();
 
-    body.classList.remove("is-changing");
-  }, 150);
+    modal?.classList.remove("is-switching");
+  }, 300);
 }
 
 function updateNav() {
@@ -132,9 +132,11 @@ export function initProcessModal() {
       e.preventDefault();
 
       const index = Number((el as HTMLElement).dataset.processOpen);
+      if (index === currentStep && currentStep !== -1) return;
       currentStep = index;
 
-      renderStep(index);
+      renderStep(currentStep);
+      updateNav();
 
       const modal = document.getElementById("modal-process");
       modal?.classList.add("is-open");
@@ -145,6 +147,7 @@ export function initProcessModal() {
   document.getElementById("process-prev")?.addEventListener("click", () => {
     if (currentStep > 0) {
       currentStep--;
+      direction = "prev";
       renderStep(currentStep);
     }
   });
@@ -152,7 +155,12 @@ export function initProcessModal() {
   document.getElementById("process-next")?.addEventListener("click", () => {
     if (currentStep < processCases.length - 1) {
       currentStep++;
+      direction = "next";
       renderStep(currentStep);
     }
+  });
+
+  document.addEventListener("process:reset", () => {
+    currentStep = -1;
   });
 }

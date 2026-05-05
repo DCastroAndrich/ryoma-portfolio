@@ -94,6 +94,9 @@ import Modal from "../components/Modal.astro";
 				}
 
 				function closeModal(modal: HTMLElement, options: {restoreFocus?: boolean}= {}) {
+					if (modal.id === "modal-process"){
+						document.dispatchEvent(new Event("process:reset"))
+					}
 					const {restoreFocus = true} = options;
 
 					modal.classList.remove("is-open");
@@ -204,7 +207,7 @@ import Modal from "../components/Modal.astro";
 				document.querySelectorAll<HTMLElement>("[data-modal]").forEach((modal) => {
 					
 					modal.addEventListener("click", (e) => {
-						if (e.target === modal) closeModal(modal);
+						if (e.target === modal) closeModal(modal, {restoreFocus: false});
 					});
 				});
 

@@ -39,18 +39,30 @@ import Modal from "../Modal.astro";
 
         <!-- navegacion -->
          <div class="modal-process-nav">
-            <button class="process-nav-btn" id="process-prev" type="button">
-                ← Paso anterior
+            
+            <!-- prev -->
+            <button class="process-nav-btn process-nav-btn-prev" id="process-prev" type="button">
+                <span class="process-nav-icon" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                </span>
+                Paso anterior
             </button>
-
+            <!-- progess -->
             <div class="process-nav-progress">
                 <span id="process-current"></span>
-                /
+                <span class="process-nav-separator">/</span>
                 <span id="process-total"></span>
             </div>
-
-            <button class="process-nav-btn" id="process-next" type="button">
-                Siguiente paso →
+            <!-- next -->
+            <button class="process-nav-btn process-nav-btn-next" id="process-next" type="button">
+                Paso siguiente
+                <span class="process-nav-icon" aria-hidden="true">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </span>
             </button>
 
          </div>
