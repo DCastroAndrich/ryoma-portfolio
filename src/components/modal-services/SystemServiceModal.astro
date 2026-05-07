@@ -1,4 +1,5 @@
 ---
+import Button from "../Button";
 import Modal from "../Modal.astro";
 ---
 
@@ -112,12 +113,12 @@ import Modal from "../Modal.astro";
           
           <!-- footer -->
            <div class="modal-case-footer">
-             <a href="#contact" class="btn btn-primary btn-sm" data-modal-close data-scroll-target="contact">
+             <Button href="#contact" variant="primary" size="sm" data-modal-close data-scroll-target="contact">
                 INICIAR PROYECTO
-            </a>
-            <a href="#services" class="btn btn-outline btn-sm" data-modal-close data-scroll-target="services">
+            </Button>
+            <Button href="#services" variant="outline" size="sm" data-modal-close data-scroll-target="services">
                 VER OTROS SERVICIOS
-            </a>
+            </Button>
 
            </div>
 
