@@ -10,11 +10,9 @@ interface Props {
     description: string;
     bullets: string[];
     techIcons: TechIcon[];
-    image?: string;
-    imageAlt?: string;
     screenshot?: string;
     screenshotAlt?: string;
-    status: "web" | "mobile" | "en-proceso" | "finalizado";
+    status: "web" | "mobile" | "en-proceso" | "completado";
     statusLabel: string;
     caseHref: string;
     modalId?: string;
@@ -26,8 +24,6 @@ const {
     description,
     bullets,
     techIcons,
-    image,
-    imageAlt = "",
     screenshot,
     screenshotAlt = "Vista previa del proyecto",
     status,
@@ -35,7 +31,61 @@ const {
     caseHref = "#",
     modalId,
 } = Astro.props
+
+const badgeClasses: Record<Props["status"], string> = {
+    web: "text-cyan border-cyan/30 bgcyan/10",
+    mobile: "text-primary border-primary/30 bg-primary/10",
+    "en-proceso": "text-warning border-warning/30 bg-warning/10",
+    completado: "text-cyan border-cyan/30 bgcyan/10",
+}
 ---
+<article class:list={[
+    "relative overflow-hidden rounded-4xl border border-white/10 bg-white/3 backdrop-blur-sm",
+    "shadow-[0_0_50px_rgba(0,0,0,0.15)]"
+]}
+>
+    <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] ">
+        <!-- izquierda -->
+         <div class="flex flex-col p-6 md:p-8 lg:p-10 ">
+            <span class:list={["project-card-badge", badgeClasses[status]]} >
+                {statusLabel}
+            </span>
+
+            <div class="mt-4 flex flex-col gap-2">
+                <h3 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold tracking-heading-md leading-tight text-text-primary">
+                    {title}
+                </h3>
+                <p class="font-body text-base md:text-lg font-semibold tracking-subtitle leading-tight text-text-muted">
+                    {subtitle}
+                </p>
+            </div>
+
+            <div class="mt-6 flex flex-col gap-4">
+                <p class="font-body text-base md:text-[1.05rem] font-light leading-relaxed text-text-primary/90 max-w-xl">
+                    {description}
+                </p>
+
+                <ul class="flex flex-col gap-3 text-sm md:text-base text-text-primary/90">
+                    {bullets.map((bullet)=>(
+                        <li class="project-card-bullet">{bullet} </li>
+                    ))}
+                </ul>
+            </div>
+
+            <div class="mt-6 flex flex-wrap items-center gap-3" aria-label="Tecnologías utilizadas">
+                {techIcons.map(({icon, name}, index)=>(
+                    <>
+                        <span class="project-card-tech-icon" set:html={icon} aria-label={name} title={name} />
+                        {index < techIcons.length - 1 && <span class="project-card-tech-dot" aria-hidden="true"/>}
+                    </>
+                ))}
+            </div>
+
+         </div>
+
+    </div>
+
+</article>
 
 <article class={`featured-card featured-card-${status}`} >
 
