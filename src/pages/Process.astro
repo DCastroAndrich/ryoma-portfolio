@@ -1,6 +1,7 @@
 ---
 import Layout from "../layout/Layout.astro";
 import ProcessIcon from "../components/ProcessIcon.tsx";
+import Button from "../components/Button";
 
 import ProcessModal from "../components/modal-process/ProcessModal.astro";
 
@@ -59,73 +60,74 @@ const steps = [
         caseHref: "#"
     },
 ]
-
 ---
 
 <Layout>
-    <section id="process" class="flex flex-col items-start justify-center h-auto px-10 pt-10 max-w-7xl gap-24 pb-18">
-        <!-- titulo -->
-        <div class="w-full h-auto gap-7.5 flex flex-col items-center justify-center text-heading  ">
-            <h2 class="text-4xl font-bold font-heading tracking-heading-lg leading-heading-lg">
-                Proceso de trabajo
-            </h2>
-            <p class="text-lg font-light font-body tracking-subtitle leading-subtitle">Un método claro para minimizar riesgo, maximizar impacto y entregar valor desde el primer día.</p>
-        </div>
-        
-        <!-- Timeline -->
-        <div class="process-timeline">
-            
-            {steps.map((step, index) => (
-                <div class="process-step">
+    <section id="process" class="py-16 md:py-24" >
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12 md:gap-16">
+            <header class="text-center max-w-2xl mx-auto flex flex-col gap-4">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-heading-lg leading-heading-lg">
+                    Proceso de trabajo
+                </h2>
+                <p class="font-body text-base md:text-lg font-light tracking-subtitle leading-subtitle">
+                    Un método claro para minimizar riesgo, maximizar impacto y entregar valor desde el primer día.
+                </p>
+            </header>
 
-                    {/* Marcador */}
-                    <div class="process-marker">
-                        <span class="process-dot"/>
-                        
-                            <div class="process-line" aria-hidden="true" />
-                        
-                    </div>
+            <div class="grid grid-cols-1 gap-6 md:gap-8">
+                {steps.map((step, index)=>(
+                    <article class="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/3 p-6 md:p-8 flex flex-col gap-5">
+                        <div class="flex items-start gap-4">
+                            <span class="inline-flex shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/4 p-3">
+                                <ProcessIcon
+                                name={step.icon}
+                                size={28}
+                                strokeWidth={1.5}
+                                className="process-icon"
+                                />
+                            </span>
 
-                    {/* Card paso */}
-                    <div class="process-card">
+                            <div class="flex-1 flex flex-col gap-2">
+                                <span class="inline-flex w-fit rounded-full border border-white/10 bg-white/4 px-3 py-1 text-[0.72rem] font-heading font-semibold tracking-[0.08em] uppercase text-text-primary/80">
+                                    Paso {step.number}
+                                </span>
 
-                        {/* badge */}
-                        <span class="process-badge">Paso {step.number} </span>
-                        
-                        {/* icono y titulo */}
-                        <div class="process-heading">
-                            <ProcessIcon name={step.icon} size={28} strokeWidth={1.5} className="process-icon" client:load />
-                            <h3 class="process-title">{step.title} </h3>
+                                <h3 class="font-heading text-2xl md:text-3xl font-bold tracking-heading-md leading-tight">
+                                    {step.title}
+                                </h3>
+
+                                <p class="font-body text-base md:text-lg font-light leading-relaxed text-text-primary/90">
+                                    {step.description}
+                                </p>
+                            </div>
                         </div>
-                            
-                        {/* descripcion */}
-                        <p class="process-description">{step.description} </p>
 
-                        {/* bullets */}
-                        <ul class="process-bullets">
+                        <ul class="flex flex-col gap-3 pl-1 text-sm md:text-base text-text-primary/90">
                             {step.bullets.map((bullet)=>(
-                                <li class="process-bullet" >• {bullet} </li>
+                                <li class="relative pl-4 before:content-[''] before:absolute before:left-0 before:top-[0.65rem] before:h-1.5 before:w-1.5 before:rounded-full before:bg-linear-to-r before:from-cyan before:to-magenta ">
+                                    {bullet}
+                                </li>
                             ))}
                         </ul>
 
-                        {/* entregable */}
-                        <p class="process-deliverable">
-                            <strong>Entreglable: </strong> {step.deliverable}
+                        <p class="font-body text-sm md:text-base text-text-primary/80">
+                            <strong>Entregable:</strong> {step.deliverable}
                         </p>
-
-                        {/* link */}
-                        <a class="btn-link btn-link-process" href="#" data-process-open={index} >
-                            Ver como la aplicamos
-                            <span class="btn-link-icon" aria-hidden="true">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                                </svg>
-                            </span>
-                        </a>
-                    </div>
-                </div>
-            ))}            
-        </div>
-        <ProcessModal/>
-    </section>
-</Layout>
+                        <div class="pt-2">
+                            <Button
+                                type="button"
+                                variant="link"
+                                size="sm"
+                                className="w-fit process-open-btn"
+                                data-process-open={index}
+                            >
+                                Ver como la aplicamos
+                            </Button>
+                        </div>
+                    </article>
+                ))}
+            </div>
+            <ProcessModal/>
+        </div>        
+    <section/>
+<Layout/>

@@ -1,5 +1,6 @@
 ---
 import Modal from "../../components/Modal.astro";
+import Button from "../Button";
 
 import greenGlowImg from "../../assets/projects/GreenGlow.jpg"
 import greenGlowIIImg from "../../assets/projects/GreenGlowII.jpg"
@@ -118,22 +119,24 @@ const techStack = [
           </div>
           <!-- footer -->
            <div class="modal-case-footer">
-             <a
+             <Button
              href="https://greenglow.com.ar"
              target="_blank"
              rel="noopener noreferrer"
-             class="btn btn-primary btn-sm"
+             variant="primary"
+             size="sm"
              >
                  VISITAR SITIO
-             </a>
+             </Button>
              
-             <a
+             <Button
              href="#contact"
-             class="btn btn-outline btn-sm"
+             variant="outline"
+             size="sm"
              data-modal-close
              >
                  HABLEMOS
-             </a>
+             </Button>
  
            </div>
 
