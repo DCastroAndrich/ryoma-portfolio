@@ -2935,4 +2935,58 @@
   .projects-carousel::-webkit-scrollbar {
     display: none;
   }
+
+  #site-navbar {
+    transition:
+      background-color 240ms ease,
+      backdrop-filter 240ms ease,
+      box-shadow 240ms ease;
+  }
+
+  #site-navbar.scrolled {
+    background: rgba(8, 8, 10, 0.72);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.24);
+  }
+
+  #site-navbar .mobile-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 240ms ease;
+  }
+
+  #site-navbar.menu-open #mobile-menu {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #site-navbar.menu-open .mobile-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #site-navbar #mobile-menu {
+    transform: translateY(-6px);
+    transition:
+      opacity 240ms ease,
+      transform 240ms ease;
+  }
+
+  #site-navbar.menu-open #mobile-menu {
+    transform: translateY(0);
+  }
+
+  #site-navbar .nav-link {
+    transition:
+      color 200ms ease,
+      background-color 200ms ease,
+      transform 200ms ease;
+  }
+
+  #site-navbar .nav-link:hover {
+    color: var(--color-cyan);
+  }
 }
