@@ -312,7 +312,7 @@ export default function ContactForm() {
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="flex flex-col gap-6 rounded-[28px] border border-white/10 bg-white/3 p-6 md:gap-8 md:p-8"
+      className="w-full min-w-0 rounded-[28px] border border-white/10 bg-white/3 p-6 md:p-8 flex flex-col gap-6 md:gap-8"
     >
       {/* nombre + email */}
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -500,9 +500,10 @@ export default function ContactForm() {
           type="submit"
           variant="primary"
           size="lg"
+          fullWidth
           disabled={isSubmitting}
           aria-busy={isSubmitting}
-          className="w-fit max-w-full justify-center"
+
         >
           {isSubmitting ? (
             <>

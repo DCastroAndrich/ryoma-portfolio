@@ -125,7 +125,13 @@ const steps = [
                       <strong>Entregable:</strong> {step.deliverable}
                     </p>
                     <div class="pt-1">
-                      <Button type="button" variant="link" size="sm" data-process-open={index}>
+                      <Button
+                        fullWidth
+                        type="button"
+                        variant="link"
+                        size="sm"
+                        data-process-open={index}
+                      >
                         Ver como la aplicamos
                       </Button>
                     </div>
@@ -139,7 +145,5 @@ const steps = [
 
       <ProcessModal />
     </div>
-    <section></section>
-    <Layout />
-  </section></Layout
->
+  </section>
+</Layout>

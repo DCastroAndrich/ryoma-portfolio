@@ -95,11 +95,11 @@ const badgeClasses: Record<Props["status"], string> = {
       <div class="mt-auto pt-8">
         {
           modalId ? (
-            <Button type="button" data-modal-open={modalId} variant="outline" size="sm">
+            <Button fullWidth type="button" data-modal-open={modalId} variant="outline" size="sm">
               VER CASO →
             </Button>
           ) : (
-            <Button href={caseHref} variant="ghost" size="sm">
+            <Button fullWidth href={caseHref} variant="ghost" size="sm">
               VER CASO →
             </Button>
           )

@@ -1,23 +1,23 @@
-import type { ReactNode, ButtonHTMLAttributes, AnchorHTMLAttributes } from "react";
-
-/* types */
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react"
 
 type ButtonVariant = "primary" | "outline" | "ghost" | "link";
-type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
-type ButtonWeight = 400 | 500 | 600 | 700;
+type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl"
+type ButtonWeight = 400 | 500 | 600 | 700
 
 interface BaseProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
   weight?: ButtonWeight;
-  className?: string;
   fullWidth?: boolean;
+  className?: string;
   children: ReactNode;
-  disabled?: boolean;
+  disabled?: boolean
 }
 
 type AnchorProps = BaseProps &
-  Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "children" | "className" | "href"> & {
+  Omit<AnchorHTMLAttributes<HTMLAnchorElement>,
+    "children" | "className" | "href"
+  > & {
     href: string;
     type?: never;
   };
@@ -27,7 +27,7 @@ type NativeButtonProps = BaseProps &
     href?: never;
   };
 
-type Props = AnchorProps | NativeButtonProps;
+type Props = AnchorProps | NativeButtonProps
 
 const baseClasses = `
 btn
@@ -44,41 +44,44 @@ const sizeClasses: Record<ButtonSize, string> = {
   sm: "px-5 py-2.5 rounded-xl text-sm",
   md: "px-6 py-3 rounded-2xl text-sm md:text-base",
   lg: "px-8 py-4 rounded-[18px] text-lg",
-  xl: "px-10 py-5 rounded-[20px] text-xl",
+  xl: "px-10 py-5 rounded-[20px] text-xl"
 };
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary: "btn-primary",
   outline: "btn-outline",
   ghost: "btn-ghost",
-  link: `btn-link rounded-none p-0 font-body tracking-[0.01em]`,
+  link: "btn-link rounded-none p-0 font-body trancking-[0.01em]"
 };
 
-const weightClasses = {
+const weightClasses: Record<ButtonWeight, string> = {
   400: "font-normal",
   500: "font-medium",
   600: "font-semibold",
-  700: "font-bold",
+  700: "font-bold"
 };
-const widthClass = fullWidth ? "w-full sm:w-auto" : "";
 
 export default function Button(props: Props) {
   const {
     variant = "primary",
     size = "md",
     weight = 600,
+    fullWidth = false,
     className = "",
     children,
     disabled = false,
   } = props;
+
+  const widthClass = fullWidth ? "w-full sm: w-auto" : "";
 
   const classes = [
     baseClasses,
     sizeClasses[size],
     variantClasses[variant],
     weightClasses[weight],
+    widthClass,
     disabled ? "opacity-45 pointer-events-none" : "",
-    className,
+    className
   ]
     .filter(Boolean)
     .join(" ");
@@ -97,14 +100,19 @@ export default function Button(props: Props) {
       >
         {children}
       </a>
-    );
+    )
   }
 
-  const { type = "button", ...buttonProps } = props as NativeButtonProps;
+  const { type = "button", fullWidth: _fullWidht, ...buttonProps } = props as NativeButtonProps;
 
   return (
-    <button type={type} disabled={disabled} className={classes} {...buttonProps}>
+    <button
+      type={type}
+      disabled={disabled}
+      className={classes}
+      {...buttonProps}
+    >
       {children}
     </button>
-  );
+  )
 }
