@@ -502,6 +502,7 @@ export default function ContactForm() {
           size="lg"
           disabled={isSubmitting}
           aria-busy={isSubmitting}
+          className="w-fit max-w-full justify-center"
         >
           {isSubmitting ? (
             <>

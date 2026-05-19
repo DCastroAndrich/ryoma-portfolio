@@ -35,14 +35,15 @@ import logoIcon from "../assets/logo-o.svg?raw";
       </ul>
 
       <!-- Toogle y CTA -->
-      <div class="flex items-center gap-4">
+      <div class="hidden items-center gap-4 md:flex">
         <!-- toogle -->
         <ThemeToggle client:load className="theme-toogle" />
 
         <!-- CTA -->
-        <Button href="#contact" variant="outline" size="xs"> Hablemos </Button>
-
-        <!-- Menu hamburguesa -->
+        <Button href="#contact" variant="outline" size="sm"> Hablemos </Button>
+      </div>
+      <!-- Menu hamburguesa -->
+      <div class="flex items-center gap-2 md:hidden">
         <button
           id="nav-toggle"
           aria-controls="mobile-menu"
@@ -63,7 +64,7 @@ import logoIcon from "../assets/logo-o.svg?raw";
     </div>
   </div>
 
-  <!-- Meun movil -->
+  <!-- Menu movil -->
 
   <div
     id="mobile-menu"
@@ -73,7 +74,7 @@ import logoIcon from "../assets/logo-o.svg?raw";
     aria-hidden="true"
   >
     <div
-      class="mx-auto flex max-h-[calc(100vh-64px)] flex-col gap-4 overflow-y-auto px-6 py-6 sm:px-8"
+      class="flex max-h-[calc(100dvh-64px)] w-full flex-col gap-4 overflow-y-auto px-4 py-6 sm:px-6"
     >
       <div class="flex items-center justify-between">
         <!-- Logo -->

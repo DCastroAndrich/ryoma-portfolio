@@ -11,6 +11,7 @@ interface BaseProps {
   size?: ButtonSize;
   weight?: ButtonWeight;
   className?: string;
+  fullWidth?: boolean;
   children: ReactNode;
   disabled?: boolean;
 }
@@ -33,7 +34,6 @@ btn
 inline-flex items-center justify-center gap-2
 font-heading
 tracking-[0.06em]
-whitespace-nowrap
 select-none
 transition-all
 duration-300
@@ -60,6 +60,7 @@ const weightClasses = {
   600: "font-semibold",
   700: "font-bold",
 };
+const widthClass = fullWidth ? "w-full sm:w-auto" : "";
 
 export default function Button(props: Props) {
   const {
@@ -102,7 +103,7 @@ export default function Button(props: Props) {
   const { type = "button", ...buttonProps } = props as NativeButtonProps;
 
   return (
-    <button type="button" disabled={disabled} className={classes} {...props}>
+    <button type={type} disabled={disabled} className={classes} {...buttonProps}>
       {children}
     </button>
   );
