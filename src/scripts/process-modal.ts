@@ -13,8 +13,7 @@ const processCases: ProcessCase[] = [
     badge: "Paso 01",
     title: "Descubrimiento",
     intro: "Entender el problema real antes de diseñar cualquier solución.",
-    problem:
-      "El cleinte tenía ventas fragmentadas entre canales sin flujo claro.",
+    problem: "El cleinte tenía ventas fragmentadas entre canales sin flujo claro.",
     actions: [
       "Entrevistas con stakeholders",
       "Análisis de flujo actual",
@@ -41,11 +40,7 @@ const processCases: ProcessCase[] = [
     title: "Desarrollo & Deploy",
     intro: "Convertir el diseño en una herramienta real.",
     problem: "Necesidad de performance y escalabilidad.",
-    actions: [
-      "Arquitectura modular",
-      "Componentes reutilizables",
-      "Deploy controlado",
-    ],
+    actions: ["Arquitectura modular", "Componentes reutilizables", "Deploy controlado"],
     decision: "Priorizar performance sobre complejidad innecesaria.",
     impact: "Sitio rápido, estable y preparado para crecer.",
   },
@@ -54,17 +49,13 @@ const processCases: ProcessCase[] = [
     title: "Mantenimiento & Escalado",
     intro: "Acompañar el crecimiento del producto.",
     problem: "Los productos digitales quedan obsoletos sin evolución.",
-    actions: [
-      "Documentación del sistema",
-      "Monitoreo de performance",
-      "Plan de mejoras",
-    ],
+    actions: ["Documentación del sistema", "Monitoreo de performance", "Plan de mejoras"],
     decision: "Evolución continua en lugar de rediseños completos.",
     impact: "Sistema que crece sin romperse.",
   },
 ];
 
-let currentStep = 0;
+let currentStep = -1;
 let direction: "next" | "prev" = "next";
 
 const modal = document.getElementById("modal-process");
@@ -78,25 +69,14 @@ function renderStep(index: number) {
   modal?.classList.add("is-switching");
 
   setTimeout(() => {
-    (document.getElementById("process-step-badge") as HTMLElement).textContent =
-      data.badge;
-    (document.getElementById("process-step-title") as HTMLElement).textContent =
-      data.title;
-    (document.getElementById("process-step-intro") as HTMLElement).textContent =
-      data.intro;
-    (
-      document.getElementById("process-step-problem") as HTMLElement
-    ).textContent = data.problem;
-    (
-      document.getElementById("process-step-decision") as HTMLElement
-    ).textContent = data.decision;
-    (
-      document.getElementById("process-step-impact") as HTMLElement
-    ).textContent = data.impact;
+    (document.getElementById("process-step-badge") as HTMLElement).textContent = data.badge;
+    (document.getElementById("process-step-title") as HTMLElement).textContent = data.title;
+    (document.getElementById("process-step-intro") as HTMLElement).textContent = data.intro;
+    (document.getElementById("process-step-problem") as HTMLElement).textContent = data.problem;
+    (document.getElementById("process-step-decision") as HTMLElement).textContent = data.decision;
+    (document.getElementById("process-step-impact") as HTMLElement).textContent = data.impact;
 
-    const actionList = document.getElementById(
-      "process-step-actions",
-    ) as HTMLUListElement | null;
+    const actionList = document.getElementById("process-step-actions") as HTMLUListElement | null;
 
     if (!actionList) return;
 
@@ -107,10 +87,10 @@ function renderStep(index: number) {
       li.textContent = item;
       actionList.appendChild(li);
     });
-    (document.getElementById("process-current") as HTMLElement).textContent =
-      String(index + 1);
-    (document.getElementById("process-total") as HTMLElement).textContent =
-      String(processCases.length);
+    (document.getElementById("process-current") as HTMLElement).textContent = String(index + 1);
+    (document.getElementById("process-total") as HTMLElement).textContent = String(
+      processCases.length,
+    );
 
     updateNav();
 

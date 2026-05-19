@@ -1,240 +1,277 @@
 ---
-import ThemeToggle from "./ThemeToggle"
-import Button from "./Button"
+import ThemeToggle from "./ThemeToggle";
+import Button from "./Button";
 
-import logoIcon from "../assets/logo-o.svg?raw"
+import logoIcon from "../assets/logo-o.svg?raw";
 ---
-<nav id="site-navbar" class="fixed top-0 left-0 w-full z-50" role="navigation" aria-label="Barra de navegación">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between h-16 md:h-20">
-            <!-- logos -->
-             <a href="/" class="flex items-center gap-3 z-30" aria-label="Ir al inicio">
-                <span class="block h-6 w-auto" style="aspect-ratio: 278 / 200;" set:html={logoIcon} aria-hidden="true" />
-            </a>
 
-             <!-- Desktop links -->
-              <ul class="hidden md:flex items-center gap-8 text-sm font-heading" id="nav-container">
-                <span id="nav-pill"/>
+<nav
+  id="site-navbar"
+  class="fixed top-0 left-0 z-50 w-full"
+  role="navigation"
+  aria-label="Barra de navegación"
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-between md:h-20">
+      <!-- logos -->
+      <a href="/" class="z-30 flex items-center gap-3" aria-label="Ir al inicio">
+        <span
+          class="block h-6 w-auto"
+          style="aspect-ratio: 278 / 200;"
+          set:html={logoIcon}
+          aria-hidden="true"
+        />
+      </a>
 
-                <li><a href="#about" class="nav-link group relative px-1 py-2">Acerca de mí</a></li>
-                <li><a href="#services" class="nav-link group relative px-1 py-2">Servicios</a></li>
-                <li><a href="#projects" class="nav-link group relative px-1 py-2">Proyectos</a></li>
-                <li><a href="#process" class="nav-link group relative px-1 py-2">Proceso</a></li>
-                <li><a href="#contact" class="nav-link group relative px-1 py-2">Contacto</a></li>
-              </ul>
+      <!-- Desktop links -->
+      <ul class="font-heading hidden items-center gap-8 text-sm md:flex" id="nav-container">
+        <span id="nav-pill"></span>
 
-              <!-- Toogle y CTA -->
-               <div class="flex items-center gap-4">
-                <!-- toogle -->
-                <ThemeToggle client:load className="theme-toogle" />
-                
-                <!-- CTA -->
-                 <Button href="#contact" variant="outline" size="xs" >
-                    Hablemos
-                 </Button>
+        <li><a href="#about" class="nav-link group relative px-1 py-2">Acerca de mí</a></li>
+        <li><a href="#services" class="nav-link group relative px-1 py-2">Servicios</a></li>
+        <li><a href="#projects" class="nav-link group relative px-1 py-2">Proyectos</a></li>
+        <li><a href="#process" class="nav-link group relative px-1 py-2">Proceso</a></li>
+        <li><a href="#contact" class="nav-link group relative px-1 py-2">Contacto</a></li>
+      </ul>
 
-                 <!-- Menu hamburguesa -->
-                  <button id="nav-toggle" aria-controls="mobile-menu" aria-expanded="false" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2" type="button">
-                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" aria-hidden>
-                        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </button>
-               </div>
+      <!-- Toogle y CTA -->
+      <div class="flex items-center gap-4">
+        <!-- toogle -->
+        <ThemeToggle client:load className="theme-toogle" />
+
+        <!-- CTA -->
+        <Button href="#contact" variant="outline" size="xs"> Hablemos </Button>
+
+        <!-- Menu hamburguesa -->
+        <button
+          id="nav-toggle"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 md:hidden"
+          type="button"
+        >
+          <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path
+              d="M4 7h16M4 12h16M4 17h16"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Meun movil -->
+
+  <div
+    id="mobile-menu"
+    class="mobile-menu bg-bg/95 pointer-events-none fixed inset-0 z-40 opacity-0 backdrop-blur-lg transition-all duration-300 md:hidden"
+    role="menu"
+    aria-labelledby="nav-toggle"
+    aria-hidden="true"
+  >
+    <div
+      class="mx-auto flex max-h-[calc(100vh-64px)] flex-col gap-4 overflow-y-auto px-6 py-6 sm:px-8"
+    >
+      <div class="flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/">
+          <span
+            class="block h-6 w-auto"
+            style="aspect-ratio: 278 / 200;"
+            set:html={logoIcon}
+            aria-hidden="true"
+          />
+        </a>
+        <button
+          id="nav-close"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-lg focus:outline-none"
+          aria-label="Cerrar menú"
+        >
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path
+              d="M6 6l12 12M6 18L18 6"
+              stroke="currentColor"
+              stroke-width="1.4"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </div>
+      <nav class="flex flex-col gap-2" aria-label="Menú móvil">
+        <a href="#about" class="nav-link block rounded-md px-3 py-3">Acerca de mí</a>
+        <a href="#services" class="nav-link block rounded-md px-3 py-3">Servicios</a>
+        <a href="#projects" class="nav-link block rounded-md px-3 py-3">Proyectos</a>
+        <a href="#results" class="nav-link block rounded-md px-3 py-3">Resultados</a>
+        <a href="#process" class="nav-link block rounded-md px-3 py-3">Proceso</a>
+        <a href="#contact" class="nav-link block rounded-md px-3 py-3">Contacto</a>
+      </nav>
+
+      <div class="mt-2 flex flex-col gap-3 border-t border-[rgba(255,255,255,0.04)] pt-2">
+        <!-- CTA fullWidth -->
+        <Button href="#contact" variant="outline" size="xs"> Hablemos </Button>
+        <!-- Theme toggle -->
+        <div class="flex items-center justify-start">
+          <ThemeToggle client:load className="theme-toggle" />
         </div>
+      </div>
     </div>
 
-    <!-- Meun movil -->
+    <!-- backdrop (click para cerrar) -->
+    <div id="mobile-backdrop" class="mobile-backdrop md:hidden" aria-hidden="true"></div>
+  </div>
 
-    <div id="mobile-menu" class="fixed inset-0 z-40 bg-bg/95 backdrop-blur-lg opacity-0 pointer-events-none transition-all duration-300 md:hidden" role="menu" aria-labelledby="nav-toggle" aria-hidden="true" >
-        <div class="max-w-300 mx-auto px-6 sm:px-8 py-6 flex flex-col gap-4">
-            <div class="flex items-center justify-between">
-                <!-- Logo -->
-                <a href="/" >
-                    <span class="block h-6 w-auto" style="aspect-ratio: 278 / 200;" set:html={logoIcon} aria-hidden="true"/>
-                    
-                 </a>
-                 <button id="nav-close" class="inline-flex items-center justify-center w-10 h-10 rounded-lg focus:outline-none" aria-label="Cerrar menú">
-                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" aria-hidden>
-                        <path d="M6 6l12 12M6 18L18 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                 </button>
-             </div>
-             <nav class="flex flex-col gap-2" aria-label="Menú móvil">
-                <a href="#about" class="nav-link block px-3 py-3 rounded-md">Acerca de mí</a>
-                <a href="#services" class="nav-link block px-3 py-3 rounded-md">Servicios</a>
-                <a href="#projects" class="nav-link block px-3 py-3 rounded-md">Proyectos</a>
-                <a href="#results" class="nav-link block px-3 py-3 rounded-md">Resultados</a>
-                <a href="#process" class="nav-link block px-3 py-3 rounded-md">Proceso</a>
-                <a href="#contact" class="nav-link block px-3 py-3 rounded-md">Contacto</a>
-             </nav>
-             
-             <div class="pt-2 border-t border-[rgba(255,255,255,0.04)] mt-2 flex flex-col gap-3">
-                <!-- CTA fullWidth -->
-                 <Button client:load href="#contact" className="w-full justify-center" variant="outline">
-                    Hablemos    
-                </Button> 
-                 <!-- Theme toggle -->
-                  <div class="flex items-center justify-start">
-                    <ThemeToggle client:load className="theme-toggle" />
-                  </div>
-             </div>
-        </div>
+  <!-- script del cliente: controla el scrolled y el menu movil -->
 
-        <!-- backdrop (click para cerrar) -->
-         <div id="mobile-backdrop" class="mobile-backdrop md:hidden" aria-hidden="true"></div>
-    </div>
+  <script type="module">
+    (function () {
+      const nav = document.getElementById("site-navbar");
+      if (!nav) return;
 
-    <!-- script del cliente: controla el scrolled y el menu movil -->
+      const toggleBtn = document.getElementById("nav-toggle");
+      const closeBtn = document.getElementById("nav-close");
+      const mobileMenu = document.getElementById("mobile-menu");
+      const mobileBackdrop = document.getElementById("mobile-backdrop");
+      const threshold = 16;
 
-    <script type="module">
-        (function(){
-            const nav = document.getElementById("site-navbar");
-            if(!nav) return;
+      const navContainer = document.getElementById("nav-container");
+      const pill = document.getElementById("nav-pill");
+      const navLinks = navContainer?.querySelectorAll(".nav-link") || [];
+      const sections = document.querySelectorAll("section[id]");
 
-            const toggleBtn = document.getElementById("nav-toggle")
-            const closeBtn = document.getElementById("nav-close")
-            const mobileMenu = document.getElementById("mobile-menu")
-            const mobileBackdrop = document.getElementById("mobile-backdrop")
-            const threshold = 16;
+      let activeLink = null;
 
-            const navContainer = document.getElementById("nav-container");
-            const pill = document.getElementById("nav-pill");
-            const navLinks = navContainer?.querySelectorAll(".nav-link") || [];
-            const sections = document.querySelectorAll("section[id]");
+      const movePill = (el) => {
+        if (!el || !pill || !navContainer) return;
+        const containerRect = navContainer.getBoundingClientRect();
+        const rect = el.getBoundingClientRect();
 
-            let activeLink = null;
+        const x = rect.left - containerRect.left;
 
+        const currentX = pill._x || 0;
+        const distance = Math.abs(x - currentX);
+        const duration = Math.min(Math.max(distance * 0.4, 220), 420);
 
+        pill.style.transitionDuration = `${duration}ms`;
+        pill.style.width = `${rect.width}px`;
+        pill.style.transform = `translateX(${x}px)`;
+        pill.style.opacity = "1";
 
-            const movePill = (el) =>{
-                if (!el || !pill || !navContainer) return
-                const containerRect = navContainer.getBoundingClientRect()
-                const rect = el.getBoundingClientRect();
-                
-                const x = rect.left - containerRect.left
+        pill._x = x;
+      };
+      const hidePill = () => {
+        if (!pill) return;
+        pill.style.opacity = "0";
+      };
 
-                const currentX = pill._x || 0;
-                const distance = Math.abs(x - currentX);
-                const duration = Math.min(Math.max(distance * 0.4, 220), 420)
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute("id");
 
-                pill.style.transitionDuration = `${duration}ms`;
-                pill.style.width = `${rect.width}px`
-                pill.style.transform = `translateX(${x}px)`
-                pill.style.opacity = "1";
+              const link = [...navLinks].find((l) => l.getAttribute("href") === `#${id}`);
 
-                pill._x = x;
-            }
-            const hidePill = () =>{
-                if(!pill)return;
-                pill.style.opacity = "0";
-            }
+              if (link) {
+                activeLink = link;
+                movePill(link);
 
+                navLinks.forEach((l) => l.classList.remove("active"));
+                link.classList.add("active");
 
-            const observer = new IntersectionObserver((entries)=>{
-                entries.forEach((entry) =>{
-                    if (entry.isIntersecting){
-                        const id = entry.target.getAttribute("id");
-                        
-                        const link = [...navLinks].find((l)=> l.getAttribute("href") === `#${id}`);
-
-                        if(link){
-                            activeLink = link;
-                            movePill(link);
-
-                            navLinks.forEach((l)=> l.classList.remove("active"))
-                            link.classList.add("active")
-
-                            document.querySelectorAll(".mobile-menu .nav-link").forEach((l)=>{
-                                l.classList.toggle("active", l.getAttribute("href") === `#${id}`)
-                            })
-                        }
-                    }
+                document.querySelectorAll(".mobile-menu .nav-link").forEach((l) => {
+                  l.classList.toggle("active", l.getAttribute("href") === `#${id}`);
                 });
-            },{
-                rootMargin: "-45% 0px -50% 0px",
-                threshold: 0,
-            });
-            sections.forEach((section)=> observer.observe(section));
-
-            const handleScroll = () =>{
-                const y = window.scrollY || window.pageYOffset;
-
-                if (y > threshold) nav.classList.add("scrolled");
-                else nav.classList.remove("scrolled")
-
-                if(y < 80){
-                    activeLink = null;
-                    hidePill()
-                }else if (activeLink){
-                    movePill(activeLink)
-                }
+              }
             }
+          });
+        },
+        {
+          rootMargin: "-45% 0px -50% 0px",
+          threshold: 0,
+        },
+      );
+      sections.forEach((section) => observer.observe(section));
 
-            let hoverTimeout = null;
+      const handleScroll = () => {
+        const y = window.scrollY || window.pageYOffset;
 
-            navLinks.forEach((link)=>{
-                link.addEventListener("mouseenter", ()=>{
-                    clearTimeout(hoverTimeout);
-                    hoverTimeout = setTimeout(()=>{
+        if (y > threshold) nav.classList.add("scrolled");
+        else nav.classList.remove("scrolled");
 
-                        movePill(link)
-                    }, 90)
-                })
-                link.addEventListener("mouseleave", ()=>{
-                    clearTimeout(hoverTimeout);
+        if (y < 80) {
+          activeLink = null;
+          hidePill();
+        } else if (activeLink) {
+          movePill(activeLink);
+        }
+      };
 
-                    hoverTimeout = setTimeout(()=>{
+      let hoverTimeout = null;
 
-                        if(activeLink)movePill(activeLink)
-                        else hidePill()
-                    }, 100)
-                })
-            })
+      navLinks.forEach((link) => {
+        link.addEventListener("mouseenter", () => {
+          clearTimeout(hoverTimeout);
+          hoverTimeout = setTimeout(() => {
+            movePill(link);
+          }, 90);
+        });
+        link.addEventListener("mouseleave", () => {
+          clearTimeout(hoverTimeout);
 
-            const openMenu = () => {
-                nav.classList.add("menu-open")
-                toggleBtn?.setAttribute("aria-expanded", "true");
-                mobileMenu?.setAttribute("aria-hidden", "false");
-                document.documentElement.style.overflow = "hidden";
-            };
+          hoverTimeout = setTimeout(() => {
+            if (activeLink) movePill(activeLink);
+            else hidePill();
+          }, 100);
+        });
+      });
 
-            const closeMenu = () => {
-                nav.classList.remove("menu-open");
-                toggleBtn?.setAttribute("aria-expanded", "false");
-                mobileMenu?.setAttribute("aria-hidden", "true");
-                document.documentElement.style.overflow = "";
-            }  
-            
-            const toggleMenu = () => (nav.classList.contains("menu-open") ? closeMenu() : openMenu())
+      const openMenu = () => {
+        nav.classList.add("menu-open");
+        toggleBtn?.setAttribute("aria-expanded", "true");
+        mobileMenu?.setAttribute("aria-hidden", "false");
+        document.documentElement.style.overflow = "hidden";
+      };
 
-            /* inicio scrolled state */
-            
-            handleScroll();
-            window.addEventListener("scroll", handleScroll, {passive: true})
+      const closeMenu = () => {
+        nav.classList.remove("menu-open");
+        toggleBtn?.setAttribute("aria-expanded", "false");
+        mobileMenu?.setAttribute("aria-hidden", "true");
+        document.documentElement.style.overflow = "";
+      };
 
-            /* toggle events */
+      const toggleMenu = () => (nav.classList.contains("menu-open") ? closeMenu() : openMenu());
 
-            toggleBtn?.addEventListener("click", toggleMenu);
-            closeBtn?.addEventListener("click", closeMenu);
-            mobileBackdrop?.addEventListener("click", closeMenu)
+      /* inicio scrolled state */
 
-            /* close menu luego de click on link */
+      handleScroll();
+      window.addEventListener("scroll", handleScroll, { passive: true });
 
-            mobileMenu?.querySelectorAll("a[href^='#']").forEach((a)=>{
-                a.addEventListener("click", closeMenu)
-            })
+      /* toggle events */
 
-            /* close on escape */
+      toggleBtn?.addEventListener("click", toggleMenu);
+      closeBtn?.addEventListener("click", closeMenu);
+      mobileBackdrop?.addEventListener("click", closeMenu);
 
-            window.addEventListener("keydown", (e)=>{
-                if(e.key === "Escape")closeMenu()
-            })
+      /* close menu luego de click on link */
 
-            /* close menu if resizing to desktop */
+      mobileMenu?.querySelectorAll("a[href^='#']").forEach((a) => {
+        a.addEventListener("click", closeMenu);
+      });
 
-            window.addEventListener("resize", ()=>{
-                if (window.innerWidth >= 768)closeMenu()
-            })
-        })();
-    </script>
+      /* close on escape */
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeMenu();
+      });
+
+      /* close menu if resizing to desktop */
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 768) closeMenu();
+      });
+    })();
+  </script>
 </nav>

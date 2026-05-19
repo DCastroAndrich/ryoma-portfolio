@@ -1,18 +1,18 @@
 import { defineCollection, z } from "astro:content";
 
 const about = defineCollection({
-    type: "content",
-    schema: z.object({
-        heroTitle: z.string(),
-        heroText: z.string(),
-        sections: z.array(
-            z.object({
-                title: z.string(),
-                body: z.string(),
-            })
-        )        
-    })
-})
+  type: "content",
+  schema: z.object({
+    heroTitle: z.string(),
+    heroText: z.string(),
+    sections: z.array(
+      z.object({
+        title: z.string(),
+        body: z.string(),
+      }),
+    ),
+  }),
+});
 
 /* const projects = defineCollection({
     type: "content",
@@ -25,6 +25,6 @@ const about = defineCollection({
 }) */
 
 export const collections = {
-    about,
-    /* projects */
-}
+  about,
+  /* projects */
+};

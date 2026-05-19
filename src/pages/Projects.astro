@@ -1,134 +1,135 @@
 ---
 import Layout from "../layout/Layout.astro";
 
-import greenGlowImg from "../assets/projects/GreenGlow.jpg"
-import caAutomotoresImg from "../assets/projects/CAAutomotores.png"
-import c_aImg from "../assets/projects/C&A.png"
+import greenGlowImg from "../assets/projects/GreenGlow.jpg";
+import caAutomotoresImg from "../assets/projects/CAAutomotores.png";
+import c_aImg from "../assets/projects/C&A.png";
 
 import ProjectCard from "../components/ProjectCard.astro";
 import FeaturedProjectCard from "../components/FeaturedProjectCard.astro";
 
-import astroIconRaw from "../assets/tech-icons/astro.svg?raw"
-import reactIconRaw from "../assets/tech-icons/react.svg?raw"
-import tsIconRaw from "../assets/tech-icons/typescript.svg?raw"
-import tailwindIconRaw from "../assets/tech-icons/tailwind.svg?raw"
+import astroIconRaw from "../assets/tech-icons/astro.svg?raw";
+import reactIconRaw from "../assets/tech-icons/react.svg?raw";
+import tsIconRaw from "../assets/tech-icons/typescript.svg?raw";
+import tailwindIconRaw from "../assets/tech-icons/tailwind.svg?raw";
 
 import CaseStudyGreenGlow from "../components/case-studies/CaseStudyGreenGlow.astro";
 
 const featuredTech = [
-    {icon: astroIconRaw, name: "Astro"},
-    {icon: reactIconRaw, name: "React"},
-    {icon: tsIconRaw, name: "Typescript"},
-    {icon: tailwindIconRaw, name: "TailwindCSS"},
+  { icon: astroIconRaw, name: "Astro" },
+  { icon: reactIconRaw, name: "React" },
+  { icon: tsIconRaw, name: "Typescript" },
+  { icon: tailwindIconRaw, name: "TailwindCSS" },
 ];
 
 const upcomingTech = [
-    {icon: astroIconRaw, name: "Astro"},
-    {icon: reactIconRaw, name: "React"},
-    {icon: tsIconRaw, name: "Typescript"},
-    {icon: tailwindIconRaw, name: "TailwindCSS"},
+  { icon: astroIconRaw, name: "Astro" },
+  { icon: reactIconRaw, name: "React" },
+  { icon: tsIconRaw, name: "Typescript" },
+  { icon: tailwindIconRaw, name: "TailwindCSS" },
 ];
-
-
 ---
+
 <Layout>
-    <section id="projects" class="py-16 md:py-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-16 md:gap-20">
+  <section id="projects" class="py-16 md:py-24">
+    <div class="mx-auto flex max-w-7xl flex-col gap-16 px-4 sm:px-6 md:gap-20 lg:px-8">
+      <!-- Featured -->
+      <header class="mx-auto flex max-w-2xl flex-col gap-4 text-center">
+        <h2
+          class="font-heading tracking-heading-lg leading-heading-lg text-3xl font-bold md:text-4xl"
+        >
+          Proyecto destacado
+        </h2>
+        <p class="font-body tracking-subtitle leading-subtitle text-base font-light md:text-lg">
+          Trabajo real, decisiones reales, resultados medibles.
+        </p>
+      </header>
 
-            <!-- Featured -->
-             <header class="text-center max-w-2xl mx-auto flex flex-col gap-4">
-                <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-heading-lg leading-heading-lg">
-                    Proyecto destacado
-                </h2>
-                <p class="font-body text-base md:text-lg font-light tracking-subtitle leading-subtitle">
-                    Trabajo real, decisiones reales, resultados medibles.
-                </p>
-             </header>
-             
-             <FeaturedProjectCard
-                title="GreenGlow"
-                subtitle="E-commerce de productos fitocométicos"
-                description="Plataforma enfocada en conversión y escalabilidad."
-                bullets={[
-                    "UX orientada a catálogo y compra",
-                    "Arquitectura Astro + React",
-                    "Identidad natural con base científica"
-                ]}
-                techIcons={[
-                    {icon: astroIconRaw, name: "Astro"},
-                    {icon: reactIconRaw, name: "React"},
-                    {icon: tsIconRaw, name: "Typescript"},
-                    {icon: tailwindIconRaw, name: "Tailwindcss"},
-                ]}
-                screenshot={greenGlowImg.src}
-                screenshotAlt="Logo GreenGlow"
-                status="web"
-                statusLabel="Web"
-                caseHref="greenglow.com.ar"
-                modalId="modal-greenglow"
-             />
+      <FeaturedProjectCard
+        title="GreenGlow"
+        subtitle="E-commerce de productos fitocométicos"
+        description="Plataforma enfocada en conversión y escalabilidad."
+        bullets={[
+          "UX orientada a catálogo y compra",
+          "Arquitectura Astro + React",
+          "Identidad natural con base científica",
+        ]}
+        techIcons={[
+          { icon: astroIconRaw, name: "Astro" },
+          { icon: reactIconRaw, name: "React" },
+          { icon: tsIconRaw, name: "Typescript" },
+          { icon: tailwindIconRaw, name: "Tailwindcss" },
+        ]}
+        screenshot={greenGlowImg.src}
+        screenshotAlt="Logo GreenGlow"
+        status="web"
+        statusLabel="Web"
+        caseHref="greenglow.com.ar"
+        modalId="modal-greenglow"
+      />
 
-             <!-- upcoming -->
-              <section class="flex flex-col gap-8">
-                <header class="text-center max-w-2xl mx-auto flex flex-col gap-4">
-                    <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-heading-lg leading-heading-lg">
-                        Próximos proyectos
-                    </h2>
-                    <p class="font-body text-base md:text-lg font-light tracking-subtitle leading-subtitle">
-                        Proyectos en desarrollo enfocados en resolver necesidades reales de negocio.
-                    </p>
-                </header>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <ProjectCard
-                        title="C.A. Automotores"
-                        subtitle="Taller de Electromecánica General"
-                        description="Desarrollo de una landing page orientada a mejorar la presencia digital y captar clientes locales."
-                        bullets={[
-                            "Estructura clara de servicios y contacto",
-                            "Optimización SEO local",
-                            "Diseño mobile-first"
-                        ]}
-                        techIcons={[
-                            {icon: astroIconRaw, name: "Astro"},
-                            {icon: reactIconRaw, name: "React"},
-                            {icon: tsIconRaw, name: "Typescript"},
-                            {icon: tailwindIconRaw, name: "Tailwindcss"},
-                        ]}
-                        image={caAutomotoresImg.src}
-                        imageAlt="Logo C.A. Automotores"
-                        status="en-proceso"
-                        statusLabel="En Proceso"
-                        caseHref="#caautomotores"
-                        variant="upcoming"
-                    />
+      <!-- upcoming -->
+      <section class="flex flex-col gap-8">
+        <header class="mx-auto flex max-w-2xl flex-col gap-4 text-center">
+          <h2
+            class="font-heading tracking-heading-lg leading-heading-lg text-3xl font-bold md:text-4xl"
+          >
+            Próximos proyectos
+          </h2>
+          <p class="font-body tracking-subtitle leading-subtitle text-base font-light md:text-lg">
+            Proyectos en desarrollo enfocados en resolver necesidades reales de negocio.
+          </p>
+        </header>
 
-                    <ProjectCard
-                        title="C & A"
-                        subtitle="Contabilidad & Administración de Consorcios"
-                        description="Landing institucional enfocada en transmitir confianza y profesionalizar la presencia digital"
-                        bullets={[
-                            "Jerarquía clara de servicios",
-                            "Comunicación orientada a clientes",
-                            "Diseño responsive y accesible"
-                        ]}
-                        techIcons={[
-                            {icon: astroIconRaw, name: "Astro"},
-                            {icon: reactIconRaw, name: "React"},
-                            {icon: tsIconRaw, name: "Typescript"},
-                            {icon: tailwindIconRaw, name: "Tailwindcss"},
-                        ]}
-                        image={c_aImg.src}
-                        imageAlt="Logo C & A"
-                        status="en-proceso"
-                        statusLabel="En proceso"
-                        caseHref="#c_a"
-                        variant="upcoming"
-                    />
-                </div>
-              </section>
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <ProjectCard
+            title="C.A. Automotores"
+            subtitle="Taller de Electromecánica General"
+            description="Desarrollo de una landing page orientada a mejorar la presencia digital y captar clientes locales."
+            bullets={[
+              "Estructura clara de servicios y contacto",
+              "Optimización SEO local",
+              "Diseño mobile-first",
+            ]}
+            techIcons={[
+              { icon: astroIconRaw, name: "Astro" },
+              { icon: reactIconRaw, name: "React" },
+              { icon: tsIconRaw, name: "Typescript" },
+              { icon: tailwindIconRaw, name: "Tailwindcss" },
+            ]}
+            image={caAutomotoresImg.src}
+            imageAlt="Logo C.A. Automotores"
+            status="en-proceso"
+            statusLabel="En Proceso"
+            caseHref="#caautomotores"
+            variant="upcoming"
+          />
+
+          <ProjectCard
+            title="C & A"
+            subtitle="Contabilidad & Administración de Consorcios"
+            description="Landing institucional enfocada en transmitir confianza y profesionalizar la presencia digital"
+            bullets={[
+              "Jerarquía clara de servicios",
+              "Comunicación orientada a clientes",
+              "Diseño responsive y accesible",
+            ]}
+            techIcons={[
+              { icon: astroIconRaw, name: "Astro" },
+              { icon: reactIconRaw, name: "React" },
+              { icon: tsIconRaw, name: "Typescript" },
+              { icon: tailwindIconRaw, name: "Tailwindcss" },
+            ]}
+            image={c_aImg.src}
+            imageAlt="Logo C & A"
+            status="en-proceso"
+            statusLabel="En proceso"
+            caseHref="#c_a"
+            variant="upcoming"
+          />
         </div>
-        <CaseStudyGreenGlow/>
-    </section>
-
+      </section>
+    </div>
+    <CaseStudyGreenGlow />
+  </section>
 </Layout>

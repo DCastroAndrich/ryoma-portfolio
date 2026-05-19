@@ -1,68 +1,96 @@
 ---
 import Modal from "../Modal.astro";
 import Button from "../Button";
-
 ---
+
 <Modal id="modal-process" variant="document" ariaLabel="Proceso de trabajo">
-    
-    <div class="modal-layout-document">        
-        <!-- header -->
-        <div class="modal-document-header modal-process-header">
-            <span class="modal-process-badge" id="process-step-badge" ></span>
-            <h2 class="modal-document-title modal-process-title" id="process-step-title"></h2>
-            <p class="modal-process-intro" id="process-step-intro"></p>
-        </div>
-
-        <!-- body -->
-        <div class="modal-document-body modal-process-body">
-            <div class="modal-process-block is-problem">
-                <h2>El Problema</h2>
-                <p id="process-step-problem"></p>
-            </div>
-            
-            <div class="modal-process-block is-actions">
-                <h2>Qué hicimos</h2>
-                <ul id="process-step-actions"></ul>
-            </div>
-            
-            <div class="modal-process-block is-decision">
-                <h2>Decisión clave</h2>
-                <p id="process-step-decision"></p>
-            </div>
-            
-            <div class="modal-process-block is-impact">
-                <h2>Impacto</h2>
-                <p id="process-step-impact"></p>
-            </div>
-        </div>
-
-        <!-- navegacion -->
-         <div class="modal-process-nav">
-            
-            <!-- prev -->
-            <Button id="process-prev" type="button" variant="ghost" size="sm" className="process-nav-btn process-nav-btn-prev">
-                <span class="process-nav-icon" aria-hidden="true">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
-                </span>
-                Paso anterior
-            </Button>
-            <!-- progess -->
-            <div class="process-nav-progress">
-                <span id="process-current"></span>
-                <span class="process-nav-separator">/</span>
-                <span id="process-total"></span>
-            </div>
-            <!-- next -->
-            <Button className="process-nav-btn process-nav-btn-next" id="process-next" type="button" variant="ghost" size="sm">
-                Paso siguiente
-                <span class="process-nav-icon" aria-hidden="true">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                </span>
-            </Button>
-         </div>
+  <div class="modal-layout-document">
+    <!-- header -->
+    <div class="modal-document-header modal-process-header">
+      <span class="modal-process-badge" id="process-step-badge"></span>
+      <h2 class="modal-document-title modal-process-title" id="process-step-title"></h2>
+      <p class="modal-process-intro" id="process-step-intro"></p>
     </div>
+
+    <!-- body -->
+    <div class="modal-document-body modal-process-body">
+      <div class="modal-process-block is-problem">
+        <h2>El Problema</h2>
+        <p id="process-step-problem"></p>
+      </div>
+
+      <div class="modal-process-block is-actions">
+        <h2>Qué hicimos</h2>
+        <ul id="process-step-actions"></ul>
+      </div>
+
+      <div class="modal-process-block is-decision">
+        <h2>Decisión clave</h2>
+        <p id="process-step-decision"></p>
+      </div>
+
+      <div class="modal-process-block is-impact">
+        <h2>Impacto</h2>
+        <p id="process-step-impact"></p>
+      </div>
+    </div>
+
+    <!-- navegacion -->
+    <div class="modal-process-nav">
+      <!-- prev -->
+      <Button
+        id="process-prev"
+        type="button"
+        variant="ghost"
+        size="sm"
+        className="process-nav-btn process-nav-btn-prev"
+      >
+        <span class="process-nav-icon" aria-hidden="true">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M19 12H5M12 19l-7-7 7-7"></path>
+          </svg>
+        </span>
+        Paso anterior
+      </Button>
+      <!-- progess -->
+      <div class="process-nav-progress">
+        <span id="process-current"></span>
+        <span class="process-nav-separator">/</span>
+        <span id="process-total"></span>
+      </div>
+      <!-- next -->
+      <Button
+        className="process-nav-btn process-nav-btn-next"
+        id="process-next"
+        type="button"
+        variant="ghost"
+        size="sm"
+      >
+        Paso siguiente
+        <span class="process-nav-icon" aria-hidden="true">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7"></path>
+          </svg>
+        </span>
+      </Button>
+    </div>
+  </div>
 </Modal>

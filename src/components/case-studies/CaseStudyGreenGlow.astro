@@ -2,144 +2,161 @@
 import Modal from "../../components/Modal.astro";
 import Button from "../Button";
 
-import greenGlowImg from "../../assets/projects/GreenGlow.jpg"
-import greenGlowIIImg from "../../assets/projects/GreenGlowII.jpg"
-import greenGlowIIIImg from "../../assets/projects/GreenGlowIII.jpg"
+import greenGlowImg from "../../assets/projects/GreenGlow.jpg";
+import greenGlowIIImg from "../../assets/projects/GreenGlowII.jpg";
+import greenGlowIIIImg from "../../assets/projects/GreenGlowIII.jpg";
 
 const screenshots = [
-{src: greenGlowImg.src, alt: "Vista home de Green Glow"},
-{src: greenGlowIIImg.src, alt: "Vista de producto de Green Glow"},
-{src: greenGlowIIIImg.src, alt: "Vista de categorias de Green Glow"},
-]
+  { src: greenGlowImg.src, alt: "Vista home de Green Glow" },
+  { src: greenGlowIIImg.src, alt: "Vista de producto de Green Glow" },
+  { src: greenGlowIIIImg.src, alt: "Vista de categorias de Green Glow" },
+];
 
-import astroIconRaw from "../../assets/tech-icons/astro.svg?raw"
-import reactIconRaw from "../../assets/tech-icons/react.svg?raw"
-import tsIconRaw from "../../assets/tech-icons/typescript.svg?raw"
-import tailwindIconRaw from "../../assets/tech-icons/tailwind.svg?raw"
+import astroIconRaw from "../../assets/tech-icons/astro.svg?raw";
+import reactIconRaw from "../../assets/tech-icons/react.svg?raw";
+import tsIconRaw from "../../assets/tech-icons/typescript.svg?raw";
+import tailwindIconRaw from "../../assets/tech-icons/tailwind.svg?raw";
 import TechIcon from "../../components/TechIcon";
 
 const techStack = [
-    {name: "Astro", icon: astroIconRaw},
-    {name: "React", icon: reactIconRaw},
-    {name: "Typescript", icon: tsIconRaw},
-    {name: "Tailwind", icon: tailwindIconRaw},
-
-]
+  { name: "Astro", icon: astroIconRaw },
+  { name: "React", icon: reactIconRaw },
+  { name: "Typescript", icon: tsIconRaw },
+  { name: "Tailwind", icon: tailwindIconRaw },
+];
 ---
 
-<Modal id="modal-greenglow" variant="case-study" ariaLabel="Case de estudio Green Glow" >
-    <div class="modal-layout-case-study">
-        <!-- izquierda -->
-         <div class="modal-case-left">
-            <!-- Header -->
-            <div class="modal-case-header">
-                <div class="modal-case-badges">
-                    <span class="modal-case-badge modal-case-badge-web">Web</span>
-                    <span class="modal-case-badge modal-case-badge-study">Caso de estudio</span>
-                </div>
-                <h2 class="modal-case-title">Green Glow</h2>
-                <p class="modal-case-intro">
-                    Diseñé y desarrollé la tienda web de GreenGlow para transformar su presencia digital: desde ventas por Instagram/WhatsApp a una plataforma propia optimizada para conversión y crecimiento.
-                </p>
-            </div>
+<Modal id="modal-greenglow" variant="case-study" ariaLabel="Case de estudio Green Glow">
+  <div class="modal-layout-case-study">
+    <!-- izquierda -->
+    <div class="modal-case-left">
+      <!-- Header -->
+      <div class="modal-case-header">
+        <div class="modal-case-badges">
+          <span class="modal-case-badge modal-case-badge-web">Web</span>
+          <span class="modal-case-badge modal-case-badge-study">Caso de estudio</span>
+        </div>
+        <h2 class="modal-case-title">Green Glow</h2>
+        <p class="modal-case-intro">
+          Diseñé y desarrollé la tienda web de GreenGlow para transformar su presencia digital:
+          desde ventas por Instagram/WhatsApp a una plataforma propia optimizada para conversión y
+          crecimiento.
+        </p>
+      </div>
 
-            <!-- Body -->
-             <div class="modal-case-body">
-                <div class="modal-case-section">
-                    <h3 class="modal-case-section-title">Contexto</h3>
-                    <p class="modal-case-section-text">
-                        GreenGlow vendía mayormente por Instagram, WhatsApp y local físico. No tenía un sitio propio donde centralizar catálogo, procesos de venta y comunicación de marca.
-                    </p>
-                    <p class="modal-case-section-text">
-                        Objetivo: profesionalizar la presencia digital, organizar el catálogo y habilitar un canal escalable de ventas.
-                    </p>
-                </div>
-                <div class="modal-case-section">
-                    <h3 class="modal-case-section-title">El problema</h3>
-                    <p class="modal-case-section-text">
-                        La situación presentaba tres limitaciones claras: dependencia de canales externos, catálogo poco escalable y una imagen digital que no reflejaba profesionalismo. El reto: crear una web rápida, clara y fiel a la identidad natural de la marca, sin sacrificar rendimiento ni UX.
-
-                    </p>
-
-                </div>
-                <div class="modal-case-section">
-                    <h3 class="modal-case-section-title">Enfoque y solución</h3>
-                    <p class="modal-case-section-text">
-                        Antes de elegir herramientas definimos prioridades: conversión, rendimiento y facilidad de gestión. Las acciones clave fueron:
-                    </p>
-                    <ul class="modal-case-bullets">
-                        <li class="modal-case-bullet">Diseño UX/UI enfocado en catálogo y checkout asistido.</li>
-                        <li class="modal-case-bullet">Estructura modular de contenido y catálogo (fácil de mantener).</li>
-                        <li class="modal-case-bullet">Desarrollo frontend con Astro + React para performance.</li>
-                        <li class="modal-case-bullet">CSS con Tailwind para rapidez y consistencia.</li>
-                        <li class="modal-case-bullet">Deploy y hosting en Cloudflare; configuración de dominio y SEO on-page.</li>
-                        <li class="modal-case-bullet">Entregables: prototipos, componente de producto reutilizable, integración de catálogo y deploy.</li>
-                    </ul>
-                </div>
-                <div class="modal-case-section">
-                    <h3 class="modal-case-section-title">Tecnologías</h3>
-                    <div class="modal-case-tech">
-                        {techStack.map(({name, icon}, index)=>(
-                            <>
-                                <TechIcon name={name} icon={icon} size="sm" client:load />
-                                {index < techStack.length -1 && (
-                                    <span class="project-card-tech-dot" aria-hidden="true" />
-                                )}
-                            </>
-                        ))}
-                    </div>                    
-                </div>
-                <div class="modal-case-section">
-                    <h3 class="modal-case-section-title">Resultados</h3>
-                    <ul class="modal-case-bullets">
-                        <li class="modal-case-bullet">Sitio online, estable y preparado para escalar catálogo.</li>
-                        <li class="modal-case-bullet">UX orientada a conversión y navegación clara.</li>
-                        <li class="modal-case-bullet">Cliente satisfecha; mantenimiento y actualizaciones en curso.</li>
-                    </ul>
-                    
-                </div>
-                <div class="modal-case-section">
-                    <h3 class="modal-case-section-title">Aprendizaje clave</h3>
-                    <p class="modal-case-section-text">
-                        El equilibrio entre estética y arquitectura técnica es lo que convierte un sitio en una herramienta de negocio en vez de una tarjeta de presentación.
-                    </p>                    
-                </div>
-
-             </div>
-         </div>
-         
-         
-         <!-- derecha -->
-         <div class="modal-case-right">
-             {screenshots.map(({src,alt})=>(
-                <div class="modal-case-screenshot" data-lightbox-src={src} data-lightbox-alt={alt} data-lightbox-group="greenglow" >
-                    <img src={src} alt={alt} loading="lazy" />
-                </div>
-            ))}
+      <!-- Body -->
+      <div class="modal-case-body">
+        <div class="modal-case-section">
+          <h3 class="modal-case-section-title">Contexto</h3>
+          <p class="modal-case-section-text">
+            GreenGlow vendía mayormente por Instagram, WhatsApp y local físico. No tenía un sitio
+            propio donde centralizar catálogo, procesos de venta y comunicación de marca.
+          </p>
+          <p class="modal-case-section-text">
+            Objetivo: profesionalizar la presencia digital, organizar el catálogo y habilitar un
+            canal escalable de ventas.
+          </p>
+        </div>
+        <div class="modal-case-section">
+          <h3 class="modal-case-section-title">El problema</h3>
+          <p class="modal-case-section-text">
+            La situación presentaba tres limitaciones claras: dependencia de canales externos,
+            catálogo poco escalable y una imagen digital que no reflejaba profesionalismo. El reto:
+            crear una web rápida, clara y fiel a la identidad natural de la marca, sin sacrificar
+            rendimiento ni UX.
+          </p>
+        </div>
+        <div class="modal-case-section">
+          <h3 class="modal-case-section-title">Enfoque y solución</h3>
+          <p class="modal-case-section-text">
+            Antes de elegir herramientas definimos prioridades: conversión, rendimiento y facilidad
+            de gestión. Las acciones clave fueron:
+          </p>
+          <ul class="modal-case-bullets">
+            <li class="modal-case-bullet">
+              Diseño UX/UI enfocado en catálogo y checkout asistido.
+            </li>
+            <li class="modal-case-bullet">
+              Estructura modular de contenido y catálogo (fácil de mantener).
+            </li>
+            <li class="modal-case-bullet">
+              Desarrollo frontend con Astro + React para performance.
+            </li>
+            <li class="modal-case-bullet">CSS con Tailwind para rapidez y consistencia.</li>
+            <li class="modal-case-bullet">
+              Deploy y hosting en Cloudflare; configuración de dominio y SEO on-page.
+            </li>
+            <li class="modal-case-bullet">
+              Entregables: prototipos, componente de producto reutilizable, integración de catálogo
+              y deploy.
+            </li>
+          </ul>
+        </div>
+        <div class="modal-case-section">
+          <h3 class="modal-case-section-title">Tecnologías</h3>
+          <div class="modal-case-tech">
+            {
+              techStack.map(({ name, icon }, index) => (
+                <>
+                  <TechIcon name={name} icon={icon} size="sm" client:load />
+                  {index < techStack.length - 1 && (
+                    <span class="project-card-tech-dot" aria-hidden="true" />
+                  )}
+                </>
+              ))
+            }
           </div>
-          <!-- footer -->
-           <div class="modal-case-footer">
-             <Button
-             href="https://greenglow.com.ar"
-             target="_blank"
-             rel="noopener noreferrer"
-             variant="primary"
-             size="sm"
-             >
-                 VISITAR SITIO
-             </Button>
-             
-             <Button
-             href="#contact"
-             variant="outline"
-             size="sm"
-             data-modal-close
-             >
-                 HABLEMOS
-             </Button>
- 
-           </div>
-
+        </div>
+        <div class="modal-case-section">
+          <h3 class="modal-case-section-title">Resultados</h3>
+          <ul class="modal-case-bullets">
+            <li class="modal-case-bullet">
+              Sitio online, estable y preparado para escalar catálogo.
+            </li>
+            <li class="modal-case-bullet">UX orientada a conversión y navegación clara.</li>
+            <li class="modal-case-bullet">
+              Cliente satisfecha; mantenimiento y actualizaciones en curso.
+            </li>
+          </ul>
+        </div>
+        <div class="modal-case-section">
+          <h3 class="modal-case-section-title">Aprendizaje clave</h3>
+          <p class="modal-case-section-text">
+            El equilibrio entre estética y arquitectura técnica es lo que convierte un sitio en una
+            herramienta de negocio en vez de una tarjeta de presentación.
+          </p>
+        </div>
+      </div>
     </div>
 
+    <!-- derecha -->
+    <div class="modal-case-right">
+      {
+        screenshots.map(({ src, alt }) => (
+          <div
+            class="modal-case-screenshot"
+            data-lightbox-src={src}
+            data-lightbox-alt={alt}
+            data-lightbox-group="greenglow"
+          >
+            <img src={src} alt={alt} loading="lazy" />
+          </div>
+        ))
+      }
+    </div>
+    <!-- footer -->
+    <div class="modal-case-footer">
+      <Button
+        href="https://greenglow.com.ar"
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="primary"
+        size="sm"
+      >
+        VISITAR SITIO
+      </Button>
+
+      <Button href="#contact" variant="outline" size="sm" data-modal-close> HABLEMOS </Button>
+    </div>
+  </div>
 </Modal>

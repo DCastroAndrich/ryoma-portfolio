@@ -1,76 +1,64 @@
 ---
-import Layout from "../layout/Layout.astro"
-import logoO from "../assets/logo-o.svg?raw"
-import logoRyoma from "../assets/logotipo-ryoma.svg?raw"
-import logoDevelopment from "../assets/logotipo-development.svg?raw"
-import Button from "../components/Button"
-import TechStack from "../components/TechStack"
-
+import Layout from "../layout/Layout.astro";
+import logoO from "../assets/logo-o.svg?raw";
+import logoRyoma from "../assets/logotipo-ryoma.svg?raw";
+import logoDevelopment from "../assets/logotipo-development.svg?raw";
+import Button from "../components/Button";
+import TechStack from "../components/TechStack";
 
 /* iconos */
-import astroIconRaw from "../assets/tech-icons/astro.svg?raw"
-import nextJSIconRaw from "../assets/tech-icons/nextjs.svg?raw"
-import nestJSIconRaw from "../assets/tech-icons/nestjs.svg?raw"
-import tsIconRaw from "../assets/tech-icons/typescript.svg?raw"
-import postgreSQLIconRaw from "../assets/tech-icons/postgresql.svg?raw"
-import prismaIconRaw from "../assets/tech-icons/prisma.svg?raw"
-import reactIconRaw from "../assets/tech-icons/react.svg?raw"
-import nodeJSIconRaw from "../assets/tech-icons/nodejs.svg?raw"
-import mongoIconRaw from "../assets/tech-icons/mongodb.svg?raw"
-
+import astroIconRaw from "../assets/tech-icons/astro.svg?raw";
+import nextJSIconRaw from "../assets/tech-icons/nextjs.svg?raw";
+import nestJSIconRaw from "../assets/tech-icons/nestjs.svg?raw";
+import tsIconRaw from "../assets/tech-icons/typescript.svg?raw";
+import postgreSQLIconRaw from "../assets/tech-icons/postgresql.svg?raw";
+import prismaIconRaw from "../assets/tech-icons/prisma.svg?raw";
+import reactIconRaw from "../assets/tech-icons/react.svg?raw";
+import nodeJSIconRaw from "../assets/tech-icons/nodejs.svg?raw";
+import mongoIconRaw from "../assets/tech-icons/mongodb.svg?raw";
 
 const techStack = [
-    {name: "ASTRO", icon: astroIconRaw},
-    {name: "NEXT JS", icon: nextJSIconRaw},
-    {name: "NEST JS", icon: nestJSIconRaw},
-    {name: "TYPESCRIPT", icon: tsIconRaw},
-    {name: "POSTGRESQL", icon: postgreSQLIconRaw},
-    {name: "PRISMA ORM", icon: prismaIconRaw},
-    {name: "REACT", icon: reactIconRaw},
-    {name: "NODE JS", icon: nodeJSIconRaw},
-    {name: "MONGO DB", icon: mongoIconRaw}
-]
-
+  { name: "ASTRO", icon: astroIconRaw },
+  { name: "NEXT JS", icon: nextJSIconRaw },
+  { name: "NEST JS", icon: nestJSIconRaw },
+  { name: "TYPESCRIPT", icon: tsIconRaw },
+  { name: "POSTGRESQL", icon: postgreSQLIconRaw },
+  { name: "PRISMA ORM", icon: prismaIconRaw },
+  { name: "REACT", icon: reactIconRaw },
+  { name: "NODE JS", icon: nodeJSIconRaw },
+  { name: "MONGO DB", icon: mongoIconRaw },
+];
 ---
+
 <Layout>
-    <section class="relative py-20 md:py-32">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center gap-12">
-            <!-- glow -->
-             <!-- glow-left -->
-            <div class="glow glow-left">
-            </div>
-                <!-- glow-right -->
-            <div class="glow glow-right">
-            </div>
-            
-            <!-- logos -->
-            <div class="flex flex-col items-center gap-8">
-                
-                <span class="block w-40 sm:w-52 md:w-64" set:html={logoO} />
-                
-                <div class="flex flex-col items-center gap-4">
-                    <span class="block w-64 sm:w-80 md:w-md" set:html={logoRyoma} />
-                    <span class="block w-52 sm:w-64 md:w-88 " set:html={logoDevelopment} />
-                </div>
-                
-                <p class="text-base sm:text-lg md:text-xl max-w-2xl font-heading font-semibold text-center">Soluciones digitales con precisión metódica. Entregando valor de alto rendimiento.</p>
-            
-            </div>
+  <section class="relative py-20 md:py-32">
+    <div class="mx-auto flex max-w-5xl flex-col items-center gap-12 px-4 text-center sm:px-6">
+      <!-- glow -->
+      <!-- glow-left -->
+      <div class="glow glow-left"></div>
+      <!-- glow-right -->
+      <div class="glow glow-right"></div>
 
-            <!-- CTA -->
-             <div class="flex flex-col sm:flex-row items-center gap-4">
-                 <Button href="#contact" variant="primary" weight={500} >
-                     HABLEMOS
-                 </Button>
-                 <Button href="#contact" variant="outline" weight={500}>
-                     PROYECTOS
-                 </Button>
+      <!-- logos -->
+      <div class="flex flex-col items-center gap-8">
+        <span class="block w-40 sm:w-52 md:w-64" set:html={logoO} />
 
-             </div>
-             <TechStack items={techStack} client:load/>
-
+        <div class="flex flex-col items-center gap-4">
+          <span class="block w-64 sm:w-80 md:w-md" set:html={logoRyoma} />
+          <span class="block w-52 sm:w-64 md:w-88" set:html={logoDevelopment} />
         </div>
 
-    </section>
+        <p class="font-heading max-w-2xl text-center text-base font-semibold sm:text-lg md:text-xl">
+          Soluciones digitales con precisión metódica. Entregando valor de alto rendimiento.
+        </p>
+      </div>
 
+      <!-- CTA -->
+      <div class="flex flex-col items-center gap-4 sm:flex-row">
+        <Button href="#contact" variant="primary" weight={500}> HABLEMOS </Button>
+        <Button href="#contact" variant="outline" weight={500}> PROYECTOS </Button>
+      </div>
+      <TechStack items={techStack} client:load />
+    </div>
+  </section>
 </Layout>

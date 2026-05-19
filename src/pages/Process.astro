@@ -5,143 +5,141 @@ import Button from "../components/Button";
 
 import ProcessModal from "../components/modal-process/ProcessModal.astro";
 
-
 const steps = [
-    {
-        number: "01",
-        title: "Descubrimiento",
-       icon: "Compass",
-        description: "Descubrimos el contexto real: negocio, usuario y restricciones.",
-        bullets: [
-            "Workshops y entrevistas con stakeholders.",
-            "Mapeo de flujos y puntos de fricción.",
-            "Priorización de funcionalidades y definición de KPI."
-        ],
-        deliverable: "Priorización de funcionalidades y definición de KPI.",
-        caseHref: "#"
-    },
-    {
-        number: "02",
-        title: "Diseño & Prototipo",
-        icon: "PenTool",
-        description: "Prototipos interactivos que validan la experiencia antes de codear.",
-        bullets: [
-            "Wireframes y prototipos testeables en Figma.",
-            "Flujos centrados en conversión y reducción de fricción.",
-            "Pruebas rápidas con usuarios o stakeholders."
-        ],
-        deliverable: "Pruebas rápidas con usuarios o stakeholders.",
-        caseHref: "#"
-    },
-    {
-        number: "03",
-        title: "Desarrollo & Deploy",
-        icon: "Server",
-        description: "Arquitectura modular, código tipado y deploy seguro.",
-        bullets: [
-            "Implementación con componentes reutilizables (Typescript).",
-            "Pipelines básicos de CI/CD y staging.",
-            "Test básicos y revisión de performance."
-        ],
-        deliverable: "Repositorio, staging link y despliegue en producción.",
-        caseHref: "#"
-    },
-    {
-        number: "04",
-        title: "Mantenimiento & Escalado",
-        icon: "RefreshCw",
-        description: "Soporte, documentación y roadmap para crecer sin rehacer.",
-        bullets: [
-            "Documentación de componentes y handover.",
-            "Plan de mejoras y monitorización (performance/errores).",
-            "Opciones de soporte mensual y sprints de mejora."
-        ],
-        deliverable: "Documentación, plan de roadmap y acuerdos de mantenimiento.",
-        caseHref: "#"
-    },
-]
+  {
+    number: "01",
+    title: "Descubrimiento",
+    icon: "Compass",
+    description: "Descubrimos el contexto real: negocio, usuario y restricciones.",
+    bullets: [
+      "Workshops y entrevistas con stakeholders.",
+      "Mapeo de flujos y puntos de fricción.",
+      "Priorización de funcionalidades y definición de KPI.",
+    ],
+    deliverable: "Priorización de funcionalidades y definición de KPI.",
+    caseHref: "#",
+  },
+  {
+    number: "02",
+    title: "Diseño & Prototipo",
+    icon: "PenTool",
+    description: "Prototipos interactivos que validan la experiencia antes de codear.",
+    bullets: [
+      "Wireframes y prototipos testeables en Figma.",
+      "Flujos centrados en conversión y reducción de fricción.",
+      "Pruebas rápidas con usuarios o stakeholders.",
+    ],
+    deliverable: "Pruebas rápidas con usuarios o stakeholders.",
+    caseHref: "#",
+  },
+  {
+    number: "03",
+    title: "Desarrollo & Deploy",
+    icon: "Server",
+    description: "Arquitectura modular, código tipado y deploy seguro.",
+    bullets: [
+      "Implementación con componentes reutilizables (Typescript).",
+      "Pipelines básicos de CI/CD y staging.",
+      "Test básicos y revisión de performance.",
+    ],
+    deliverable: "Repositorio, staging link y despliegue en producción.",
+    caseHref: "#",
+  },
+  {
+    number: "04",
+    title: "Mantenimiento & Escalado",
+    icon: "RefreshCw",
+    description: "Soporte, documentación y roadmap para crecer sin rehacer.",
+    bullets: [
+      "Documentación de componentes y handover.",
+      "Plan de mejoras y monitorización (performance/errores).",
+      "Opciones de soporte mensual y sprints de mejora.",
+    ],
+    deliverable: "Documentación, plan de roadmap y acuerdos de mantenimiento.",
+    caseHref: "#",
+  },
+];
 ---
 
 <Layout>
-    <section id="process" class="py-16 md:py-24" >
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-12 md:gap-16">
-            <header class="text-center max-w-2xl mx-auto flex flex-col gap-4">
-                <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-heading-lg leading-heading-lg">
-                    Proceso de trabajo
-                </h2>
-                <p class="font-body text-base md:text-lg font-light tracking-subtitle leading-subtitle">
-                    Un método claro para minimizar riesgo, maximizar impacto y entregar valor desde el primer día.
-                </p>
-            </header>
+  <section id="process" class="py-16 md:py-24">
+    <div class="mx-auto flex max-w-7xl flex-col gap-12 px-4 sm:px-6 md:gap-16 lg:px-8">
+      <header class="mx-auto flex max-w-2xl flex-col gap-4 text-center">
+        <h2
+          class="font-heading tracking-heading-lg leading-heading-lg text-3xl font-bold md:text-4xl"
+        >
+          Proceso de trabajo
+        </h2>
+        <p class="font-body tracking-subtitle leading-subtitle text-base font-light md:text-lg">
+          Un método claro para minimizar riesgo, maximizar impacto y entregar valor desde el primer
+          día.
+        </p>
+      </header>
 
-            <div class="relative">
-                
-                <div class="flex flex-col gap-6 md:gap-8">
-                    {steps.map((step, index)=>(
-                        <article class="relative overflow-hidden rounded-[28px] border border-white/10 bg-white/3 p-6 md:p-8 ">
-                            <div class="grid grid-cols-1 md:grid-cols-[2rem_1fr] md:gap-x-5">
-                                <div class="relative hidden md:block" aria-hidden="true">
-                                    <span class="process-dot" ></span>
-                                    <span class="process-line" ></span>
-                                </div>
-                            
-                                <div class="flex flex-col gap-4">
+      <div class="relative">
+        <div class="flex flex-col gap-6 md:gap-8">
+          {
+            steps.map((step, index) => (
+              <article class="relative w-full rounded-[28px] border border-white/10 bg-white/3 p-5 md:p-8">
+                <div class="flex flex-col gap-4 md:flex-row md:gap-5">
+                  <div class="relative hidden w-8 shrink-0 md:block" aria-hidden="true">
+                    <span class="process-dot" />
+                    <span class="process-line" />
+                  </div>
 
-                                    <div class="flex items-start gap-4">
-                                        
-                                        <span class="inline-flex shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/4 p-3">
-                                            <ProcessIcon
-                                            name={step.icon}
-                                            size={28}
-                                            strokeWidth={1.5}
-                                            className="process-icon"
-                                            />
-                                        </span>
-            
-                                        <div class="flex-1 flex flex-col gap-2">
-                                            <span class="inline-flex w-fit rounded-full border border-white/10 bg-white/4 px-3 py-1 text-[0.72rem] font-heading font-semibold tracking-[0.08em] uppercase text-text-primary/80">
-                                                Paso {step.number}
-                                            </span>
-            
-                                            <h3 class="font-heading text-2xl md:text-3xl font-bold tracking-heading-md leading-tight">
-                                                {step.title}
-                                            </h3>
-            
-                                            <p class="font-body text-base md:text-lg font-light leading-relaxed text-text-primary/90">
-                                                {step.description}
-                                            </p>
-                                        </div>
-                                    </div>
-            
-                                    <ul class="flex flex-col gap-3 pl-1 text-sm md:text-base text-text-primary/90">
-                                        {step.bullets.map((bullet)=>(
-                                            <li class="relative pl-4 before:content-[''] before:absolute before:left-0 before:top-[0.65rem] before:h-1.5 before:w-1.5 before:rounded-full before:bg-linear-to-r before:from-cyan before:to-magenta ">
-                                                {bullet}
-                                            </li>
-                                        ))}
-                                    </ul>
-            
-                                    <p class="font-body text-sm md:text-base text-text-primary/80">
-                                        <strong>Entregable:</strong> {step.deliverable}
-                                    </p>
-                                    <div class="mt-6">
-                                        <Button
-                                            type="button"
-                                            variant="link"
-                                            size="sm"
-                                            data-process-open={index}
-                                        >
-                                            Ver como la aplicamos
-                                        </Button>
-                                    </div>
-                                </div>
-                            </div>                            
-                        </article>
-                    ))}
+                  <div class="flex flex-col gap-4">
+                    <div class="flex items-start gap-4">
+                      <span class="inline-flex shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/4 p-3">
+                        <ProcessIcon
+                          name={step.icon}
+                          size={28}
+                          strokeWidth={1.5}
+                          className="process-icon"
+                        />
+                      </span>
+
+                      <div class="flex min-w-0 flex-1 flex-col gap-3">
+                        <span class="font-heading text-text-primary/80 inline-flex w-fit rounded-full border border-white/10 bg-white/4 px-3 py-1 text-[0.72rem] font-semibold tracking-[0.08em] uppercase">
+                          Paso {step.number}
+                        </span>
+
+                        <h3 class="font-heading tracking-heading-md text-xl leading-tight font-bold md:text-3xl">
+                          {step.title}
+                        </h3>
+
+                        <p class="font-body text-text-primary/90 text-sm leading-relaxed font-light md:text-lg">
+                          {step.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    <ul class="text-text-primary/90 flex flex-col gap-2 pl-1 text-sm md:text-base">
+                      {step.bullets.map((bullet) => (
+                        <li class="before:from-cyan before:to-magenta relative pl-4 before:absolute before:top-[0.65rem] before:left-0 before:h-1.5 before:w-1.5 before:rounded-full before:bg-linear-to-r before:content-['']">
+                          {bullet}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <p class="font-body text-text-primary/80 text-sm md:text-base">
+                      <strong>Entregable:</strong> {step.deliverable}
+                    </p>
+                    <div class="pt-1">
+                      <Button type="button" variant="link" size="sm" data-process-open={index}>
+                        Ver como la aplicamos
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-            </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
 
-            <ProcessModal/>
-        </div>        
-    <section/>
-<Layout/>
+      <ProcessModal />
+    </div>
+    <section></section>
+    <Layout />
+  </section></Layout
+>

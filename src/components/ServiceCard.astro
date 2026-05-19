@@ -1,79 +1,68 @@
 ---
-import Button from './Button';
+import Button from "./Button";
 interface Props {
-    icon: string;
-    title: string;
-    subtitle: string;
-    description: string[];
-    ctaLabel: string;
-    modalId?: string;
-    featured?: boolean
+  icon: string;
+  title: string;
+  subtitle: string;
+  description: string[];
+  ctaLabel: string;
+  modalId?: string;
+  featured?: boolean;
 }
-const {
-    icon, title, subtitle, description, ctaLabel, modalId, featured = false
-} = Astro.props
-
+const { icon, title, subtitle, description, ctaLabel, modalId, featured = false } = Astro.props;
 ---
-<article class:list={[
-    "relative overflow-hidden rounded-[28px] border border-white/10 bg-white/3 backdrop-blur-sm transition-all duration-300 ",
-    "hover:border-[--color-cyan]/40 hover:shadow-[0_0_40px_rgba(0,151,192,0.12)] ",
-    featured 
-        ? "p-6 md:p-10 flex flex-col gap-8" 
-        : "p-6 flex flex-col gap-6 h-full"
-    ]} 
->
-<!-- glow -->
- <div class:list={[
-    "absolute inset-0 pointer-events-none opacity-40",
-    featured
-        ? "bg-[radial-gradient(circle_at_top_left,rgba(255,0,255,0.12),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,151,192,0.12),transparent_35%)]"
-        : "bg-[radial-gradient(circle_at_top_left,rgba(255,0,255,0.8),transparent_35%)"
-    ]}
- />
 
- <!-- icon -->
-  <span
-    class="relative z-10 w-8 h-8 text-[--color-cyan]"
-    set:html={icon}
-    aria-hidden="true"
-  />
+<article
+  class:list={[
+    "relative overflow-hidden rounded-[28px] border border-white/10 bg-white/3 backdrop-blur-sm transition-all duration-300",
+    "hover:border-[--color-cyan]/40 hover:shadow-[0_0_40px_rgba(0,151,192,0.12)]",
+    featured ? "flex flex-col gap-8 p-6 md:p-10" : "flex h-full flex-col gap-6 p-6",
+  ]}
+>
+  <!-- glow -->
+  <div
+    class:list={[
+      "pointer-events-none absolute inset-0 opacity-40",
+      featured
+        ? "bg-[radial-gradient(circle_at_top_left,rgba(255,0,255,0.12),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(0,151,192,0.12),transparent_35%)]"
+        : "bg-[radial-gradient(circle_at_top_left,rgba(255,0,255,0.8),transparent_35%)",
+    ]}
+  >
+  </div>
+
+  <!-- icon -->
+  <span class="relative z-10 h-8 w-8 text-[--color-cyan]" set:html={icon} aria-hidden="true" />
 
   <!-- content -->
-   <div class="relative z-10 flex flex-col gap-5 flex-1">
+  <div class="relative z-10 flex flex-1 flex-col gap-5">
     <div class="flex flex-col gap-2">
-        <h3 class:list={[
-            "font-heading font-bold text-heading tracking-heading-md leading-tight",
-            featured
-                ? "text-3xl md:text-4xl"
-                : "text-2xl"
-            ]}
-        >
-            {title}
-        </h3>
-        <p class="font-body text-base md:text-lg text-text-muted">
-            {subtitle}
-        </p>
+      <h3
+        class:list={[
+          "font-heading text-heading tracking-heading-md leading-tight font-bold",
+          featured ? "text-3xl md:text-4xl" : "text-2xl",
+        ]}
+      >
+        {title}
+      </h3>
+      <p class="font-body text-text-muted text-base md:text-lg">
+        {subtitle}
+      </p>
     </div>
     <div class="flex flex-col gap-3">
-        {description.map((paragraph)=>(
-            <p class="font-body text-sm md:text-base leading-relaxed text-text-primary/90">
-                {paragraph}
-            </p>
-        ))}
+      {
+        description.map((paragraph) => (
+          <p class="font-body text-text-primary/90 text-sm leading-relaxed md:text-base">
+            {paragraph}
+          </p>
+        ))
+      }
     </div>
-   </div>
-   
-   <!-- CTA -->
-    <div class="relative z-10 mt-auto">
-        <Button
-            variant="outline"
-            size="sm"
-            data-modal-open={modalId}
-        >
-            {ctaLabel}
-        </Button>
-    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="relative z-10 mt-auto">
+    <Button variant="outline" size="sm" data-modal-open={modalId}>
+      {ctaLabel}
+    </Button>
+  </div>
 </article>
-
-
-

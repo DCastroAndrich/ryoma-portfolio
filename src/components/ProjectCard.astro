@@ -1,112 +1,116 @@
 ---
-import Button from './Button';
+import Button from "./Button";
 
 interface TechIcon {
-    icon: string;
-    name: string;
+  icon: string;
+  name: string;
 }
 
 interface Props {
-    title: string;
-    subtitle: string;
-    description: string;
-    bullets: string[];
-    techIcons: TechIcon[];
-    image: string;
-    imageAlt?: string;
-    status: "web" | "mobile" | "en-proceso" | "completado";
-    statusLabel: string;
-    caseHref?: string;
-    variant?: "default" | "upcoming"
+  title: string;
+  subtitle: string;
+  description: string;
+  bullets: string[];
+  techIcons: TechIcon[];
+  image: string;
+  imageAlt?: string;
+  status: "web" | "mobile" | "en-proceso" | "completado";
+  statusLabel: string;
+  caseHref?: string;
+  variant?: "default" | "upcoming";
 }
 
 const {
-    title,
-    subtitle,
-    description,
-    bullets,
-    techIcons,
-    image,
-    imageAlt ="",
-    status,
-    statusLabel,
-    caseHref ="#",
-    variant = "default"
-} = Astro.props
+  title,
+  subtitle,
+  description,
+  bullets,
+  techIcons,
+  image,
+  imageAlt = "",
+  status,
+  statusLabel,
+  caseHref = "#",
+  variant = "default",
+} = Astro.props;
 
 const badgeClasses: Record<Props["status"], string> = {
-    web: "text-cyan border-cyan/30 bgcyan/10",
-    mobile: "text-primary border-primary/30 bg-primary/10",
-    "en-proceso": "text-warning border-warning/30 bg-warning/10",
-    completado: "text-cyan border-cyan/30 bgcyan/10",
-}
-
+  web: "text-cyan border-cyan/30 bgcyan/10",
+  mobile: "text-primary border-primary/30 bg-primary/10",
+  "en-proceso": "text-warning border-warning/30 bg-warning/10",
+  completado: "text-cyan border-cyan/30 bgcyan/10",
+};
 ---
-<article class:list={[
-    "group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/3 backdrop-blur-sm transition-all duration-300 hover:border-white/20 ",
+
+<article
+  class:list={[
+    "group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/3 backdrop-blur-sm transition-all duration-300 hover:border-white/20",
     "min-h-128",
-    variant === "default" ? "lg:min-h-136":"lg:min-h-120"
-]}>
-    <!-- imagen de fondo -->
-     <div class="pointer-events-none absolute inset-0">
-        <div class="project-card-image">
-            <img src={image} alt={imageAlt} />
-        </div>
-        <div class="absolute inset-0 bg-linear-to-r from-black/55 via-black/35 to-black/10" />
-     </div>
+    variant === "default" ? "lg:min-h-136" : "lg:min-h-120",
+  ]}
+>
+  <!-- imagen de fondo -->
+  <div class="pointer-events-none absolute inset-0">
+    <div class="project-card-image">
+      <img src={image} alt={imageAlt} />
+    </div>
+    <div class="absolute inset-0 bg-linear-to-r from-black/55 via-black/35 to-black/10"></div>
+  </div>
 
-     <!-- content -->
-      <div class="relative z-10 flex h-full flex-col p-6 md:p-8 lg:p-10">
-        <span class:list={["project-card-badge", badgeClasses[status]]} >
-            {statusLabel}
-        </span>
+  <!-- content -->
+  <div class="relative z-10 flex h-full flex-col p-6 md:p-8 lg:p-10">
+    <span class:list={["project-card-badge", badgeClasses[status]]}>
+      {statusLabel}
+    </span>
 
-        <div class="mt-4 flex flex-col gap-2">
-            <h3 class="font-heading text-2xl md:text-[1.75rem] font-semibold tracking-heading-md leading-heading-md">
-                {title}
-            </h3>
-            <p class="font-body text-base md:text-lg font-semibold tracking-subtitle leading-tight text-text-muted">
-                {subtitle}
-            </p>
-        </div>
+    <div class="mt-4 flex flex-col gap-2">
+      <h3
+        class="font-heading tracking-heading-md leading-heading-md text-2xl font-semibold md:text-[1.75rem]"
+      >
+        {title}
+      </h3>
+      <p
+        class="font-body tracking-subtitle text-text-muted text-base leading-tight font-semibold md:text-lg"
+      >
+        {subtitle}
+      </p>
+    </div>
 
-        <div class="mt-6 flex flex-col gap-4">
-            <p class="font-body text-base md:text-[1.05rem] font-light leading-relaxed text-text-primary/90 max-w-xl">
-                {description}
-            </p>
+    <div class="mt-6 flex flex-col gap-4">
+      <p
+        class="font-body text-text-primary/90 max-w-xl text-base leading-relaxed font-light md:text-[1.05rem]"
+      >
+        {description}
+      </p>
 
-            <ul class="flex flex-col gap-3 text-sm md:text-base text-text-primary/90">
-                {bullets.map((bullet)=>(
-                    <li class="project-card-bullet">{bullet} </li>
-                ))}
-            </ul>
-        </div>
+      <ul class="text-text-primary/90 flex flex-col gap-3 text-sm md:text-base">
+        {bullets.map((bullet) => <li class="project-card-bullet">{bullet} </li>)}
+      </ul>
+    </div>
 
-        <div class="mt-6 flex flex-wrap items-center gap-3" aria-label="Tecnologías utilizadas">
-            {techIcons.map(({icon, name}, index)=>(
-                <>
-                    <span class="project-card-tech-icon" set:html={icon} aria-level={name} title={name} />
-                    {index < techIcons.length - 1 && <span class="project-card-tech-dot" aria-hidden="true"/> }
-                </>
-            ))}
-        </div>
-
-        <div class="mt-auto pt-8">
-            {variant === "default" ? (
-                <Button href={caseHref} variant="ghost" size="sm" className="w.fit" >
-                     VER CASO →
-                </Button>
-            ): (
-                <span class="inline-flex font-body text-sm text-text-muted">
-                    Próximamente
-                </span>
+    <div class="mt-6 flex flex-wrap items-center gap-3" aria-label="Tecnologías utilizadas">
+      {
+        techIcons.map(({ icon, name }, index) => (
+          <>
+            <span class="project-card-tech-icon" set:html={icon} aria-level={name} title={name} />
+            {index < techIcons.length - 1 && (
+              <span class="project-card-tech-dot" aria-hidden="true" />
             )}
+          </>
+        ))
+      }
+    </div>
 
-        </div>
-
-      </div>
-
-
+    <div class="mt-auto pt-8">
+      {
+        variant === "default" ? (
+          <Button href={caseHref} variant="ghost" size="sm" className="w.fit">
+            VER CASO →
+          </Button>
+        ) : (
+          <span class="font-body text-text-muted inline-flex text-sm">Próximamente</span>
+        )
+      }
+    </div>
+  </div>
 </article>
-
-
