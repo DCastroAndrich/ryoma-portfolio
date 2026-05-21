@@ -2632,7 +2632,7 @@
     transform: translate(-10%, -65%);
   }
 
-  @media (max-widht; 640px) {
+  @media (max-width: 640px) {
     .glow {
       width: 320px;
       height: 320px;
