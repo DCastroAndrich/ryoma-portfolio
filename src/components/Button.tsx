@@ -1,8 +1,12 @@
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react"
+import type {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  ReactNode,
+} from "react";
 
 type ButtonVariant = "primary" | "outline" | "ghost" | "link";
-type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl"
-type ButtonWeight = 400 | 500 | 600 | 700
+type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
+type ButtonWeight = 400 | 500 | 600 | 700;
 
 interface BaseProps {
   variant?: ButtonVariant;
@@ -11,11 +15,12 @@ interface BaseProps {
   fullWidth?: boolean;
   className?: string;
   children: ReactNode;
-  disabled?: boolean
+  disabled?: boolean;
 }
 
 type AnchorProps = BaseProps &
-  Omit<AnchorHTMLAttributes<HTMLAnchorElement>,
+  Omit<
+    AnchorHTMLAttributes<HTMLAnchorElement>,
     "children" | "className" | "href"
   > & {
     href: string;
@@ -27,7 +32,7 @@ type NativeButtonProps = BaseProps &
     href?: never;
   };
 
-type Props = AnchorProps | NativeButtonProps
+type Props = AnchorProps | NativeButtonProps;
 
 const baseClasses = `
 btn
@@ -41,24 +46,24 @@ duration-300
 
 const sizeClasses: Record<ButtonSize, string> = {
   xs: "px-4 py-2 rounded-[10px] text-xs",
-  sm: "px-5 py-2.5 rounded-xl text-sm",
-  md: "px-6 py-3 rounded-2xl text-sm md:text-base",
-  lg: "px-8 py-4 rounded-[18px] text-lg",
-  xl: "px-10 py-5 rounded-[20px] text-xl"
+  sm: "px-4 py-2 rounded-xl text-xs sm:text-sm leading-none",
+  md: "px-5 py-2.5 rounded-2xl text-xs sm:text-sm md:text-base",
+  lg: "px-6 py-3 rounded-[18px] text-sm sm:text-base lg:text-lg",
+  xl: "px-10 py-5 rounded-[20px] text-xl",
 };
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary: "btn-primary",
   outline: "btn-outline",
   ghost: "btn-ghost",
-  link: "btn-link rounded-none p-0 font-body trancking-[0.01em]"
+  link: "btn-link rounded-none p-0 font-body tracking-[0.01em]",
 };
 
 const weightClasses: Record<ButtonWeight, string> = {
   400: "font-normal",
   500: "font-medium",
   600: "font-semibold",
-  700: "font-bold"
+  700: "font-bold",
 };
 
 export default function Button(props: Props) {
@@ -72,7 +77,7 @@ export default function Button(props: Props) {
     disabled = false,
   } = props;
 
-  const widthClass = fullWidth ? "w-full sm: w-auto" : "";
+  const widthClass = fullWidth ? "w-full sm:w-auto" : "";
 
   const classes = [
     baseClasses,
@@ -81,13 +86,19 @@ export default function Button(props: Props) {
     weightClasses[weight],
     widthClass,
     disabled ? "opacity-45 pointer-events-none" : "",
-    className
+    className,
   ]
     .filter(Boolean)
     .join(" ");
 
   if ("href" in props) {
-    const { href, target, rel, ...anchorProps } = props as AnchorProps;
+    const {
+      href,
+      target,
+      rel,
+      fullWidth: _fullWidth,
+      ...anchorProps
+    } = props as AnchorProps;
 
     return (
       <a
@@ -100,10 +111,14 @@ export default function Button(props: Props) {
       >
         {children}
       </a>
-    )
+    );
   }
 
-  const { type = "button", fullWidth: _fullWidht, ...buttonProps } = props as NativeButtonProps;
+  const {
+    type = "button",
+    fullWidth: _fullWidth,
+    ...buttonProps
+  } = props as NativeButtonProps;
 
   return (
     <button
@@ -114,5 +129,5 @@ export default function Button(props: Props) {
     >
       {children}
     </button>
-  )
+  );
 }

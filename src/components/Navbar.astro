@@ -68,16 +68,12 @@ import logoIcon from "../assets/logo-o.svg?raw";
     aria-labelledby="nav-toggle"
     aria-hidden="true"
   >
-    <div
-      id="mobile-backdrop"
-      class="mobile-backdrop bg-black/45 backdrop-blur-sm"
-      aria-hidden="true"
-    >
+    <div id="mobile-backdrop" class="mobile-backdrop bg-bg backdrop-blur-sm" aria-hidden="true">
     </div>
 
     <div class="relative z-10 h-full w-full backdrop-blur-2xl">
       <div
-        class="mx-auto flex max-h-[calc(100dvh-64px)] w-full flex-col gap-4 overflow-y-auto px-4 py-6 sm:px-6"
+        class="bg-bg mx-auto flex max-h-[calc(100dvh-64px)] w-full flex-col gap-4 overflow-y-auto px-4 py-6 sm:px-6"
       >
         <div class="flex items-center justify-between">
           <a href="/" aria-label="Ir al inicio">
@@ -106,7 +102,7 @@ import logoIcon from "../assets/logo-o.svg?raw";
           </button>
         </div>
 
-        <nav class="flex flex-col gap-2" aria-label="Menú móvil">
+        <nav class="font-body flex flex-col gap-2" aria-label="Menú móvil">
           <a href="#about" class="nav-link block rounded-md px-3 py-3">Acerca de mí</a>
           <a href="#services" class="nav-link block rounded-md px-3 py-3">Servicios</a>
           <a href="#projects" class="nav-link block rounded-md px-3 py-3">Proyectos</a>
@@ -115,7 +111,7 @@ import logoIcon from "../assets/logo-o.svg?raw";
         </nav>
 
         <div class="mt-2 flex flex-col gap-3 border-t border-[rgba(255,255,255,0.08)] pt-2">
-          <Button fullWidth href="#contact" variant="outline" size="sm"> Hablemos </Button>
+          <Button href="#contact" variant="outline" size="sm"> Hablemos </Button>
 
           <div class="flex items-center justify-start">
             <ThemeToggle client:load className="theme-toggle" />

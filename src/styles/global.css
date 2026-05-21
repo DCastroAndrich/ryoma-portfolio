@@ -546,6 +546,32 @@
     transform: translateX(-50%) translateY(0);
   }
 
+  @media (max-width: 640px) {
+    .tech-icon {
+      width: 32px;
+      padding-bottom: 12px;
+    }
+    .tech-icon-sm {
+      width: 28px;
+      padding-bottom: 10px;
+    }
+    .tech-icon-md {
+      width: 32px;
+      padding-bottom: 12px;
+    }
+    .tech-icon-lg {
+      width: 36px;
+      padding-bottom: 14px;
+    }
+    .tech-icon-svg,
+    .tech-icon-sm .tech-icon-svg,
+    .tech-icon-lg,
+    .tech-icon-svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
   /* -------- PROJECT CARD -------- */
 
   /* imagen de fondo */
@@ -771,6 +797,18 @@
   .btn-link-process {
     font-size: 0.875rem;
     align-self: flex-start;
+  }
+
+  .process-icon-mobile svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .process-icon-mobile svg {
+      width: 28px;
+      height: 28px;
+    }
   }
 
   /* -------- CONTACTO -------- */
@@ -2592,6 +2630,21 @@
       transparent 65%
     );
     transform: translate(-10%, -65%);
+  }
+
+  @media (max-widht; 640px) {
+    .glow {
+      width: 320px;
+      height: 320px;
+      filter: blur(120px);
+      opacity: 0.45;
+    }
+    .glow-left {
+      transform: translate(-80%, -60%);
+    }
+    .glow-right {
+      transform: translate(-20%, -60%);
+    }
   }
   /* ======== LOGO ======== */
   .logo-aberration-cyan,

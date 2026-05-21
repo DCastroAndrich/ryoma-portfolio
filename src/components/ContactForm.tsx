@@ -88,7 +88,7 @@ function BrandSelect({
 
   return (
     <div ref={rootRef} className="relative flex flex-col gap-2">
-      <label htmlFor={id} className="font-heading text-text-primary/75 text-sm tracking-[0.08em]">
+      <label htmlFor={id} className="font-heading text-text-primary/75 text-[11px] sm:text-xs font-medium tracking-[0.12em] uppercase">
         {label} {required && <span className="text-primary">*</span>}
       </label>
 
@@ -98,7 +98,7 @@ function BrandSelect({
         aria-haspopup="listbox"
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
-        className="border-accent/35 font-body text-text-primary hover:border-accent/55 focus:border-accent/60 focus:ring-accent/20 flex w-full items-center justify-between gap-4 rounded-2xl border bg-white/3 px-4 py-3 text-left text-sm transition outline-none focus:ring-2 md:text-base"
+        className="border-accent/35 font-body text-text-primary hover:border-accent/55 focus:border-accent/60 focus:ring-accent/20 flex w-full items-center justify-between gap-4 rounded-2xl border bg-white/3 px-4 py-3 text-left text-sm transition outline-none focus:ring-2 sm:text-base"
       >
         <span className={selected ? "text-text-primary" : "text-text-primary/45"}>
           {selected?.label ?? placeholder}
@@ -129,7 +129,7 @@ function BrandSelect({
                   onChange(opt.value);
                   setOpen(false);
                 }}
-                className={`flex w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm transition md:text-base ${active ? "bg-accent/10 text-text-primary" : "text-text-primary/80 hover:text-text-primary hover:bg-white/5"}`}
+                className={`flex w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm transition sm:text-base ${active ? "bg-accent/10 text-text-primary" : "text-text-primary/80 hover:text-text-primary hover:bg-white/5"}`}
               >
                 <span>{opt.label}</span>
                 {active && <Check size={16} strokeWidth={2} className="text-accent" />}
@@ -191,7 +191,7 @@ function SelectField({
     <div className={`flex flex-col gap-2 ${error ? "" : ""}`}>
       <label
         htmlFor={id}
-        className="font-heading text-text-primary/75 text-sm tracking-[0.08em] uppercase"
+        className="font-heading text-text-primary/75 text-[11px] sm:text-xs font-medium tracking-[0.12em] uppercase"
       >
         {label}
         {required && <span className="text-magenta">*</span>}
@@ -205,7 +205,7 @@ function SelectField({
           onChange={onChange}
           aria-invalid={!!error}
           aria-describedby={error ? `${id}-error` : undefined}
-          className="font-body text-text-primary placeholder:text-text-primary/40 focus:border-cyan/50 focus:ring-cyan/20 w-full appearance-none rounded-2xl border border-white/10 bg-white/3 px-4 py-3 pr-11 text-sm transition outline-none md:text-base"
+          className="font-body text-text-primary placeholder:text-text-primary/40 focus:border-cyan/50 focus:ring-cyan/20 w-full appearance-none rounded-2xl border border-white/10 bg-white/3 px-4 py-3 pr-11 text-sm transition outline-none sm:text-base"
         >
           <option value="" disabled>
             {placeholder}
@@ -302,7 +302,7 @@ export default function ContactForm() {
         role="status"
       >
         <CheckCircle2 size={20} strokeWidth={1.5} className="text-accent" />
-        <span className="font-body text-text-primary/90 text-sm md:text-base">
+        <span className="font-body text-text-primary/90 text-sm sm:text-base">
           Consulta enviada. Te respondo dentro de las próximas 48 horas hábiles.
         </span>
       </div>
@@ -320,7 +320,7 @@ export default function ContactForm() {
         <div className="flex flex-col gap-2">
           <label
             htmlFor="name"
-            className="font-heading text-text-primary/75 text-sm tracking-[0.08em] uppercase"
+            className="font-heading text-text-primary/75 text-[11px] sm:text-xs font-medium tracking-[0.12em] uppercase"
           >
             Nombre <span className="text-primary">*</span>
           </label>
@@ -328,7 +328,7 @@ export default function ContactForm() {
             type="text"
             id="name"
             name="name"
-            className="font-body text-text-primary placeholder:text-text-primary/40 focus:border-accent/50 focus:ring-accent/20 w-full rounded-2xl border border-white/10 bg-white/3 px-4 py-3 text-sm transition outline-none focus:ring-2 md:text-base"
+            className="font-body text-text-primary placeholder:text-text-primary/40 focus:border-accent/50 focus:ring-accent/20 w-full rounded-2xl border border-white/10 bg-white/3 px-4 py-3 text-sm transition outline-none focus:ring-2 sm:text-base"
             placeholder="Juan Pérez"
             value={formData.name}
             onChange={handleChange}
@@ -347,7 +347,7 @@ export default function ContactForm() {
         <div className="flex flex-col gap-2">
           <label
             htmlFor="email"
-            className="font-heading text-text-primary/75 text-sm tracking-[0.08em] uppercase"
+            className="font-heading text-text-primary/75 text-[11px] sm:text-xs font-medium tracking-[0.12em] uppercase"
           >
             Email <span className="text-primary">*</span>
           </label>
@@ -377,7 +377,7 @@ export default function ContactForm() {
       <div className="flex flex-col gap-2">
         <label
           htmlFor="company"
-          className="font-heading text-text-primary/75 text-sm tracking-[0.08em] uppercase"
+          className="font-heading text-text-primary/75 text-[11px] sm:text-xs font-medium tracking-[0.12em] uppercase"
         >
           Empresa / Poryecto <span className="text-text-primary/55 font-normal">(opcional)</span>
         </label>
@@ -449,7 +449,7 @@ export default function ContactForm() {
       <div className="flex flex-col gap-2">
         <label
           htmlFor="message"
-          className="font-heading text-text-primary/75 text-sm tracking-[0.08em] uppercase"
+          className="font-heading text-text-primary/75 text-[11px] sm:text-xs font-medium tracking-[0.12em] uppercase"
         >
           Mensaje
         </label>
@@ -497,10 +497,10 @@ export default function ContactForm() {
       {/* submit */}
       <div className="pt-2">
         <Button
+          fullWidth
           type="submit"
           variant="primary"
           size="lg"
-          fullWidth
           disabled={isSubmitting}
           aria-busy={isSubmitting}
 
