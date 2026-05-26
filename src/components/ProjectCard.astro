@@ -102,7 +102,7 @@ const badgeClasses: Record<Props["status"], string> = {
       {
         techIcons.map(({ icon, name }, index) => (
           <>
-            <span class="project-card-tech-icon" set:html={icon} aria-label={name} title={name} />
+            <span class="project-card-tech-icon" set:html={icon} aria-hidden="true" title={name} />
             {index < techIcons.length - 1 && (
               <span class="project-card-tech-dot" aria-hidden="true" />
             )}
