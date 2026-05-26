@@ -2,9 +2,9 @@
 import Modal from "../../components/Modal.astro";
 import Button from "../Button";
 
-import greenGlowImg from "../../assets/projects/GreenGlow.jpg";
-import greenGlowIIImg from "../../assets/projects/GreenGlowII.jpg";
-import greenGlowIIIImg from "../../assets/projects/GreenGlowIII.jpg";
+import greenGlowImg from "../../assets/projects/GreenGlow.webp";
+import greenGlowIIImg from "../../assets/projects/GreenGlowII.webp";
+import greenGlowIIIImg from "../../assets/projects/GreenGlowIII.webp";
 
 const screenshots = [
   { src: greenGlowImg.src, alt: "Vista home de Green Glow" },
@@ -27,11 +27,11 @@ const techStack = [
 ---
 
 <Modal id="modal-greenglow" variant="case-study" ariaLabel="Case de estudio Green Glow">
-  <div class="modal-layout-case-study">
+  <article class="modal-layout-case-study">
     <!-- izquierda -->
-    <div class="modal-case-left">
+    <section class="modal-case-left">
       <!-- Header -->
-      <div class="modal-case-header">
+      <header class="modal-case-header">
         <div class="modal-case-badges">
           <span class="modal-case-badge modal-case-badge-web">Web</span>
           <span class="modal-case-badge modal-case-badge-study">Caso de estudio</span>
@@ -42,7 +42,7 @@ const techStack = [
           desde ventas por Instagram/WhatsApp a una plataforma propia optimizada para conversión y
           crecimiento.
         </p>
-      </div>
+      </header>
 
       <!-- Body -->
       <div class="modal-case-body">
@@ -127,10 +127,10 @@ const techStack = [
           </p>
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- derecha -->
-    <div class="modal-case-right">
+    <section class="modal-case-right">
       {
         screenshots.map(({ src, alt }) => (
           <div
@@ -143,10 +143,11 @@ const techStack = [
           </div>
         ))
       }
-    </div>
+    </section>
     <!-- footer -->
-    <div class="modal-case-footer">
+    <div class="modal-case-footer flex flex-col gap-3 sm:flex-row">
       <Button
+        fullWidth
         href="https://greenglow.com.ar"
         target="_blank"
         rel="noopener noreferrer"
@@ -156,7 +157,9 @@ const techStack = [
         VISITAR SITIO
       </Button>
 
-      <Button href="#contact" variant="outline" size="sm" data-modal-close> HABLEMOS </Button>
+      <Button fullWidth href="#contact" variant="outline" size="sm" data-modal-close>
+        HABLEMOS
+      </Button>
     </div>
-  </div>
+  </article>
 </Modal>

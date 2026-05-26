@@ -36,13 +36,14 @@ import Button from "../Button";
     </div>
 
     <!-- navegacion -->
-    <div class="modal-process-nav">
+    <div class="modal-process-nav flec flex-col gap-3 sm:flex-row">
       <!-- prev -->
       <Button
         id="process-prev"
         type="button"
         variant="ghost"
         size="sm"
+        fullWidth
         className="process-nav-btn process-nav-btn-prev"
       >
         <span class="process-nav-icon" aria-hidden="true">
@@ -69,6 +70,7 @@ import Button from "../Button";
       </div>
       <!-- next -->
       <Button
+        fullWidth
         className="process-nav-btn process-nav-btn-next"
         id="process-next"
         type="button"

@@ -1978,18 +1978,19 @@
     cursor: pointer;
   }
   .modal-lightbox-stage {
-    position: absolute;
-    inset: 0;
+    position: relative;
+    width: min(100%, 1100px);
     display: flex;
     align-items: center;
     justify-content: center;
     pointer-events: none;
+    overflow: visible;
   }
   .modal-lightbox-nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 20;
+    z-index: 30;
     width: 42px;
     height: 42px;
     border: none;
@@ -2033,8 +2034,8 @@
   }
   .modal-lightbox-img {
     display: block;
-    max-width: 100%;
-    max-height: 100%;
+    max-width: min(90vw, 1100px);
+    max-height: min(80vh, 780px);
     border-radius: 12px;
     object-fit: contain;
     margin: 0 auto;
@@ -2049,6 +2050,24 @@
   .modal-lightbox-img.is-changing {
     opacity: 0;
     transform: scale(0.96);
+  }
+  @media (max-width: 640px) {
+    .modal-lightbox-stage {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .modal-lightbox-nav {
+      position: static;
+      transform: none;
+      width: 100%;
+    }
+
+    .modal-lightbox-prev,
+    .modal-lightbox-next {
+      left: auto;
+      right: auto;
+    }
   }
 
   /* *** Variante: Service Modal */
@@ -2169,9 +2188,7 @@
       flex: none;
       min-height: auto;
     }
-    .modal-case-right {
-      display: none;
-    }
+
     .modal-case-left {
       border-right: none;
       overflow: visible;

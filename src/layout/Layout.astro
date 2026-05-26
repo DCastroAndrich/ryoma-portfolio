@@ -162,7 +162,7 @@ import Modal from "../components/Modal.astro";
 
           document.documentElement.style.overflow = "";
           if (restoreFocus) {
-            lastFocused?.focus();
+            lastFocused?.focus({ preventScroll: true });
           }
         }
 
