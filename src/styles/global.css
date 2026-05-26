@@ -2621,16 +2621,20 @@
   }
 
   /* -------- GLOW -------- */
+  .glow-layer {
+    @apply pointer-events-none absolute inset-0 overflow-hidden;
+    z-index: 0;
+  }
   .glow {
     @apply pointer-events-none absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: clamp(600px, 70vw, 1100px);
-    height: clamp(600px, 70vw, 1100px);
-    filter: blur(clamp(200px, 25vw, 400px));
-    opacity: 0.7;
+    width: clamp(420px, 62vw, 1100px);
+    height: clamp(420px, 62vw, 1100px);
+    border-radius: 9999px;
+    filter: blur(clamp(120px, 18vw, 320px));
+    opacity: 0.55;
     mix-blend-mode: screen;
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
   }
 
   .glow-left {
@@ -2641,7 +2645,9 @@
       rgba(255, 0, 255, 0.1) 60%,
       transparent 65%
     );
-    transform: translate(-90%, -65%);
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-88%, -64%, 0);
   }
 
   .glow-right {
@@ -2652,21 +2658,23 @@
       rgba(0, 155, 192, 0.1) 60%,
       transparent 65%
     );
-    transform: translate(-10%, -65%);
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-12%, -64%, 0);
   }
 
   @media (max-width: 640px) {
     .glow {
-      width: 320px;
-      height: 320px;
-      filter: blur(120px);
-      opacity: 0.45;
+      width: clamp(300px, 72vw, 520px);
+      height: clamp(300px, 72vw, 520px);
+      filter: blur(clamp(90px, 14vw, 180px));
+      opacity: 0.38;
     }
     .glow-left {
-      transform: translate(-80%, -60%);
+      transform: translate3d(-92%, -60%, 0);
     }
     .glow-right {
-      transform: translate(-20%, -60%);
+      transform: translate3d(-8%, -60%, 0);
     }
   }
   /* ======== LOGO ======== */

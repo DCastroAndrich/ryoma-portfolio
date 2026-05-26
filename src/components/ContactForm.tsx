@@ -205,7 +205,7 @@ function SelectField({
           onChange={onChange}
           aria-invalid={!!error}
           aria-describedby={error ? `${id}-error` : undefined}
-          className="font-body text-text-primary placeholder:text-text-primary/40 focus:border-cyan/50 focus:ring-cyan/20 w-full appearance-none rounded-2xl border border-white/10 bg-white/3 px-4 py-3 pr-11 text-sm transition outline-none sm:text-base"
+          className="font-body text-text-primary placeholder:text-text-primary/60 focus:border-cyan/50 focus:ring-cyan/20 w-full appearance-none rounded-2xl border border-white/10 bg-white/3 px-4 py-3 pr-11 text-sm transition outline-none sm:text-base"
         >
           <option value="" disabled>
             {placeholder}

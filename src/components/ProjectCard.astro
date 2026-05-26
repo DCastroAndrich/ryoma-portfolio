@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import Button from "./Button";
 
 interface TechIcon {
@@ -12,7 +14,7 @@ interface Props {
   description: string;
   bullets: string[];
   techIcons: TechIcon[];
-  image: string;
+  image: ImageMetadata;
   imageAlt?: string;
   status: "web" | "mobile" | "en-proceso" | "completado";
   statusLabel: string;
@@ -52,7 +54,15 @@ const badgeClasses: Record<Props["status"], string> = {
   <!-- imagen de fondo -->
   <div class="pointer-events-none absolute inset-0">
     <div class="project-card-image">
-      <img src={image} alt={imageAlt} />
+      <Image
+        src={image}
+        alt={imageAlt}
+        class="h-full w-full object-cover object-center"
+        widths={[360, 540, 720, 960]}
+        sizes="(max-width: 1024px) 100vw, 50vw"
+        loading="lazy"
+        decoding="async"
+      />
     </div>
     <div class="absolute inset-0 bg-linear-to-r from-black/55 via-black/35 to-black/10"></div>
   </div>
@@ -92,7 +102,7 @@ const badgeClasses: Record<Props["status"], string> = {
       {
         techIcons.map(({ icon, name }, index) => (
           <>
-            <span class="project-card-tech-icon" set:html={icon} aria-level={name} title={name} />
+            <span class="project-card-tech-icon" set:html={icon} aria-label={name} title={name} />
             {index < techIcons.length - 1 && (
               <span class="project-card-tech-dot" aria-hidden="true" />
             )}

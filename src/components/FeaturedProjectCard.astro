@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import Button from "./Button";
 interface TechIcon {
   icon: string;
@@ -11,7 +13,7 @@ interface Props {
   description: string;
   bullets: string[];
   techIcons: TechIcon[];
-  screenshot?: string;
+  screenshot?: ImageMetadata;
   screenshotAlt?: string;
   status: "web" | "mobile" | "en-proceso" | "completado";
   statusLabel: string;
@@ -126,7 +128,15 @@ const badgeClasses: Record<Props["status"], string> = {
         <div class="browser-viewport">
           {
             screenshot ? (
-              <img src={screenshot} alt={screenshotAlt} class="browser-screenshot" />
+              <Image
+                src={screenshot}
+                alt={screenshotAlt}
+                class="browser-screenshot"
+                widths={[480, 720, 960, 1200]}
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                loading="lazy"
+                decoding="async"
+              />
             ) : (
               <div class="browser-placeholder">
                 <p>Preview disponible próximamente</p>

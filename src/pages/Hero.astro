@@ -34,13 +34,15 @@ const techStack = [
   <section class="relative isolate w-full overflow-hidden py-20 md:py-32">
     <div class="mx-auto flex max-w-7xl flex-col items-center gap-12 px-4 text-center sm:px-6">
       <!-- glow -->
-      <!-- glow-left -->
-      <div class="glow glow-left"></div>
-      <!-- glow-right -->
-      <div class="glow glow-right"></div>
+      <div aria-hidden="true" class="glow-layer">
+        <!-- glow-left -->
+        <div class="glow glow-left" aria-hidden="true"></div>
+        <!-- glow-right -->
+        <div class="glow glow-right" aria-hidden="true"></div>
+      </div>
 
       <!-- logos -->
-      <div class="flex flex-col items-center gap-8">
+      <div class="z-100 flex flex-col items-center gap-8">
         <span class="block w-40 sm:w-52 md:w-64" set:html={logoO} />
 
         <div class="flex flex-col items-center gap-4">
