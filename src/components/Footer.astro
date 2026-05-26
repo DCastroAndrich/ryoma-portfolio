@@ -1,82 +1,115 @@
 ---
 import Button from "./Button";
 
-import logoIcon from "../assets/logo-o.svg?raw"
-import logoRyoma from "../assets/logotipo-ryoma.svg?raw"
+import logoIcon from "../assets/logo-o.svg?raw";
+import logoRyoma from "../assets/logotipo-ryoma.svg?raw";
 
-import linkedinLogo from "../assets/socials/linkedin.svg?raw"
-import githubLogo from "../assets/socials/github.svg?raw"
+import linkedinLogo from "../assets/socials/linkedin.svg?raw";
+import githubLogo from "../assets/socials/github.svg?raw";
 
-const currentYear = new Date().getFullYear()
+const currentYear = new Date().getFullYear();
 ---
 
-<footer class="site-footer" role="contentinfo">
-    <div class="footer-inner">
-        
-        <!-- zona superior -->
-         <div class="footer-top">
-        
-            <!-- columna 1 -->
-             <div class="footer-brand">
-                <a href="/" aria-label="Ir al inicio" class="flex items-center gap-3">
-                    <span class="footer-logo-icon" set:html={logoIcon} />
-                    <span class="footer-logo-text" set:html={logoRyoma} />
-                </a>
-                <p class="footer-tagline">Soluciones digitales con precisión metódica.</p>
-                <p class="footer-subtagline">Trabajo remoto · Proyectos a medida</p>
-             </div>
+<footer class="bg-bg/95 border-t border-white/10" role="contentinfo">
+  <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-[1.2fr_0.8fr_1fr] lg:gap-12">
+      <!-- brand -->
+      <div class="flex flex-col gap-4">
+        <a href="/" aria-label="Ir al inicio" class="flex w-fit items-center gap-3">
+          <span
+            class="block h-7 w-auto"
+            style="aspect-ratio: 278 / 200;"
+            set:html={logoIcon}
+            aria-hidden="true"
+          />
+          <span
+            class="block h-6 w-auto"
+            style="aspect-ratio: 940 / 180;"
+            set:html={logoRyoma}
+            aria-hidden="true"
+          />
+        </a>
+        <p
+          class="font-heading md:text-md tracking-heading-md text-text-primary max-w-sm text-lg leading-tight font-semibold"
+        >
+          Soluciones digitales con precisión metódica.
+        </p>
+        <p class="font-body text-md text-text-primary/70 md:text-sm">
+          Trabajo remoto · Proyectos a medida
+        </p>
+      </div>
 
-             <!-- columna 2 -->
-              <nav class="footer-nav" aria-label="Navegación del footer">
-                <p class="footer-nav-label">Navegación</p>
-                <a href="#" class="footer-nav-link">Inicio</a>
-                <a href="#about" class="footer-nav-link">Sobre mí</a>
-                <a href="#services" class="footer-nav-link">Servicios</a>
-                <a href="#projects" class="footer-nav-link">Proyectos</a>
-                <a href="#process" class="footer-nav-link">Proceso</a>
-                <a href="#contact" class="footer-nav-link">Contacto</a>
-              </nav>
+      <!-- nav -->
+      <nav class="flex flex-col gap-4" aria-label="Navegación del footer">
+        <p class="font-heading text-text-primary/65 text-sm tracking-[0.08em] uppercase">
+          Navegación
+        </p>
 
-              <!-- columna 3 -->
-               <div class="footer-contact">
-                <p class="footer-contact-label">Contacto</p>
-                <a href="mailto:hola@ryoma.com" class="footer-contact-item">
-                    hola@ryoma.com
-                </a>
-                <span class="footer-contact-item">+54 9 221 6069 6954</span>
+        <div class="grid grid-cols-2 gap-x-6 gap-y-3">
+          <a href="/" class="footer-link">Inicio</a>
+          <a href="#about" class="footer-link">Sobre mí</a>
+          <a href="#services" class="footer-link">Servicios</a>
+          <a href="#projects" class="footer-link">Proyectos</a>
+          <a href="#process" class="footer-link">Proceso</a>
+          <a href="#contact" class="footer-link">Contacto</a>
+        </div>
+      </nav>
 
-                <div class="footer-socials">
-                    <a href="https://linkedin.com/in/dcastroandrich" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                        <span set:html={linkedinLogo} aria-hidden="true" />
-                    </a>
+      <!-- contact -->
+      <div class="flex flex-col gap-6">
+        <div class="flex flex-col gap-4">
+          <p class="font-heading text-text-primary/65 text-sm tracking-[0.08em] uppercase">
+            Contacto
+          </p>
 
-                    <a href="https://github.com/DCastroAndrich" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub" >
-                        <span set:html={githubLogo} aria-hidden="true" />
-                    </a>
-                </div>
-                <div class="footer-cta">
-                    <Button href="#contact" variant="outline" size="sm" client:load>
-                        Enviar mensaje
-                    </Button>
-                </div>
-               </div>
+          <a href="mailto:hola@ryoma.dev" class="footer-link w-fit"> hola@ryoma.dev </a>
 
-         </div>
-         <!-- separador -->
-          <div class="footer-divider" aria-hidden="true"/>
+          <span class="font-body text-text-primary/70 text-sm md:text-base">
+            +54 9 221 609 6954
+          </span>
+        </div>
 
-          <!-- zona inferior -->
-           <div class="footer-bottom">
-            <p class="footer-copyright">
-                © {currentYear} Ryōma Development. Todos los derechos reservados.
-            </p>
-            <div class="footer-legal-links">
-                <span class="footer-legal-dot">·</span>
-                <a href="/privacy" class="footer-legal-link" target="_blank">Política de privacidad</a>
-                <span class="footer-legal-dot">·</span>
-                <a href="/terms" class="footer-legal-link" target="_blank">Términos y Condiciones</a>
-                <span class="footer-legal-dot">·</span>
-            </div>
-           </div>
+        <div class="flex items-center gap-3">
+          <a
+            href="https://linkedin.com/in/dcastroandrich"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+          >
+            <span set:html={linkedinLogo} aria-hidden="true" />
+          </a>
+
+          <a
+            href="https://github.com/DCastroAndrich"
+            class="footer-social-link"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+          >
+            <span set:html={githubLogo} aria-hidden="true" />
+          </a>
+        </div>
+
+        <div class="pt-1">
+          <Button fullWidth href="#contact" variant="outline" size="sm"> Enviar mensaje </Button>
+        </div>
+      </div>
     </div>
+
+    <div class="bg-lienar-to-r my-10 h-px w-full from-transparent via-white/15 to-transparent">
+    </div>
+
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <p class="font-body text-text-primary/60 text-sm">
+        © {currentYear} Ryōma Development. Todos los derechos reservados.
+      </p>
+
+      <div class="text-text-primary/60 flex flex-wrap items-center gap-3 text-sm">
+        <a href="/privacy" target="_blank" class="footer-legal-link">Política de privacidad</a>
+        <span aria-hidden="true" class="text-white/20">·</span>
+        <a href="/terms" target="_blank" class="footer-legal-link">Términos y Condiciones</a>
+      </div>
+    </div>
+  </div>
 </footer>

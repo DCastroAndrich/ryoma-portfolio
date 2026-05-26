@@ -1,79 +1,89 @@
 ---
 import ServiceCard from "../components/ServiceCard.astro";
 import Layout from "../layout/Layout.astro";
-import rocketIcon from "../assets/services-icons/rocket.svg?raw"
-import workflowIcon from "../assets/services-icons/workflow.svg?raw"
-import layersIcon from "../assets/services-icons/layers.svg?raw"
-import brainIcon from "../assets/services-icons/brain-circuit.svg?raw"
+import rocketIcon from "../assets/services-icons/rocket.svg?raw";
+import workflowIcon from "../assets/services-icons/workflow.svg?raw";
+import layersIcon from "../assets/services-icons/layers.svg?raw";
+import brainIcon from "../assets/services-icons/brain-circuit.svg?raw";
 
 import WebServiceModal from "../components/modal-services/WebServiceModal.astro";
 import BackendServiceModal from "../components/modal-services/BackendServiceModal.astro";
 import IntegrationsServiceModal from "../components/modal-services/IntegrationsServiceModal.astro";
 import SystemServiceModal from "../components/modal-services/SystemServiceModal.astro";
-
 ---
 
 <Layout>
-    <section id="services" class="flex flex-col items-start justify-center h-auto px-10 pt-16 max-w-7xl gap-15 pb-18 ">
-        <!-- titulo -->
-        <div class="w-full h-auto gap-7.5 flex flex-col items-center justify-center text-heading  ">
-            <h2 class="text-4xl font-bold font-heading tracking-heading-lg leading-heading-lg">
-                Mis servicios
-            </h2>
-            <p class="text-lg font-light font-body tracking-subtitle leading-subtitle">Diseño, arquitectura y automatización pensadas para procesos reales.</p>
+  <section id="services" class="py-16 md:p-24">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <!-- Header -->
+      <div class="mx-auto flex max-w-2xl flex-col gap-4 text-center">
+        <h2 class="font-heading text-3xl font-bold md:text-4xl">Mis servicios</h2>
 
-        </div>
-        
-        <!-- tarjetas -->
+        <p class="font-body text-base font-light md:text-lg">
+          Diseño, arquitectura y automatización pensadas para procesos reales.
+        </p>
+      </div>
 
-        <div class="flex flex-col h-auto gap-18 ">
-            <!-- featured -->
-            <div class="w-full" >
-                <ServiceCard
-                icon={rocketIcon}
-                title="Plataformas Web de Alto Rendimiento"
-                subtitle="Interfaces rápidas, estables y listas para producción."
-                description={["Diseño y construyo plataformas pensadas para usuarios y operaciones reales.", "Rendimiento primero, UX clara y código que soporta crecimiento sin sorpresas."]}
-                ctaLabel="EXPLORAR SERVICIO"
-                modalId="modal-web"
-                featured={true}
-                />
-
-            </div>
-            <div class="grid grid-cols-3 gap-6">
-                <ServiceCard
-                icon={workflowIcon}
-                title="Sistemas a Medida sin Ruido"
-                subtitle="Automatización real, sin improvisaciones."
-                description={["Analizo tu flujo y elimino tareas repetitivas con software hecho a medida.", "Menos errores, menos fricción y más tiempo útil para tu equipo."]}
-                ctaLabel="VER ENFOQUE"
-                modalId="modal-system"
-                />
-                <ServiceCard
-                icon={layersIcon}
-                title="Backend diseñado para escalar"
-                subtitle="Seguridad y previsibilidad bajo carga."
-                description={["APIs modulares con NestJS y TypeScript, listas para crecer.", "Performance, tests y arquitectura que no se rompen cuando el tráfico aumenta."]}
-                ctaLabel="VER ARQUITECTURA"
-                modalId="modal-backend"
-                />
-                <ServiceCard
-                icon={brainIcon}
-                title="Integraciones que funcionan de verdad"
-                subtitle="Datos consistentes, procesos sincronizados."
-                description={["Conecto sistemas y diseño flujos automáticos confiables.", "Menos trabajo manual, menos errores y operaciones que se ejecutan solas."]}
-                ctaLabel="VER INTEGRACIONES"
-                modalId="modal-integrations"
-                />
-
-            </div>
-
+      <!-- content -->
+      <div class="mt-12 flex flex-col gap-12 md:mt-16">
+        <!-- featured -->
+        <div>
+          <ServiceCard
+            icon={rocketIcon}
+            title="Plataformas Web de Alto Rendimiento"
+            subtitle="Interfaces rápidas, estables y listas para producción."
+            description={[
+              "Diseño y construyo plataformas pensadas para usuarios y operaciones reales.",
+              "Rendimiento primero, UX clara y código que soporta crecimiento sin sorpresas.",
+            ]}
+            ctaLabel="EXPLORAR SERVICIO"
+            modalId="modal-web"
+            featured={true}
+          />
         </div>
 
-    </section>
-    <WebServiceModal/>
-    <BackendServiceModal/>
-    <IntegrationsServiceModal/>
-    <SystemServiceModal/>
+        <!-- grid -->
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ServiceCard
+            icon={workflowIcon}
+            title="Sistemas a Medida sin Ruido"
+            subtitle="Automatización real, sin improvisaciones."
+            description={[
+              "Analizo tu flujo y elimino tareas repetitivas con software hecho a medida.",
+              "Menos errores, menos fricción y más tiempo útil para tu equipo.",
+            ]}
+            ctaLabel="VER ENFOQUE"
+            modalId="modal-system"
+          />
+          <ServiceCard
+            icon={layersIcon}
+            title="Backend diseñado para escalar"
+            subtitle="Seguridad y previsibilidad bajo carga."
+            description={[
+              "APIs modulares con NestJS y TypeScript, listas para crecer.",
+              "Performance, tests y arquitectura que no se rompen cuando el tráfico aumenta.",
+            ]}
+            ctaLabel="VER ARQUITECTURA"
+            modalId="modal-backend"
+          />
+          <ServiceCard
+            icon={brainIcon}
+            title="Integraciones que funcionan de verdad"
+            subtitle="Datos consistentes, procesos sincronizados."
+            description={[
+              "Conecto sistemas y diseño flujos automáticos confiables.",
+              "Menos trabajo manual, menos errores y operaciones que se ejecutan solas.",
+            ]}
+            ctaLabel="VER INTEGRACIONES"
+            modalId="modal-integrations"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <WebServiceModal />
+  <BackendServiceModal />
+  <IntegrationsServiceModal />
+  <SystemServiceModal />
 </Layout>

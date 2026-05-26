@@ -1,193 +1,133 @@
-import { type ReactNode, type ButtonHTMLAttributes, type AnchorHTMLAttributes } from "react";
+import type {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  ReactNode,
+} from "react";
 
-/* types */
+type ButtonVariant = "primary" | "outline" | "ghost" | "link";
+type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
+type ButtonWeight = 400 | 500 | 600 | 700;
 
-type Variant = "primary" | "outline" | "ghost" | "link";
-
-type Size = "xs" | "sm" | "md" | "lg" | "xl"
-
-/* Props compartidas entre <a> y <button> */
-//con href -> <a>
-//sin href -> <button>
-
-type SharedProps = {
-    variant?: Variant;
-    size?: Size;
-    icon?: ReactNode;
-    font?: "heading" | "body";
-    weight?: 400 | 500 | 600 | 700;
-    isLoading?: boolean;
-    loadingText?: string;
-    className?: string;
-    children: ReactNode
+interface BaseProps {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  weight?: ButtonWeight;
+  fullWidth?: boolean;
+  className?: string;
+  children: ReactNode;
+  disabled?: boolean;
 }
 
-/* Props para <a> */
-type AnchorProps = SharedProps & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof SharedProps> & {
+type AnchorProps = BaseProps &
+  Omit<
+    AnchorHTMLAttributes<HTMLAnchorElement>,
+    "children" | "className" | "href"
+  > & {
     href: string;
-};
-/* Props para <button> */
-type ButtonProps = SharedProps & Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof SharedProps> & {
+    type?: never;
+  };
+
+type NativeButtonProps = BaseProps &
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children" | "className"> & {
     href?: never;
+  };
+
+type Props = AnchorProps | NativeButtonProps;
+
+const baseClasses = `
+btn
+inline-flex items-center justify-center gap-2
+font-heading
+tracking-[0.06em]
+select-none
+transition-all
+duration-300
+`;
+
+const sizeClasses: Record<ButtonSize, string> = {
+  xs: "px-4 py-2 rounded-[10px] text-xs",
+  sm: "px-4 py-2 rounded-xl text-xs sm:text-sm leading-none",
+  md: "px-5 py-2.5 rounded-2xl text-xs sm:text-sm md:text-base",
+  lg: "px-6 py-3 rounded-[18px] text-sm sm:text-base lg:text-lg",
+  xl: "px-10 py-5 rounded-[20px] text-xl",
 };
 
-type ButtonComponentProps = AnchorProps | ButtonProps
+const variantClasses: Record<ButtonVariant, string> = {
+  primary: "btn-primary",
+  outline: "btn-outline",
+  ghost: "btn-ghost",
+  link: "btn-link rounded-none p-0 font-body tracking-[0.01em]",
+};
 
-/* Spinner SVG*/
-function Spinner() {
-    return (
-        <svg
-            className="animate-spin"
-            width={18}
-            height={18}
-            viewBox="0 0 24 24"
-            fill="none"
-            aria-hidden="true"
-        >
-            {/* Pista */}
-            <circle
-                cx={12}
-                cy={12}
-                r={10}
-                stroke="currentColor"
-                strokeWidth={2.5}
-                strokeOpacity={0.25}
-            />
-            {/* Arco activo */}
-            <path
-                d="M12 2a10 10 0 0 1 10 10"
-                stroke="currentColor"
-                strokeWidth={2.5}
-                strokeLinecap="round"
-            />
-        </svg>
-    )
-}
+const weightClasses: Record<ButtonWeight, string> = {
+  400: "font-normal",
+  500: "font-medium",
+  600: "font-semibold",
+  700: "font-bold",
+};
 
-/* Contenido interno (compartido) */
+export default function Button(props: Props) {
+  const {
+    variant = "primary",
+    size = "md",
+    weight = 600,
+    fullWidth = false,
+    className = "",
+    children,
+    disabled = false,
+  } = props;
 
-type ContentProps = {
-    isLoading: boolean;
-    loadingText?: string;
-    icon?: ReactNode;
-    isLink?: boolean;
-    children: ReactNode
-}
+  const widthClass = fullWidth ? "w-full sm:w-auto" : "";
 
-function ButtonContent({ isLoading, loadingText, isLink, icon, children }: ContentProps) {
-    if (isLoading) {
-        return (
-            <>
-                <Spinner />
-                <span>{loadingText ?? children} </span>
-            </>
-        )
-    }
-    return (
-        <>
-            <span>{children} </span>
-            {icon && (
-                <span className={isLink ? "btn-link-icon" : "inline-flex items-center"} aria-hidden="true" >
-                    {icon}
-                </span>
-            )}
-        </>
-    )
+  const classes = [
+    baseClasses,
+    sizeClasses[size],
+    variantClasses[variant],
+    weightClasses[weight],
+    widthClass,
+    disabled ? "opacity-45 pointer-events-none" : "",
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
-}
-
-/* HELPERS */
-/* Tamaño */
-function sizeClass(size: Size): string {
-    return size === "md" ? "" : `btn-${size}`;
-}
-/* Fuentes */
-function fontClass(font?: "heading" | "body"): string {
-    if (!font) return "";
-    return `btn-font-${font}`
-}
-function weightClass(weight?: 400 | 500 | 600 | 700): string {
-    if (!weight) return "";
-    return `btn-weight-${weight}`
-
-}
-
-
-/* render */
-
-function renderElement(
-    classes: string,
-    content: ReactNode,
-    props: ButtonComponentProps,
-    rest: Record<string, unknown>,
-    isLoading: boolean
-) {
-    if ("href" in props && props.href) {
-        const { href, ...anchorRest } = rest as Omit<AnchorProps, keyof SharedProps>
-        return (
-            <a href={href} className={classes} {...anchorRest} >
-                {content}
-            </a>
-        )
-    }
-    const { type = "button", disabled, ...buttonRest } = rest as Omit<ButtonProps, keyof SharedProps>
-    return (
-        <button
-            type={type as "button" | "submit" | "reset"}
-            disabled={disabled || isLoading}
-            className={classes}
-            aria-busy={isLoading || undefined}
-            {...buttonRest}
-        >
-            {content}
-        </button>
-    )
-}
-/* Componente principal */
-
-export default function Button(props: ButtonComponentProps) {
+  if ("href" in props) {
     const {
-        variant = "primary",
-        size = "md",
-        icon,
-        font,
-        weight,
-        isLoading = false,
-        loadingText,
-        className = "",
-        children,
-        ...rest
-    } = props;
+      href,
+      target,
+      rel,
+      fullWidth: _fullWidth,
+      ...anchorProps
+    } = props as AnchorProps;
 
-    const sc = sizeClass(size)
-    const fc = fontClass(font)
-    const wc = weightClass(weight)
-
-    const content = (
-        <ButtonContent
-            isLoading={isLoading}
-            loadingText={loadingText}
-            icon={icon}
-            isLink={variant === "link"}
-        >
-            {children}
-        </ButtonContent>
+    return (
+      <a
+        href={href}
+        target={target}
+        rel={target === "_blank" ? "noopener noreferrer" : rel}
+        aria-disabled={disabled}
+        className={classes}
+        {...anchorProps}
+      >
+        {children}
+      </a>
     );
+  }
 
-    /* VARIANTE LINK */
-    if (variant === "link") {
-        const classes = ["btn-link", sc, fc, wc, className].filter(Boolean).join(" ");
-        return renderElement(classes, content, props, rest as Record<string, unknown>, isLoading)
-    }
+  const {
+    type = "button",
+    fullWidth: _fullWidth,
+    ...buttonProps
+  } = props as NativeButtonProps;
 
-    /* VARIANTE PRIMARY - OUTLINE - GHOST */
-
-    const variantClass: Record<Exclude<Variant, "link">, string> = {
-        primary: "btn-primary",
-        outline: "btn-outline",
-        ghost: "btn-ghost"
-    }
-
-    const classes = ["btn", variantClass[variant as Exclude<Variant, "link">], sc, fc, wc, className].filter(Boolean).join(" ")
-    return renderElement(classes, content, props, rest as Record<string, unknown>, isLoading)
+  return (
+    <button
+      type={type}
+      disabled={disabled}
+      className={classes}
+      {...buttonProps}
+    >
+      {children}
+    </button>
+  );
 }

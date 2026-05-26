@@ -2,83 +2,137 @@
 import Layout from "../layout/Layout.astro";
 import ContactForm from "../components/ContactForm";
 import Button from "../components/Button";
-import { Mail } from "lucide-react";
+import {
+  Mail,
+  CalendarDays,
+  ArrowUpRight,
+  Sparkles,
+  Clock3,
+  Languages,
+  MessageSquareQuote,
+} from "lucide-react";
 ---
 
 <Layout>
-    <section id="contact" class="flex flex-col items-start justify-center h-auto px-10 pt-16 max-w-7xl gap-24 pb-18 ">
-         <!-- titulo -->
-        <div class="w-full h-auto gap-7.5 flex flex-col items-center justify-center text-heading  ">
-            <h2 class="text-4xl font-bold font-heading tracking-heading-lg leading-heading-lg">
-                Contacto
-            </h2>
-            <p class="text-lg font-light font-body tracking-subtitle leading-subtitle">¿Tenés un proyecto en mente? Contame en pocas palabras y te respondo dentro de 48 horas hábiles.</p>
-        </div>
-        
-        <!-- FORMULARIO Y SIDEBAR -->
-         <div class="contact-grid w-full">
-        
-            <!-- Columna izquierda -->
-             <ContactForm client:load/>
+  <section id="contact" class="py-16 md:py-24">
+    <div class="mx-auto flex max-w-7xl flex-col gap-12 px-4 sm:px-6 md:gap-16 lg:px-8">
+      <header class="mx-auto flex max-w-2xl flex-col gap-4 text-center">
+        <h2
+          class="font-heading tracking-heading-lg leading-heading-lg text-3xl font-bold md:text-4xl"
+        >
+          Contacto
+        </h2>
+        <p
+          class="font-body tracking-subtitle leading-subtitle text-text-primary/85 text-base font-light md:text-lg"
+        >
+          ¿Tenés un proyecto en mente? Contame en pocas palabras y te respondo dentro de 48 horas
+          hábiles.
+        </p>
+      </header>
 
-             <!-- Columna derecha -->
-              <aside class="contact-sidebar" >
-                <!-- CTA rapido -->
-                <div class="contact-sidebar-block">
-                    <span class="contact-sidebar-label">¿Querés hablar ahora?</span>
-                    <div class="contact-quick-cta">
-                        <Button href="https://cal.com" variant="ghost" size="sm" client:load>
-                            Reservar 15'
-                        </Button>
-                    </div>
-                </div>
-                <!-- Email y Disponibilidad -->
-                 <div class="contact-sidebar-block">
-                    <span class="contact-sidebar-label">Email directo</span>
-                    <a href="mailto:hola@ryoma.dev" class="contact-email-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                            <rect width="20" height="16" x="2" y="4" rx="2"/>
-                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-                        </svg>
-                        hola@ryoma.dev
-                    </a>
+      <div
+        class="grid grid-cols-1 items-start gap-6 md:gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(320px,0.85fr)]"
+      >
+        <ContactForm client:load />
 
-                    <span class="contact-sidebar-label" style="margin-top: : 0.5rem;">Disponibilidad</span>
-                    <div class="contact-availability">
-                        <p class="contact-availability-item">
-                            <strong>Dispinibilidad:</strong> remoto · 10-20 h/sem
-                        </p>
-                        <p class="contact-availability-item">
-                            <strong>Idiomas:</strong> Español / Inglés
-                        </p>
-                    </div>
-                 </div>
+        <aside class="flex flex-col gap-6">
+          <div
+            class="flex flex-col gap-4 rounded-[28px] border border-white/10 bg-white/3 p-6 md:p-8"
+          >
+            <div class="flex items-center gap-3">
+              <span
+                class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/4 p-3"
+              >
+                <CalendarDays size={18} strokeWidth={1.6} />
+              </span>
 
-                 <!-- FAQ -->
-                  <div class="contact-sidebar-block">
-                    <span class="contact-sidebar-label">FAQ</span>
-                    <div class="contact-faq">
-                        <div class="contact-faq-item">
-                            <span class="contact-faq-q">¿Cuánto demora un landing?</span>
-                            <span class="contact-faq-arrow">→</span>
-                            <span class="contact-faq-a">2 - 3 semanas.</span>
-                        </div>
-                        <div class="contact-faq-item">
-                            <span class="contact-faq-q">¿Hacés mantenimiento?</span>
-                            <span class="contact-faq-arrow">→</span>
-                            <span class="contact-faq-a">Sí, planes mensuales.</span>
-                        </div>
-                        <div class="contact-faq-item">
-                            <span class="contact-faq-q">¿Trabajás con equipos?</span>
-                            <span class="contact-faq-arrow">→</span>
-                            <span class="contact-faq-a">Sí, con metodologías ágiles.</span>
-                        </div>
-                    </div>
-                  </div>
+              <div class="flex flex-col gap-1">
+                <span
+                  class="font-heading text-text-primary/75 text-[11px] font-medium tracking-[0.12em] uppercase sm:text-xs"
+                >
+                  ¿Querés hablar ahora?
+                </span>
+                <span class="font-body text-text-primary/70 text-sm">
+                  Coordinemos una llamada corta
+                </span>
+              </div>
+            </div>
 
-              </aside>
-         </div>
-         
-    </section>
+            <Button href="https://cal.com" target="_blank" variant="ghost" size="sm">
+              Reservar 15' <ArrowUpRight size={16} />
+            </Button>
+          </div>
 
+          <div
+            class="flex flex-col gap-4 rounded-[28px] border border-white/10 bg-white/3 p-6 md:p-8"
+          >
+            <div class="flex flex-col gap-3">
+              <span
+                class="font-heading text-text-primary/75 text-[11px] font-medium tracking-[0.12em] uppercase sm:text-xs"
+              >
+                Email directo
+              </span>
+
+              <a
+                href="mailto:hola@ryoma.dev"
+                class="font-body text-text-primary/90 hover:text-text-primary inline-flex items-center gap-2 text-sm transition-colors md:text-base"
+              >
+                <Mail size={16} strokeWidth={1.6} />
+                hola@ryoma.dev
+              </a>
+            </div>
+
+            <div class="flex flex-col gap-5">
+              <span
+                class="font-heading text-text-primary/75 text-[11px] font-medium tracking-[0.12em] uppercase sm:text-xs"
+              >
+                Disponibilidad
+              </span>
+
+              <div class="font-body text-text-primary/85 flex flex-col gap-2 text-sm md:text-base">
+                <p class="inline-flex items-center gap-2">
+                  <Clock3 size={14} strokeWidth={1.8} />
+                  remoto · 10-20 h/sem
+                </p>
+                <p class="inline-flex items-center gap-2">
+                  <Languages size={14} strokeWidth={1.8} />
+                  Español / Inglés
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="flex flex-col gap-4 rounded-[28px] border border-white/10 bg-white/3 p-6 md:p-8"
+          >
+            <span
+              class="font-heading text-text-primary/70 inline-flex items-center gap-2 text-sm tracking-[0.08em] uppercase"
+            >
+              <MessageSquareQuote size={16} strokeWidth={1.6} />
+              FAQ
+            </span>
+
+            <div class="flex flex-col divide-y divide-white/10">
+              <div class="flex items-start justify-between gap-4 py-3">
+                <span class="font-body text-text-primary/85 text-sm">
+                  ¿Cuánto demora un landing?</span
+                >
+                <span class="font-body text-text-primary/65 text-sm">2 - 3 semanas.</span>
+              </div>
+              <div class="flex items-start justify-between gap-4 py-3">
+                <span class="font-body text-text-primary/85 text-sm">¿Hacés mantenimiento?</span>
+                <span class="font-body text-text-primary/65 text-sm">Sí, planes mensuales.</span>
+              </div>
+              <div class="flex items-start justify-between gap-4 py-3">
+                <span class="font-body text-text-primary/85 text-sm">¿Trabajás con equipos?</span>
+                <span class="font-body text-text-primary/65 text-sm"
+                  >Sí, con metodologías ágiles.</span
+                >
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
 </Layout>

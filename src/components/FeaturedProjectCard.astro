@@ -1,118 +1,140 @@
 ---
+import Button from "./Button";
 interface TechIcon {
-    icon: string;
-    name: string;
+  icon: string;
+  name: string;
 }
 
 interface Props {
-    title: string;
-    subtitle: string;
-    description: string;
-    bullets: string[];
-    techIcons: TechIcon[];
-    image?: string;
-    imageAlt?: string;
-    screenshot?: string;
-    screenshotAlt?: string;
-    status: "web" | "mobile" | "en-proceso" | "finalizado";
-    statusLabel: string;
-    caseHref: string;
-    modalId?: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  bullets: string[];
+  techIcons: TechIcon[];
+  screenshot?: string;
+  screenshotAlt?: string;
+  status: "web" | "mobile" | "en-proceso" | "completado";
+  statusLabel: string;
+  caseHref: string;
+  modalId?: string;
 }
 
 const {
-    title,
-    subtitle,
-    description,
-    bullets,
-    techIcons,
-    image,
-    imageAlt = "",
-    screenshot,
-    screenshotAlt = "Vista previa del proyecto",
-    status,
-    statusLabel,
-    caseHref = "#",
-    modalId,
-} = Astro.props
+  title,
+  subtitle,
+  description,
+  bullets,
+  techIcons,
+  screenshot,
+  screenshotAlt = "Vista previa del proyecto",
+  status,
+  statusLabel,
+  caseHref = "#",
+  modalId,
+} = Astro.props;
+
+const badgeClasses: Record<Props["status"], string> = {
+  web: "text-cyan border-cyan/30 bgcyan/10",
+  mobile: "text-primary border-primary/30 bg-primary/10",
+  "en-proceso": "text-warning border-warning/30 bg-warning/10",
+  completado: "text-cyan border-cyan/30 bgcyan/10",
+};
 ---
 
-<article class={`featured-card featured-card-${status}`} >
+<article
+  class:list={[
+    "relative overflow-hidden rounded-4xl border border-white/10 bg-white/3 backdrop-blur-sm",
+    "shadow-[0_0_50px_rgba(0,0,0,0.15)]",
+  ]}
+>
+  <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr]">
+    <!-- izquierda -->
+    <div class="flex flex-col p-6 md:p-8 lg:p-10">
+      <span class:list={["project-card-badge", badgeClasses[status]]}>
+        {statusLabel}
+      </span>
 
-       <!-- Grid Principal -->
-     <div class="featured-card-grid">
-        
-        <!-- izquierda -->
-         <div class="featured-card-info">
-            <span class="project-card-badge ">{statusLabel} </span>
-            
-            <div class="featured-card-heading">
-                <h3 class="featured-card-title">{title} </h3>
-                <p class="featured-card-subtitle">{subtitle} </p>
-            </div>
+      <div class="mt-4 flex flex-col gap-2">
+        <h3
+          class="font-heading tracking-heading-md text-text-primary text-3xl leading-tight font-bold md:text-4xl lg:text-5xl"
+        >
+          {title}
+        </h3>
+        <p
+          class="font-body tracking-subtitle text-text-muted text-base leading-tight font-semibold md:text-lg"
+        >
+          {subtitle}
+        </p>
+      </div>
 
-            <div class="featured-card-body">
-                <p class="featured-card-description">{description}</p>
-                <ul class="project-card-bullets">
-                    {bullets.map((bullet)=>(
-                        <li class="project-card-bullet">
-                            <svg class="project-card-check" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                                <path d="M2 6l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            {bullet}
-                        </li>
-                    ))}
-                </ul>
-            </div>
+      <div class="mt-6 flex flex-col gap-4">
+        <p
+          class="font-body text-text-primary/90 max-w-xl text-base leading-relaxed font-light md:text-[1.05rem]"
+        >
+          {description}
+        </p>
 
-            <!-- Iconos -->
-             <div class="project-card-tech" aria-label="Tecnologías utilizadas">
-                {techIcons.map(({icon, name},index)=>(
-                    <>
-                    <span class="project-card-tech-icon" set:html={icon} aria-label={name} title={name} />
-                    {index < techIcons.length -1 && (
-                        <span class="project-card-tech-dot" aria-hidden="true" />
-                    )}
-                    </>
-                ))}
-             </div>
+        <ul class="text-text-primary/90 flex flex-col gap-3 text-sm md:text-base">
+          {bullets.map((bullet) => <li class="project-card-bullet">{bullet} </li>)}
+        </ul>
+      </div>
 
-             <!-- Spacer -->
-              <div class="project-card-spacer" />
+      <div class="mt-6 flex flex-wrap items-center gap-3" aria-label="Tecnologías utilizadas">
+        {
+          techIcons.map(({ icon, name }, index) => (
+            <>
+              <span class="project-card-tech-icon" set:html={icon} aria-label={name} title={name} />
+              {index < techIcons.length - 1 && (
+                <span class="project-card-tech-dot" aria-hidden="true" />
+              )}
+            </>
+          ))
+        }
+      </div>
 
-              <button data-modal-open={modalId} class="btn btn-ghost btn-sm project-card-cta" >
-                VER CASO →
-              </button>
-         </div>
+      <div class="mt-auto pt-8">
+        {
+          modalId ? (
+            <Button fullWidth type="button" data-modal-open={modalId} variant="outline" size="sm">
+              VER CASO →
+            </Button>
+          ) : (
+            <Button fullWidth href={caseHref} variant="ghost" size="sm">
+              VER CASO →
+            </Button>
+          )
+        }
+      </div>
+    </div>
 
-         <!-- Derecha -->
-         <!-- browser widndow -->
-         <div class="featured-card-browser">
-            <div class="browser-bar">
-                <div class="browser-dots">
-                    <span class="browser-dot browser-dot-red" />
-                    <span class="browser-dot browser-dot-yellow" />
-                    <span class="browser-dot browser-dot-green" />
-                </div>
-                <div class="browser-url">
-                    <span class="browser-url-text">
-                        {caseHref !== "#" ? caseHref : "próximamente"}
-                    </span>
-                </div>
-            </div>
+    <!-- derecha -->
+    <div class="relative min-h-88 lg:min-h-full">
+      <div class="featured-card-browser h-full">
+        <div class="browser-bar">
+          <div class="browser-dots">
+            <span class="browser-dot browser-dot-red"></span>
+            <span class="browser-dot browser-dot-yellow"></span>
+            <span class="browser-dot browser-dot-green"></span>
+          </div>
+          <div class="browser-url">
+            <span class="browser-url-text">
+              {caseHref !== "#" ? caseHref : "próximamente"}
+            </span>
+          </div>
+        </div>
 
-            <!-- Screenshot -->
-             <div class="browser-viewport">
-                {screenshot ? (
-                    <img src={screenshot} alt={screenshotAlt} class="browser-screenshot" />
-                ): (
-                    /* placeholder */
-                    <div class="browser-placeholder">
-                        <span class="browser-placeholder-text">Preview disponible próximamente</span>
-                    </div>
-                )}
-             </div>
-         </div>
-
-     </div>
+        <div class="browser-viewport">
+          {
+            screenshot ? (
+              <img src={screenshot} alt={screenshotAlt} class="browser-screenshot" />
+            ) : (
+              <div class="browser-placeholder">
+                <p>Preview disponible próximamente</p>
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </div>
 </article>

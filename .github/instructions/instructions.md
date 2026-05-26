@@ -130,12 +130,12 @@ bun <archivo>.ts
 
 ```astro
 ---
-import type { Props } from './types';
+import type { Props } from "./types";
 
 const { titulo, descripcion } = Astro.props;
 ---
 
-<section class="py-12 px-4">
+<section class="px-4 py-12">
   <h2 class="text-2xl font-bold text-gray-900 dark:text-white">{titulo}</h2>
   <p class="mt-2 text-gray-600 dark:text-gray-300">{descripcion}</p>
   <slot />
@@ -154,9 +154,7 @@ export function Card({ titulo, descripcion }: CardProps) {
   return (
     <div className="rounded-xl border border-gray-200 p-6 shadow-sm">
       <h3 className="text-lg font-semibold">{titulo}</h3>
-      {descripcion && (
-        <p className="mt-1 text-sm text-gray-500">{descripcion}</p>
-      )}
+      {descripcion && <p className="mt-1 text-sm text-gray-500">{descripcion}</p>}
     </div>
   );
 }

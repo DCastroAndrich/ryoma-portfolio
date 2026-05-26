@@ -1,127 +1,137 @@
 ---
+import Button from "../Button";
 import Modal from "../Modal.astro";
 ---
 
 <Modal id="modal-system" variant="case-study" ariaLabel="Servicio: Sistemas a medida">
-    <div class="modal-layout-case-study">
-        <!-- izquierda -->
-         <div class="modal-case-left">
-            <!-- header -->
-             <div class="modal-case-header">
-                <div class="modal-case-badges">
-                    <span class="modal-case-badge modal-case-badge-web">Servicio</span>
-                    <span class="modal-case-badge modal-case-badge-study">Web</span>
-                </div>
+  <div class="modal-layout-case-study">
+    <!-- izquierda -->
+    <div class="modal-case-left">
+      <!-- header -->
+      <div class="modal-case-header">
+        <div class="modal-case-badges">
+          <span class="modal-case-badge modal-case-badge-web">Servicio</span>
+          <span class="modal-case-badge modal-case-badge-study">Web</span>
+        </div>
 
-                <h2 class="modal-case-title">
-                    Sistemas a Medida sin Ruido
-                </h2>
+        <h2 class="modal-case-title">Sistemas a Medida sin Ruido</h2>
 
-                <p class="modal-case-intro">
-                    Diseño sistemas internos que ordenan procesos reales y eliminan tareas manuales. No agrego software innecesario: construyo herramientas que simplifican tu operación.
-                   
-                </p>
-             </div>
+        <p class="modal-case-intro">
+          Diseño sistemas internos que ordenan procesos reales y eliminan tareas manuales. No agrego
+          software innecesario: construyo herramientas que simplifican tu operación.
+        </p>
+      </div>
 
-             <!-- body -->
-              <div class="modal-case-body">
-                <!-- ideal para -->
-                 <div class="modal-case-section">
-                    <h3 class="modal-case-section-title">Ideal para</h3>
-                    <ul class="modal-case-bullets">
-                        <li class="modal-case-bullet">Empresas que trabajan con Excel, WhatsApp o procesos manuales.</li>
-                        <li class="modal-case-bullet">Equipos que pierden tiempo en tareas repetitivas.</li>
-                        <li class="modal-case-bullet">Negocios que crecieron sin estructura digital clara.</li>
-                    </ul>
-                 </div>
+      <!-- body -->
+      <div class="modal-case-body">
+        <!-- ideal para -->
+        <div class="modal-case-section">
+          <h3 class="modal-case-section-title">Ideal para</h3>
+          <ul class="modal-case-bullets">
+            <li class="modal-case-bullet">
+              Empresas que trabajan con Excel, WhatsApp o procesos manuales.
+            </li>
+            <li class="modal-case-bullet">Equipos que pierden tiempo en tareas repetitivas.</li>
+            <li class="modal-case-bullet">Negocios que crecieron sin estructura digital clara.</li>
+          </ul>
+        </div>
 
-                 <!-- Problema -->
-                  <div class="modal-case-section">
-                    <h3 class="modal-case-section-title">El problema</h3>
-                    <p class="modal-case-section-text">
-                        La operación depende de acciones manuales, información dispersa y procesos poco claros. Esto genera errores, retrabajo y falta de control sobre el negocio.
-                    </p>
-                  </div>
+        <!-- Problema -->
+        <div class="modal-case-section">
+          <h3 class="modal-case-section-title">El problema</h3>
+          <p class="modal-case-section-text">
+            La operación depende de acciones manuales, información dispersa y procesos poco claros.
+            Esto genera errores, retrabajo y falta de control sobre el negocio.
+          </p>
+        </div>
 
-                  <!-- solucion -->
-                   <div class="modal-case-section">
-                    <h3 class="modal-case-section-title">Enfoque y solución</h3>
-                    <ul class="modal-case-bullets">
-                        <li class="modal-case-bullet">Mapeo de procesos reales.</li>
-                        <li class="modal-case-bullet">Automatización de tareas repetitivas.</li>
-                        <li class="modal-case-bullet">Centralización de información.</li>
-                        <li class="modal-case-bullet">Interfaces simples para el equipo.</li>
-                        <li class="modal-case-bullet">Flujos claros y predecibles.</li>
-                    </ul>
-                   </div>
+        <!-- solucion -->
+        <div class="modal-case-section">
+          <h3 class="modal-case-section-title">Enfoque y solución</h3>
+          <ul class="modal-case-bullets">
+            <li class="modal-case-bullet">Mapeo de procesos reales.</li>
+            <li class="modal-case-bullet">Automatización de tareas repetitivas.</li>
+            <li class="modal-case-bullet">Centralización de información.</li>
+            <li class="modal-case-bullet">Interfaces simples para el equipo.</li>
+            <li class="modal-case-bullet">Flujos claros y predecibles.</li>
+          </ul>
+        </div>
 
-                   <!-- resultado -->
-                    <div class="modal-case-section">
-                        <h3 class="modal-case-section-title">Resultado</h3>
-                        <ul class="modal-case-bullets">
-                            <li class="modal-case-bullet">Menos errores operativos.</li>
-                            <li class="modal-case-bullet">Ahorro de tiempo real.</li>
-                            <li class="modal-case-bullet">Información organizada.</li>
-                            <li class="modal-case-bullet">Procesos más eficientes y escalables.</li>
-                        </ul>
-                    </div>
+        <!-- resultado -->
+        <div class="modal-case-section">
+          <h3 class="modal-case-section-title">Resultado</h3>
+          <ul class="modal-case-bullets">
+            <li class="modal-case-bullet">Menos errores operativos.</li>
+            <li class="modal-case-bullet">Ahorro de tiempo real.</li>
+            <li class="modal-case-bullet">Información organizada.</li>
+            <li class="modal-case-bullet">Procesos más eficientes y escalables.</li>
+          </ul>
+        </div>
 
-                    <!-- FAQ -->
-                     <div class="modal-case-section">
-                        <h3 class="modal-case-section-title">Preguntas frecuentes</h3>
-                        <div class="modal-faq">
-                            <detail>
-                                <summary>¿Necesito tener todo definido para empezar?</summary>
-                                <p>No. El proceso incluye análisis y ordenamiento de tu operación.</p>
-                            </detail>
-                            <detail>
-                                <summary>¿Reemplaza mis herramientas actuales?</summary>
-                                <p>Depende. Puede integrarlas o centralizarlas.</p>
-                            </detail>
-                            <detail>
-                                <summary>¿Es algo complejo de usar?</summary>
-                                <p>No. Está diseñado para uso cotidiano sin fricción.</p>
-                            </detail>
-                        </div>
-                     </div>
-
-              </div>
-         </div>
-         
-         <!-- derecha -->
-          <div class="modal-case-right">
-
-            <div class="modal-service-card">
-                <h4>Enfoque</h4>
-                <p>Primero entiendo cómo trabajás. Después diseño el sistema.</p>
-                <p>Nada genérico, todo adaptado a tu operación.</p>
-            </div>
-            <div class="modal-service-card">
-                <h4>Tecnologías</h4>
-                <p>Node.js · Next.js · PostgreSQL · APIs</p>
-            </div>
-            <div class="modal-service-card">
-                <h4>Tiempo estimado</h4>
-                <p>3 a 6 semanas según complejidad</p>
-            </div>
-            <div class="modal-service-card">
-                <h4>Resultado</h4>
-                <p>Un sistema que reduce carga operativa y te da control real del negocio.</p>
-            </div>
+        <!-- FAQ -->
+        <div class="modal-case-section">
+          <h3 class="modal-case-section-title">Preguntas frecuentes</h3>
+          <div class="modal-faq">
+            <detail>
+              <summary>¿Necesito tener todo definido para empezar?</summary>
+              <p>No. El proceso incluye análisis y ordenamiento de tu operación.</p>
+            </detail>
+            <detail>
+              <summary>¿Reemplaza mis herramientas actuales?</summary>
+              <p>Depende. Puede integrarlas o centralizarlas.</p>
+            </detail>
+            <detail>
+              <summary>¿Es algo complejo de usar?</summary>
+              <p>No. Está diseñado para uso cotidiano sin fricción.</p>
+            </detail>
           </div>
-          
-          <!-- footer -->
-           <div class="modal-case-footer">
-             <a href="#contact" class="btn btn-primary btn-sm" data-modal-close data-scroll-target="contact">
-                INICIAR PROYECTO
-            </a>
-            <a href="#services" class="btn btn-outline btn-sm" data-modal-close data-scroll-target="services">
-                VER OTROS SERVICIOS
-            </a>
-
-           </div>
-
-
+        </div>
+      </div>
     </div>
 
+    <!-- derecha -->
+    <div class="modal-case-right">
+      <div class="modal-service-card">
+        <h4>Enfoque</h4>
+        <p>Primero entiendo cómo trabajás. Después diseño el sistema.</p>
+        <p>Nada genérico, todo adaptado a tu operación.</p>
+      </div>
+      <div class="modal-service-card">
+        <h4>Tecnologías</h4>
+        <p>Node.js · Next.js · PostgreSQL · APIs</p>
+      </div>
+      <div class="modal-service-card">
+        <h4>Tiempo estimado</h4>
+        <p>3 a 6 semanas según complejidad</p>
+      </div>
+      <div class="modal-service-card">
+        <h4>Resultado</h4>
+        <p>Un sistema que reduce carga operativa y te da control real del negocio.</p>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <div class="modal-case-footer flex flex-col gap-3 sm:flex-row">
+      <Button
+        fullWidth
+        href="#contact"
+        variant="primary"
+        size="sm"
+        data-modal-close
+        data-scroll-target="contact"
+      >
+        INICIAR PROYECTO
+      </Button>
+      <Button
+        fullWidth
+        href="#services"
+        variant="outline"
+        size="sm"
+        data-modal-close
+        data-scroll-target="services"
+      >
+        VER OTROS SERVICIOS
+      </Button>
+    </div>
+  </div>
 </Modal>
