@@ -1,0 +1,121 @@
+---
+const { className = "" } = Astro.props;
+---
+
+<button
+  id="theme-toggle"
+  type="button"
+  role="switch"
+  aria-checked="false"
+  aria-label="Alternar tema"
+  class={`theme-switch ${className}`}
+  style="touch-action: manipulation; -webkit-tap-highlight-color: transparent;"
+>
+  <span class="theme-slider">
+    <span class="theme-knob">
+      <svg class="theme-moon-dot dot-1" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="50"></circle>
+      </svg>
+      <svg class="theme-moon-dot dot-2" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="50"></circle>
+      </svg>
+      <svg class="theme-moon-dot dot-3" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="50"></circle>
+      </svg>
+
+      <svg class="theme-light-ray ray-1" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="50"></circle>
+      </svg>
+      <svg class="theme-light-ray ray-2" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="50"></circle>
+      </svg>
+      <svg class="theme-light-ray ray-3" viewBox="0 0 100 100" aria-hidden="true">
+        <circle cx="50" cy="50" r="50"></circle>
+      </svg>
+    </span>
+
+    <div class="theme-clouds" aria-hidden="true">
+      <svg class="theme-cloud dark c1" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="50"></circle>
+      </svg>
+      <svg class="theme-cloud dark c2" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="50"></circle>
+      </svg>
+      <svg class="theme-cloud dark c3" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="50"></circle>
+      </svg>
+
+      <svg class="theme-cloud light c4" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="50"></circle>
+      </svg>
+      <svg class="theme-cloud light c5" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="50"></circle>
+      </svg>
+      <svg class="theme-cloud light c6" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="50"></circle>
+      </svg>
+    </div>
+
+    <div class="theme-stars" aria-hidden="true">
+      <svg class="theme-star s1" viewBox="0 0 20 20">
+        <path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z"></path>
+      </svg>
+      <svg class="theme-star s2" viewBox="0 0 20 20">
+        <path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z"></path>
+      </svg>
+      <svg class="theme-star s3" viewBox="0 0 20 20">
+        <path d="M10 0 L12 8 L20 10 L12 12 L10 20 L8 12 L0 10 L8 8 Z"></path>
+      </svg>
+    </div>
+  </span>
+</button>
+
+<script is:inline>
+  const root = document.documentElement;
+  const btn = document.getElementById("theme-toggle");
+  const mq = window.matchMedia("(prefers-color-scheme: dark)");
+
+  const getStoredTheme = () => {
+    try {
+      return localStorage.getItem("theme");
+    } catch {
+      return null;
+    }
+  };
+
+  const applyTheme = (theme) => {
+    const isDark = theme === "dark";
+
+    root.classList.toggle("dark", isDark);
+    btn?.classList.toggle("dark", isDark);
+    btn?.classList.toggle("light", !isDark);
+    btn?.setAttribute("aria-checked", String(isDark));
+
+    try {
+      localStorage.setItem("theme", theme);
+    } catch {}
+  };
+
+  const initialTheme = getStoredTheme() ?? (mq.matches ? "dark" : "light");
+  applyTheme(initialTheme);
+
+  btn?.addEventListener("click", () => {
+    const nextTheme = root.classList.contains("dark") ? "light" : "dark";
+    applyTheme(nextTheme);
+  });
+
+  if (getStoredTheme() === null) {
+    const onChange = (event) => {
+      const stored = getStoredTheme();
+      if (stored === null) {
+        applyTheme(event.matches ? "dark" : "light");
+      }
+    };
+
+    if (typeof mq.addEventListener === "function") {
+      mq.addEventListener("change", onChange);
+    } else {
+      mq.onchange = onChange;
+    }
+  }
+</script>

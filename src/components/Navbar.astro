@@ -1,5 +1,5 @@
 ---
-import ThemeToggle from "./ThemeToggle";
+import ThemeToggle from "./ThemeToggle.astro";
 import Button from "./Button";
 
 import logoIcon from "../assets/logo-o.svg?raw";
@@ -24,7 +24,7 @@ import logoIcon from "../assets/logo-o.svg?raw";
 
       <div class="hidden items-center gap-8 md:flex">
         <ul class="font-heading relative flex items-center gap-8 text-sm" id="nav-container">
-          <span id="nav-pill"></span>
+          <li id="nav-pill" aria-hidden="true" role="presentation"></li>
           <li><a href="#about" class="nav-link group relative px-1 py-2">Acerca de mí</a></li>
           <li><a href="#services" class="nav-link group relative px-1 py-2">Servicios</a></li>
           <li><a href="#projects" class="nav-link group relative px-1 py-2">Proyectos</a></li>
@@ -33,13 +33,13 @@ import logoIcon from "../assets/logo-o.svg?raw";
         </ul>
 
         <div class="flex items-center gap-4">
-          <ThemeToggle client:load className="theme-toggle" />
+          <ThemeToggle class="theme-toggle" />
           <Button href="#contact" variant="outline" size="sm"> Hablemos </Button>
         </div>
       </div>
 
       <div class="flex items-center gap-2 md:hidden">
-        <ThemeToggle client:load className="theme-toggle" />
+        <ThemeToggle class="theme-toggle" />
 
         <button
           id="nav-toggle"
@@ -118,7 +118,7 @@ import logoIcon from "../assets/logo-o.svg?raw";
           <Button href="#contact" variant="outline" size="sm"> Hablemos </Button>
 
           <div class="flex items-center justify-start">
-            <ThemeToggle client:load className="theme-toggle" />
+            <ThemeToggle class="theme-toggle" />
           </div>
         </div>
       </div>
