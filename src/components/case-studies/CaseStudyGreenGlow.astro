@@ -1,15 +1,17 @@
 ---
 import Modal from "../../components/Modal.astro";
 import Button from "../Button";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 
 import greenGlowImg from "../../assets/projects/GreenGlow.webp";
 import greenGlowIIImg from "../../assets/projects/GreenGlowII.webp";
 import greenGlowIIIImg from "../../assets/projects/GreenGlowIII.webp";
 
-const screenshots = [
-  { src: greenGlowImg.src, alt: "Vista home de Green Glow" },
-  { src: greenGlowIIImg.src, alt: "Vista de producto de Green Glow" },
-  { src: greenGlowIIIImg.src, alt: "Vista de categorias de Green Glow" },
+const screenshots: { image: ImageMetadata; alt: string }[] = [
+  { image: greenGlowImg, alt: "Vista home de Green Glow" },
+  { image: greenGlowIIImg, alt: "Vista de producto de Green Glow" },
+  { image: greenGlowIIIImg, alt: "Vista de categorias de Green Glow" },
 ];
 
 import astroIconRaw from "../../assets/tech-icons/astro.svg?raw";
@@ -132,14 +134,22 @@ const techStack = [
     <!-- derecha -->
     <section class="modal-case-right">
       {
-        screenshots.map(({ src, alt }) => (
+        screenshots.map(({ image, alt }) => (
           <div
             class="modal-case-screenshot"
-            data-lightbox-src={src}
+            data-lightbox-src={image}
             data-lightbox-alt={alt}
             data-lightbox-group="greenglow"
           >
-            <img src={src} alt={alt} loading="lazy" />
+            <Image
+              src={image}
+              alt={alt}
+              class="h-auto w-full object-cover"
+              widths={[480, 720, 960, 1200]}
+              sizes="(max-width: 768px) 100vw, 900px"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
         ))
       }

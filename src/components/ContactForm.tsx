@@ -100,7 +100,7 @@ function BrandSelect({
         onClick={() => setOpen((prev) => !prev)}
         className="border-accent/35 font-body text-text-primary hover:border-accent/55 focus:border-accent/60 focus:ring-accent/20 flex w-full items-center justify-between gap-4 rounded-2xl border bg-white/3 px-4 py-3 text-left text-sm transition outline-none focus:ring-2 sm:text-base"
       >
-        <span className={selected ? "text-text-primary" : "text-text-primary/45"}>
+        <span className={selected ? "text-text-primary" : "text-text-primary/60"}>
           {selected?.label ?? placeholder}
         </span>
 
@@ -328,7 +328,7 @@ export default function ContactForm() {
             type="text"
             id="name"
             name="name"
-            className="font-body text-text-primary placeholder:text-text-primary/40 focus:border-accent/50 focus:ring-accent/20 w-full rounded-2xl border border-white/10 bg-white/3 px-4 py-3 text-sm transition outline-none focus:ring-2 sm:text-base"
+            className="font-body text-text-primary placeholder:text-text-primary/60 focus:border-accent/50 focus:ring-accent/20 w-full rounded-2xl border border-white/10 bg-white/3 px-4 py-3 text-sm transition outline-none focus:ring-2 sm:text-base"
             placeholder="Juan Pérez"
             value={formData.name}
             onChange={handleChange}
@@ -356,7 +356,7 @@ export default function ContactForm() {
             type="email"
             id="email"
             name="email"
-            className="font-body text-text-primary placeholder:text-text-primary/40 focus:border-accent/50 focus:ring-accent/20 w-full rounded-2xl border border-white/10 bg-white/3 px-4 py-3 text-sm transition outline-none focus:ring-2 md:text-base"
+            className="font-body text-text-primary placeholder:text-text-primary/60 focus:border-accent/50 focus:ring-accent/20 w-full rounded-2xl border border-white/10 bg-white/3 px-4 py-3 text-sm transition outline-none focus:ring-2 md:text-base"
             placeholder="tu@nombre.com"
             value={formData.email}
             onChange={handleChange}
@@ -386,7 +386,7 @@ export default function ContactForm() {
           type="text"
           id="company"
           name="company"
-          className="font-body text-text-primary placeholder:text-text-primary/40 focus:border-accent/50 focus:ring-accent/20 w-full rounded-2xl border border-white/10 bg-white/3 px-4 py-3 text-sm transition outline-none focus:ring-2 md:text-base"
+          className="font-body text-text-primary placeholder:text-text-primary/60 focus:border-accent/50 focus:ring-accent/20 w-full rounded-2xl border border-white/10 bg-white/3 px-4 py-3 text-sm transition outline-none focus:ring-2 md:text-base"
           placeholder="Nombre de la Empresa"
           value={formData.company}
           onChange={handleChange}
@@ -456,7 +456,7 @@ export default function ContactForm() {
         <textarea
           id="message"
           name="message"
-          className="font-body text-text-primary placeholder:text-text-primary/40 focus:border-accent/50 focus:ring-accent/20 min-h-35 w-full resize-y rounded-2xl border border-white/10 bg-white/3 px-4 py-3 text-sm transition outline-none focus:ring-2 md:text-base"
+          className="font-body text-text-primary placeholder:text-text-primary/60 focus:border-accent/50 focus:ring-accent/20 min-h-35 w-full resize-y rounded-2xl border border-white/10 bg-white/3 px-4 py-3 text-sm transition outline-none focus:ring-2 md:text-base"
           placeholder="Contame el objetivo, lo principal que querés resolver y cualquier dato útil."
           value={formData.message}
           onChange={handleChange}

@@ -98,11 +98,11 @@ const badgeClasses: Record<Props["status"], string> = {
       </ul>
     </div>
 
-    <div class="mt-6 flex flex-wrap items-center gap-3" aria-label="Tecnologías utilizadas">
+    <div class="mt-6 flex flex-wrap items-center gap-3" role="group" aria-hidden="true">
       {
         techIcons.map(({ icon, name }, index) => (
           <>
-            <span class="project-card-tech-icon" set:html={icon} aria-hidden="true" title={name} />
+            <span class="project-card-tech-icon" set:html={icon} title={name} />
             {index < techIcons.length - 1 && (
               <span class="project-card-tech-dot" aria-hidden="true" />
             )}
