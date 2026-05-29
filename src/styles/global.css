@@ -2623,6 +2623,8 @@
   /* -------- GLOW -------- */
   .glow-layer {
     @apply pointer-events-none absolute inset-0 overflow-hidden;
+    isolation: isolate;
+    contain: paint;
     z-index: 0;
   }
   .glow {
@@ -2665,10 +2667,11 @@
 
   @media (max-width: 640px) {
     .glow {
-      width: clamp(300px, 72vw, 520px);
-      height: clamp(300px, 72vw, 520px);
-      filter: blur(clamp(90px, 14vw, 180px));
-      opacity: 0.38;
+      width: clamp(240px, 52vw, 420px);
+      height: clamp(240px, 52vw, 420px);
+      filter: blur(clamp(60px, 10vw, 140px));
+      opacity: 0.28;
+      mix-blend-mode: normal;
     }
     .glow-left {
       transform: translate3d(-92%, -60%, 0);

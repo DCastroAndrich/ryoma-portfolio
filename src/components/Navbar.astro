@@ -65,9 +65,12 @@ import logoIcon from "../assets/logo-o.svg?raw";
   <div
     id="mobile-menu"
     class="mobile-menu pointer-events-none fixed inset-0 z-40 opacity-0 transition-all duration-300 md:hidden"
-    role="menu"
+    role="dialog"
+    aria-modal="true"
     aria-labelledby="nav-toggle"
     aria-hidden="true"
+    hidden
+    inert
   >
     <div id="mobile-backdrop" class="mobile-backdrop bg-bg backdrop-blur-sm" aria-hidden="true">
     </div>
@@ -226,14 +229,29 @@ import logoIcon from "../assets/logo-o.svg?raw";
       const openMenu = () => {
         nav.classList.add("menu-open");
         toggleBtn?.setAttribute("aria-expanded", "true");
-        mobileMenu?.setAttribute("aria-hidden", "false");
+        if (mobileMenu) {
+          mobileMenu.hidden = false;
+          requestAnimationFrame(() => {
+            mobileMenu.inert = false;
+            mobileMenu.setAttribute("aria-hidden", "false");
+          });
+        }
+
         document.documentElement.style.overflow = "hidden";
       };
 
       const closeMenu = () => {
         nav.classList.remove("menu-open");
         toggleBtn?.setAttribute("aria-expanded", "false");
-        mobileMenu?.setAttribute("aria-hidden", "true");
+
+        if (mobileMenu) {
+          mobileMenu.setAttribute("aria-hidden", "true");
+          mobileMenu.inert = true;
+          setTimeout(() => {
+            mobileMenu.hidden = true;
+          }, 300);
+        }
+
         document.documentElement.style.overflow = "";
       };
 
@@ -242,9 +260,9 @@ import logoIcon from "../assets/logo-o.svg?raw";
       handleScroll();
       window.addEventListener("scroll", handleScroll, { passive: true });
 
-      toggleBtn?.addEventListener("click", toggleMenu);
-      closeBtn?.addEventListener("click", closeMenu);
       mobileBackdrop?.addEventListener("click", closeMenu);
+      closeBtn?.addEventListener("click", closeMenu);
+      toggleBtn?.addEventListener("click", toggleMenu);
 
       mobileMenu?.querySelectorAll("a[href^='#']").forEach((a) => {
         a.addEventListener("click", closeMenu);

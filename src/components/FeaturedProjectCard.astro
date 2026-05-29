@@ -137,8 +137,8 @@ const badgeClasses: Record<Props["status"], string> = {
                 src={screenshot}
                 alt={screenshotAlt}
                 class="browser-screenshot"
-                widths={[480, 720, 960, 1200]}
-                sizes="(max-width: 1024px) 100vw, 50vw"
+                widths={[384, 512, 640, 768, 960]}
+                sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 1024px) 50vw, 50vw"
                 loading="lazy"
                 decoding="async"
               />
