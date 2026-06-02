@@ -106,7 +106,12 @@ function updateNav() {
   next.disabled = currentStep === processCases.length - 1;
 }
 
+let isInitialized = false;
+
 export function initProcessModal() {
+  if (isInitialized) return;
+  isInitialized = true;
+
   document.querySelectorAll("[data-process-open]").forEach((el) => {
     el.addEventListener("click", (e) => {
       e.preventDefault();

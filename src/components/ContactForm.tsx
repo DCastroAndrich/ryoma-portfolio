@@ -1,24 +1,6 @@
-import { useState, useEffect, type FormEvent, type ChangeEvent, useRef } from "react";
-import { ChevronDown, CheckCircle2, Check } from "lucide-react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
+import { CheckCircle2 } from "lucide-react";
 import Button from "./Button";
-
-/* Types */
-
-type SelectOption = {
-  value: string;
-  label: string;
-};
-
-interface BrandSelectProps {
-  id: string;
-  label: string;
-  required?: boolean;
-  value: string;
-  onChange: (value: string) => void;
-  options: SelectOption[];
-  error?: string;
-  placeholder: string;
-}
 
 type ProjectType =
   | ""
@@ -30,10 +12,9 @@ type ProjectType =
   | "Otro";
 
 type Budget = "" | "< $1.000" | "$1.000 - $3.000" | "$3.000 - $7.000" | "> $7.000";
-
 type Timeline = "" | "1-4 Semanas" | "1-2 Meses" | "3+ Meses" | "A definir";
 
-interface FormData {
+type FormState = {
   name: string;
   email: string;
   company: string;
@@ -42,201 +23,75 @@ interface FormData {
   timeline: Timeline;
   message: string;
   privacyAccepted: boolean;
-}
-interface FormErrors {
-  name?: string;
-  email?: string;
-  budget?: string;
-  projectType?: string;
-  timeline?: string;
-  privacyAccepted?: string;
-}
+};
 
-function BrandSelect({
-  id,
-  label,
-  required = false,
-  value,
-  onChange,
-  options,
-  error,
-  placeholder,
-}: BrandSelectProps) {
-  const [open, setOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
+type FormErrors = Partial<Record<keyof FormState, string>>;
 
-  useEffect(() => {
-    function onPointerDown(e: PointerEvent) {
-      if (!rootRef.current) return;
-      if (!rootRef.current.contains(e.target as Node)) setOpen(false);
-    }
+const PROJECT_TYPES: Array<{ value: ProjectType; label: string }> = [
+  { value: "", label: "Seleccioná una opción." },
+  { value: "Landing/Web Institucional", label: "Landing/Web Institucional" },
+  { value: "E-Commerce", label: "E-Commerce" },
+  { value: "Plataforma Web / App", label: "Plataforma Web / App" },
+  { value: "Backend / API", label: "Backend / API" },
+  { value: "Consultoría / Auditoría", label: "Consultoría / Auditoría" },
+  { value: "Otro", label: "Otro" },
+];
 
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") setOpen(false);
-    }
+const BUDGETS: Array<{ value: Budget; label: string }> = [
+  { value: "", label: "Seleccioná un presupuesto." },
+  { value: "< $1.000", label: "< $1.000" },
+  { value: "$1.000 - $3.000", label: "$1.000 - $3.000" },
+  { value: "$3.000 - $7.000", label: "$3.000 - $7.000" },
+  { value: "> $7.000", label: "> $7.000" },
+];
 
-    document.addEventListener("pointerdown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
+const TIMELINES: Array<{ value: Timeline; label: string }> = [
+  { value: "", label: "Seleccioná un plazo estimado." },
+  { value: "1-4 Semanas", label: "1-4 Semanas" },
+  { value: "1-2 Meses", label: "1-2 Meses" },
+  { value: "3+ Meses", label: "3+ Meses" },
+  { value: "A definir", label: "A definir" },
+];
 
-    return () => {
-      document.removeEventListener("pointerdown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, []);
-
-  const selected = options.find((opt) => opt.value === value);
-
-  return (
-    <div ref={rootRef} className="relative flex flex-col gap-2">
-      <label htmlFor={id} className="font-heading text-text-primary/75 text-[11px] sm:text-xs font-medium tracking-[0.12em] uppercase">
-        {label} {required && <span className="text-primary">*</span>}
-      </label>
-
-      <button
-        id={id}
-        type="button"
-        aria-haspopup="listbox"
-        aria-expanded={open}
-        onClick={() => setOpen((prev) => !prev)}
-        className="border-accent/35 font-body text-text-primary hover:border-accent/55 focus:border-accent/60 focus:ring-accent/20 flex w-full items-center justify-between gap-4 rounded-2xl border bg-white/3 px-4 py-3 text-left text-sm transition outline-none focus:ring-2 sm:text-base"
-      >
-        <span className={selected ? "text-text-primary" : "text-text-primary/60"}>
-          {selected?.label ?? placeholder}
-        </span>
-
-        <ChevronDown
-          size={16}
-          strokeWidth={1.8}
-          className={`shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
-        />
-      </button>
-
-      {open && (
-        <div
-          role="listbox"
-          className="absolute top-[calc(100%+0.5rem)] left-0 z-30 w-full overflow-hidden rounded-2xl border border-white/10 bg-[#101114] shadow-[0_20px_60px_rgba(0,0,0,0.45)]"
-        >
-          {options.map((opt) => {
-            const active = opt.value === value;
-
-            return (
-              <button
-                key={opt.value}
-                type="button"
-                role="option"
-                aria-selected={active}
-                onClick={() => {
-                  onChange(opt.value);
-                  setOpen(false);
-                }}
-                className={`flex w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm transition sm:text-base ${active ? "bg-accent/10 text-text-primary" : "text-text-primary/80 hover:text-text-primary hover:bg-white/5"}`}
-              >
-                <span>{opt.label}</span>
-                {active && <Check size={16} strokeWidth={2} className="text-accent" />}
-              </button>
-            );
-          })}
-        </div>
-      )}
-
-      {error && (
-        <span className="text-sm text-red-300" role="alert">
-          {error}
-        </span>
-      )}
-    </div>
-  );
-}
-
-/* validation */
-function validate(data: FormData): FormErrors {
+function validate(data: FormState): FormErrors {
   const errors: FormErrors = {};
 
   if (!data.name.trim()) errors.name = "El nombre es requerido.";
+
   if (!data.email.trim()) {
     errors.email = "El email es requerido.";
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
     errors.email = "Ingresá un email válido.";
   }
+
   if (!data.projectType) errors.projectType = "Seleccioná un tipo de proyecto.";
   if (!data.timeline) errors.timeline = "Seleccioná un plazo estimado.";
-  if (!data.privacyAccepted) errors.privacyAccepted = "Debés aceptar la política de privacidad.";
+  if (!data.privacyAccepted) {
+    errors.privacyAccepted = "Debés aceptar la política de privacidad.";
+  }
 
   return errors;
 }
 
-/* subcomponents */
-interface SelectFieldProps {
-  id: keyof Pick<FormData, "projectType" | "budget" | "timeline">;
-  label: string;
-  required?: boolean;
-  value: string;
-  onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-  options: { value: string; label: string }[];
-  error?: string;
-  placeholder?: string;
+function fieldClassName(hasError?: boolean) {
+  return [
+    "border-accent/35 font-body text-text-primary placeholder:text-text-primary/35 hover:border-accent/55 focus:border-accent/60 focus:ring-accent/20 flex w-full rounded-2xl border bg-white/3 px-4 py-3 text-sm transition outline-none focus:ring-2 sm:text-base",
+    hasError ? "border-red-400/70 focus:ring-red-400/20" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 }
 
-function SelectField({
-  id,
-  label,
-  required,
-  value,
-  onChange,
-  options,
-  error,
-  placeholder = "Seleccioná una opción.",
-}: SelectFieldProps) {
-  return (
-    <div className={`flex flex-col gap-2 ${error ? "" : ""}`}>
-      <label
-        htmlFor={id}
-        className="font-heading text-text-primary/75 text-[11px] sm:text-xs font-medium tracking-[0.12em] uppercase"
-      >
-        {label}
-        {required && <span className="text-magenta">*</span>}
-      </label>
-
-      <div className="relative">
-        <select
-          id={id}
-          name={id}
-          value={value}
-          onChange={onChange}
-          aria-invalid={!!error}
-          aria-describedby={error ? `${id}-error` : undefined}
-          className="font-body text-text-primary placeholder:text-text-primary/60 focus:border-cyan/50 focus:ring-cyan/20 w-full appearance-none rounded-2xl border border-white/10 bg-white/3 px-4 py-3 pr-11 text-sm transition outline-none sm:text-base"
-        >
-          <option value="" disabled>
-            {placeholder}
-          </option>
-          {options.map((opt) => (
-            <option key={opt.value} value={opt.value}>
-              {opt.value}
-            </option>
-          ))}
-        </select>
-
-        <span
-          className="text-text-primary/60 pointer-events-none absolute top-1/2 right-4 -translate-y-1/2"
-          aria-hidden="true"
-        >
-          <ChevronDown size={16} strokeWidth={1.7} />
-        </span>
-      </div>
-
-      {error && (
-        <span id={`${id}-error`} className="text-sm text-red-300" role="alert">
-          {error}
-        </span>
-      )}
-    </div>
-  );
+function labelClassName() {
+  return "text-text-primary/90 font-body text-sm";
 }
 
-/* Main component */
+function errorClassName() {
+  return "text-sm text-red-300";
+}
+
 export default function ContactForm() {
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<FormState>({
     name: "",
     email: "",
     company: "",
@@ -251,36 +106,28 @@ export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  /* handlers */
   function handleChange(
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) {
-    const { name, value, type } = e.target;
-    const checked = type === "checkbox" ? (e.target as HTMLInputElement).checked : undefined;
+    const { name, value, type } = e.currentTarget;
+
+    const nextValue =
+      type === "checkbox" ? (e.currentTarget as HTMLInputElement).checked : value;
 
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: nextValue,
     }));
 
-    if (errors[name as keyof FormErrors]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    if (errors[name as keyof FormState]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: undefined,
+      }));
     }
   }
 
-  const handleSelectChange =
-    (name: keyof Pick<FormData, "projectType" | "budget" | "timeline">) => (value: string) => {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-
-      if (errors[name]) {
-        setErrors((prev) => ({ ...prev, [name]: undefined }));
-      }
-    };
-
-  async function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const newErrors = validate(formData);
@@ -290,181 +137,183 @@ export default function ContactForm() {
     }
 
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1200));
+
+    await new Promise((resolve) => window.setTimeout(resolve, 900));
+
     setIsSubmitting(false);
     setSubmitted(true);
   }
 
   if (submitted) {
     return (
-      <div
-        className="flex items-center gap-3 rounded-[28px] border border-white/10 bg-white/3 p-6 md:p-8"
-        role="status"
-      >
-        <CheckCircle2 size={20} strokeWidth={1.5} className="text-accent" />
-        <span className="font-body text-text-primary/90 text-sm sm:text-base">
-          Consulta enviada. Te respondo dentro de las próximas 48 horas hábiles.
-        </span>
+      <div className="border-accent/20 bg-white/3 flex flex-col items-start gap-4 rounded-3xl border p-6 sm:p-8">
+        <div className="bg-accent/12 text-accent flex h-12 w-12 items-center justify-center rounded-full">
+          <CheckCircle2 className="h-6 w-6" aria-hidden="true" />
+        </div>
+
+        <div className="space-y-1">
+          <h3 className="font-heading text-text-primary text-xl">
+            Consulta enviada.
+          </h3>
+          <p className="font-body text-text-primary/80">
+            Te respondo dentro de las próximas 48 horas hábiles.
+          </p>
+        </div>
       </div>
     );
   }
+
   return (
-    <form
-      onSubmit={handleSubmit}
-      noValidate
-      className="w-full min-w-0 rounded-[28px] border border-white/10 bg-white/3 p-6 md:p-8 flex flex-col gap-6 md:gap-8"
-    >
-      {/* nombre + email */}
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        {/* nombre */}
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="grid gap-5 md:grid-cols-2">
         <div className="flex flex-col gap-2">
-          <label
-            htmlFor="name"
-            className="font-heading text-text-primary/75 text-[11px] sm:text-xs font-medium tracking-[0.12em] uppercase"
-          >
-            Nombre <span className="text-primary">*</span>
+          <label htmlFor="name" className={labelClassName()}>
+            Nombre *
           </label>
           <input
-            type="text"
             id="name"
             name="name"
-            className="font-body text-text-primary placeholder:text-text-primary/60 focus:border-accent/50 focus:ring-accent/20 w-full rounded-2xl border border-white/10 bg-white/3 px-4 py-3 text-sm transition outline-none focus:ring-2 sm:text-base"
-            placeholder="Juan Pérez"
+            type="text"
             value={formData.name}
             onChange={handleChange}
-            autoComplete="name"
+            className={fieldClassName(!!errors.name)}
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? "name-error" : undefined}
+            autoComplete="name"
           />
-
           {errors.name && (
-            <span id="name-error" className="text-sm text-red-300" role="alert">
+            <span id="name-error" className={errorClassName()} role="alert">
               {errors.name}
             </span>
           )}
         </div>
-        {/* email */}
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="email"
-            className="font-heading text-text-primary/75 text-[11px] sm:text-xs font-medium tracking-[0.12em] uppercase"
-          >
-            Email <span className="text-primary">*</span>
-          </label>
 
+        <div className="flex flex-col gap-2">
+          <label htmlFor="email" className={labelClassName()}>
+            Email *
+          </label>
           <input
-            type="email"
             id="email"
             name="email"
-            className="font-body text-text-primary placeholder:text-text-primary/60 focus:border-accent/50 focus:ring-accent/20 w-full rounded-2xl border border-white/10 bg-white/3 px-4 py-3 text-sm transition outline-none focus:ring-2 md:text-base"
-            placeholder="tu@nombre.com"
+            type="email"
             value={formData.email}
             onChange={handleChange}
-            autoComplete="email"
+            className={fieldClassName(!!errors.email)}
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? "email-error" : undefined}
+            autoComplete="email"
           />
-
           {errors.email && (
-            <span id="email-error" className="text-sm text-red-300" role="alert">
+            <span id="email-error" className={errorClassName()} role="alert">
               {errors.email}
             </span>
           )}
         </div>
       </div>
 
-      {/* Empresa / Proyecto */}
       <div className="flex flex-col gap-2">
-        <label
-          htmlFor="company"
-          className="font-heading text-text-primary/75 text-[11px] sm:text-xs font-medium tracking-[0.12em] uppercase"
-        >
-          Empresa / Poryecto <span className="text-text-primary/55 font-normal">(opcional)</span>
+        <label htmlFor="company" className={labelClassName()}>
+          Empresa / Proyecto (opcional)
         </label>
-
         <input
-          type="text"
           id="company"
           name="company"
-          className="font-body text-text-primary placeholder:text-text-primary/60 focus:border-accent/50 focus:ring-accent/20 w-full rounded-2xl border border-white/10 bg-white/3 px-4 py-3 text-sm transition outline-none focus:ring-2 md:text-base"
-          placeholder="Nombre de la Empresa"
+          type="text"
           value={formData.company}
           onChange={handleChange}
+          className={fieldClassName()}
           autoComplete="organization"
         />
       </div>
 
-      {/* Tipo de poryecto */}
-      <BrandSelect
-        id="projectType"
-        label="Tipo de proyecto"
-        required
-        value={formData.projectType}
-        onChange={handleSelectChange("projectType")}
-        options={[
-          { value: "Landing/Web Institucional", label: "Landing/Web Institucional" },
-          { value: "E-Commerce", label: "E-Commerce" },
-          { value: "Plataforma Web / App", label: "Plataforma Web / App" },
-          { value: "Backend / API", label: "Backend / API" },
-          { value: "Consultoría / Auditoría", label: "Consultoría / Auditoría" },
-          { value: "Otro", label: "Otro" },
-        ]}
-        error={errors.projectType}
-        placeholder="Seleccioná un tipo de proyecto"
-      />
+      <div className="grid gap-5 md:grid-cols-2">
+        <div className="flex flex-col gap-2">
+          <label htmlFor="projectType" className={labelClassName()}>
+            Tipo de proyecto *
+          </label>
+          <select
+            id="projectType"
+            name="projectType"
+            value={formData.projectType}
+            onChange={handleChange}
+            className={fieldClassName(!!errors.projectType)}
+            aria-invalid={!!errors.projectType}
+            aria-describedby={errors.projectType ? "projectType-error" : undefined}
+          >
+            {PROJECT_TYPES.map((option) => (
+              <option key={option.label} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+          {errors.projectType && (
+            <span id="projectType-error" className={errorClassName()} role="alert">
+              {errors.projectType}
+            </span>
+          )}
+        </div>
 
-      {/* Prsupuesto + Plazo */}
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-        <BrandSelect
-          id="budget"
-          label="Presupuesto"
-          value={formData.budget}
-          onChange={handleSelectChange("budget")}
-          options={[
-            { value: "< $1.000", label: "< $1.000" },
-            { value: "$1.000 - $3.000", label: "$1.000 - $3.000" },
-            { value: "$3.000 - $7.000", label: "$3.000 - $7.000" },
-            { value: "> $7.000", label: "> $7.000" },
-          ]}
-          placeholder="< $1.000"
-        />
-        <BrandSelect
-          id="timeline"
-          label="Plazo estimado"
-          required
-          value={formData.timeline}
-          onChange={handleSelectChange("timeline")}
-          options={[
-            { value: "1-4 Semanas", label: "1-4 Semanas" },
-            { value: "1-2 Meses", label: "1-2 Meses" },
-            { value: "3+ Meses", label: "3+ Meses" },
-            { value: "A definir", label: "A definir" },
-          ]}
-          error={errors.timeline}
-          placeholder="1-4 Semanas"
-        />
+        <div className="flex flex-col gap-2">
+          <label htmlFor="budget" className={labelClassName()}>
+            Presupuesto
+          </label>
+          <select
+            id="budget"
+            name="budget"
+            value={formData.budget}
+            onChange={handleChange}
+            className={fieldClassName()}
+          >
+            {BUDGETS.map((option) => (
+              <option key={option.label} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
-      {/* Mensaje */}
       <div className="flex flex-col gap-2">
-        <label
-          htmlFor="message"
-          className="font-heading text-text-primary/75 text-[11px] sm:text-xs font-medium tracking-[0.12em] uppercase"
+        <label htmlFor="timeline" className={labelClassName()}>
+          Plazo estimado *
+        </label>
+        <select
+          id="timeline"
+          name="timeline"
+          value={formData.timeline}
+          onChange={handleChange}
+          className={fieldClassName(!!errors.timeline)}
+          aria-invalid={!!errors.timeline}
+          aria-describedby={errors.timeline ? "timeline-error" : undefined}
         >
+          {TIMELINES.map((option) => (
+            <option key={option.label} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
+        {errors.timeline && (
+          <span id="timeline-error" className={errorClassName()} role="alert">
+            {errors.timeline}
+          </span>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <label htmlFor="message" className={labelClassName()}>
           Mensaje
         </label>
         <textarea
           id="message"
           name="message"
-          className="font-body text-text-primary placeholder:text-text-primary/60 focus:border-accent/50 focus:ring-accent/20 min-h-35 w-full resize-y rounded-2xl border border-white/10 bg-white/3 px-4 py-3 text-sm transition outline-none focus:ring-2 md:text-base"
-          placeholder="Contame el objetivo, lo principal que querés resolver y cualquier dato útil."
+          rows={5}
           value={formData.message}
           onChange={handleChange}
-          rows={5}
+          className={`${fieldClassName()} min-h-35 resize-y`}
+          placeholder="Contame en pocas palabras qué necesitás, qué objetivo tenés y para cuándo te gustaría arrancar."
         />
       </div>
 
-      {/* checkbox */}
       <div className={`flex flex-col gap-2 ${errors.privacyAccepted ? "pt-1" : ""}`}>
         <label className="text-text-primary/85 flex items-start gap-3 text-sm">
           <input
@@ -481,20 +330,21 @@ export default function ContactForm() {
             <a
               href="/privacy"
               target="_blank"
-              className="font-body hover:decoration-accent underline decoration-white/35 underline-offset-2"
+              rel="noreferrer"
+              className="font-body underline decoration-white/35 underline-offset-2 hover:decoration-accent"
             >
               Pólitica de privacidad.
             </a>
           </span>
         </label>
+
         {errors.privacyAccepted && (
-          <span id="privacy-error" className="text-sm text-red-300" role="alert">
+          <span id="privacy-error" className={errorClassName()} role="alert">
             {errors.privacyAccepted}
           </span>
         )}
       </div>
 
-      {/* submit */}
       <div className="pt-2">
         <Button
           fullWidth
@@ -503,38 +353,8 @@ export default function ContactForm() {
           size="lg"
           disabled={isSubmitting}
           aria-busy={isSubmitting}
-
         >
-          {isSubmitting ? (
-            <>
-              <svg
-                className="animate-spin"
-                width={18}
-                height={18}
-                viewBox="0 0 24 24"
-                fill="none"
-                aria-hidden="true"
-              >
-                <circle
-                  cx={12}
-                  cy={12}
-                  r={10}
-                  stroke="currentColor"
-                  strokeWidth={2.5}
-                  strokeOpacity={0.25}
-                />
-                <path
-                  d="M12 2a10 10 0 0 1 10 10"
-                  stroke="currentColor"
-                  strokeWidth={2.5}
-                  strokeLinecap="round"
-                />
-              </svg>
-              Enviando...
-            </>
-          ) : (
-            "ENVIAR CONSULTA"
-          )}
+          {isSubmitting ? "ENVIANDO..." : "ENVIAR CONSULTA"}
         </Button>
       </div>
     </form>
