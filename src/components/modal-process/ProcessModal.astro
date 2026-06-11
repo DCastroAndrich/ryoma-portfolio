@@ -5,14 +5,12 @@ import Button from "../Button";
 
 <Modal id="modal-process" variant="document" ariaLabel="Proceso de trabajo">
   <div class="modal-layout-document">
-    <!-- header -->
     <div class="modal-document-header modal-process-header">
       <span class="modal-process-badge" id="process-step-badge"></span>
       <h2 class="modal-document-title modal-process-title" id="process-step-title"></h2>
       <p class="modal-process-intro" id="process-step-intro"></p>
     </div>
 
-    <!-- body -->
     <div class="modal-document-body modal-process-body">
       <div class="modal-process-block is-problem">
         <h2>El Problema</h2>
@@ -35,9 +33,7 @@ import Button from "../Button";
       </div>
     </div>
 
-    <!-- navegacion -->
-    <div class="modal-process-nav flec flex-col gap-3 sm:flex-row">
-      <!-- prev -->
+    <div class="modal-process-nav flex flex-col gap-3 sm:flex-row">
       <Button
         id="process-prev"
         type="button"
@@ -62,13 +58,13 @@ import Button from "../Button";
         </span>
         Paso anterior
       </Button>
-      <!-- progess -->
+
       <div class="process-nav-progress">
         <span id="process-current"></span>
         <span class="process-nav-separator">/</span>
         <span id="process-total"></span>
       </div>
-      <!-- next -->
+
       <Button
         fullWidth
         className="process-nav-btn process-nav-btn-next"

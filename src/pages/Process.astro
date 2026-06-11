@@ -4,6 +4,7 @@ import ProcessIcon from "../components/ProcessIcon.tsx";
 import Button from "../components/Button";
 
 import ProcessModal from "../components/modal-process/ProcessModal.astro";
+import { number } from "astro:schema";
 
 const steps = [
   {
@@ -126,13 +127,14 @@ const steps = [
                       <strong>Entregable:</strong> {step.deliverable}
                     </p>
 
-                    <div class="pt-1">
+                    <div class="w-full pt-1">
                       <Button
                         type="button"
                         variant="link"
                         size="sm"
                         fullWidth
                         data-process-open={index}
+                        data-modal-open="modal-process"
                       >
                         Ver como la aplicamos
                       </Button>
@@ -146,6 +148,9 @@ const steps = [
       </div>
 
       <ProcessModal />
+      <script>
+        import "../scripts/process-modal";
+      </script>
     </div>
   </section>
 </Layout>

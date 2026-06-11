@@ -13,7 +13,7 @@ const processCases: ProcessCase[] = [
     badge: "Paso 01",
     title: "Descubrimiento",
     intro: "Entender el problema real antes de diseñar cualquier solución.",
-    problem: "El cleinte tenía ventas fragmentadas entre canales sin flujo claro.",
+    problem: "El cliente tenía ventas fragmentadas entre canales sin flujo claro.",
     actions: [
       "Entrevistas con stakeholders",
       "Análisis de flujo actual",
@@ -57,95 +57,142 @@ const processCases: ProcessCase[] = [
 
 let currentStep = -1;
 let direction: "next" | "prev" = "next";
+let initialized = false;
 
-const modal = document.getElementById("modal-process");
+function getModal(): HTMLElement | null {
+  return document.getElementById("modal-process") as HTMLElement | null;
+}
+
+function setText(modal: HTMLElement, selector: string, value: string) {
+  const el = modal.querySelector<HTMLElement>(selector);
+  if (el) el.textContent = value;
+}
+
+function updateNav(modal: HTMLElement) {
+  const prev = modal.querySelector<HTMLButtonElement>("#process-prev");
+  const next = modal.querySelector<HTMLButtonElement>("#process-next");
+
+  if (prev) prev.disabled = currentStep <= 0;
+  if (next) next.disabled = currentStep >= processCases.length - 1;
+}
 
 function renderStep(index: number) {
+  const modal = getModal();
   const data = processCases[index];
+  if (!modal || !data) return;
 
-  if (!data || !modal) return;
+  modal.setAttribute("data-direction", direction);
+  modal.classList.add("is-switching");
 
-  modal?.setAttribute("data-direction", direction);
-  modal?.classList.add("is-switching");
+  window.setTimeout(() => {
+    setText(modal, "#process-step-badge", data.badge);
+    setText(modal, "#process-step-title", data.title);
+    setText(modal, "#process-step-intro", data.intro);
+    setText(modal, "#process-step-problem", data.problem);
+    setText(modal, "#process-step-decision", data.decision);
+    setText(modal, "#process-step-impact", data.impact);
 
-  setTimeout(() => {
-    (document.getElementById("process-step-badge") as HTMLElement).textContent = data.badge;
-    (document.getElementById("process-step-title") as HTMLElement).textContent = data.title;
-    (document.getElementById("process-step-intro") as HTMLElement).textContent = data.intro;
-    (document.getElementById("process-step-problem") as HTMLElement).textContent = data.problem;
-    (document.getElementById("process-step-decision") as HTMLElement).textContent = data.decision;
-    (document.getElementById("process-step-impact") as HTMLElement).textContent = data.impact;
+    const actionList = modal.querySelector<HTMLUListElement>("#process-step-actions");
+    if (actionList) {
+      actionList.innerHTML = "";
+      data.actions.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        actionList.appendChild(li);
+      });
+    }
 
-    const actionList = document.getElementById("process-step-actions") as HTMLUListElement | null;
+    const currentEl = modal.querySelector<HTMLElement>("#process-current");
+    if (currentEl) currentEl.textContent = String(index + 1);
 
-    if (!actionList) return;
+    const totalEl = modal.querySelector<HTMLElement>("#process-total");
+    if (totalEl) totalEl.textContent = String(processCases.length);
 
-    actionList.innerHTML = "";
-
-    (data.actions as string[]).forEach((item) => {
-      const li = document.createElement("li");
-      li.textContent = item;
-      actionList.appendChild(li);
-    });
-    (document.getElementById("process-current") as HTMLElement).textContent = String(index + 1);
-    (document.getElementById("process-total") as HTMLElement).textContent = String(
-      processCases.length,
-    );
-
-    updateNav();
-
-    modal?.classList.remove("is-switching");
+    updateNav(modal);
+    modal.classList.remove("is-switching");
   }, 300);
 }
 
-function updateNav() {
-  const prev = document.getElementById("process-prev") as HTMLButtonElement;
-  const next = document.getElementById("process-next") as HTMLButtonElement;
+function openProcess(index: number) {
+  const modal = getModal();
+  if (!modal) return;
 
-  prev.disabled = currentStep === 0;
-  next.disabled = currentStep === processCases.length - 1;
+  currentStep = index;
+  renderStep(currentStep);
+
+  modal.classList.add("is-open");
+  document.documentElement.style.overflow = "hidden";
+  updateNav(modal);
 }
 
-let isInitialized = false;
-
 export function initProcessModal() {
-  if (isInitialized) return;
-  isInitialized = true;
+  if (initialized || typeof document === "undefined") return;
+  initialized = true;
 
-  document.querySelectorAll("[data-process-open]").forEach((el) => {
-    el.addEventListener("click", (e) => {
+  document.addEventListener(
+    "click",
+    (e) => {
+      if (!(e.target instanceof Element)) return;
+
+      const trigger = e.target.closest<HTMLElement>("[data-process-open]");
+      if (!trigger) return;
+
+      const index = Number(trigger.dataset.processOpen);
+      if (Number.isNaN(index)) return;
+
       e.preventDefault();
+      openProcess(index);
+    },
+    true,
+  );
 
-      const index = Number((el as HTMLElement).dataset.processOpen);
-      if (index === currentStep && currentStep !== -1) return;
-      currentStep = index;
+  document.addEventListener("keydown", (e) => {
+    const modal = getModal();
+    if (!modal || !modal.classList.contains("is-open")) return;
 
-      renderStep(currentStep);
-      updateNav();
+    if (e.key === "Escape") {
+      modal.classList.remove("is-open");
+      document.documentElement.style.overflow = "";
+      return;
+    }
 
-      const modal = document.getElementById("modal-process");
-      modal?.classList.add("is-open");
-      document.documentElement.style.overflow = "hidden";
-    });
-  });
-
-  document.getElementById("process-prev")?.addEventListener("click", () => {
-    if (currentStep > 0) {
-      currentStep--;
+    if (e.key === "ArrowLeft" && currentStep > 0) {
+      currentStep -= 1;
       direction = "prev";
       renderStep(currentStep);
     }
-  });
 
-  document.getElementById("process-next")?.addEventListener("click", () => {
-    if (currentStep < processCases.length - 1) {
-      currentStep++;
+    if (e.key === "ArrowRight" && currentStep < processCases.length - 1) {
+      currentStep += 1;
       direction = "next";
       renderStep(currentStep);
     }
   });
 
-  document.addEventListener("process:reset", () => {
-    currentStep = -1;
+  const modal = getModal();
+  if (!modal) return;
+
+  modal.querySelector("#process-prev")?.addEventListener("click", () => {
+    if (currentStep > 0) {
+      currentStep -= 1;
+      direction = "prev";
+      renderStep(currentStep);
+    }
   });
+
+  modal.querySelector("#process-next")?.addEventListener("click", () => {
+    if (currentStep < processCases.length - 1) {
+      currentStep += 1;
+      direction = "next";
+      renderStep(currentStep);
+    }
+  });
+}
+
+if (typeof document !== "undefined") {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initProcessModal, { once: true });
+  } else {
+    initProcessModal();
+  }
 }
