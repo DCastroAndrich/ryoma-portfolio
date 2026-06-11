@@ -1,16 +1,11 @@
 let initialized = false;
 
+const MODAL_Z_INDEX = 1000;
+const LIGHTBOX_Z_INDEX = 2000;
+
 type LightboxItem = {
   src: string;
   alt: string;
-};
-
-type ProcessStep = {
-  number: string;
-  title: string;
-  description: string;
-  bullets: string[];
-  deliverable: string;
 };
 
 function getOpenModals(): HTMLElement[] {
@@ -21,7 +16,42 @@ function lockScroll(lock: boolean) {
   document.documentElement.style.overflow = lock ? "hidden" : "";
 }
 
+function setModalLayer(modal: HTMLElement, open: boolean) {
+  modal.hidden = !open;
+  modal.setAttribute("aria-hidden", open ? "false" : "true");
+  modal.style.pointerEvents = open ? "auto" : "none";
+  modal.style.zIndex = open ? String(MODAL_Z_INDEX) : "";
+  modal.style.display = open ? "" : "";
+}
+
+function setLightboxLayer(open: boolean) {
+  const lightbox = document.getElementById("modal-lightbox") as HTMLElement | null;
+  if (!lightbox) return;
+
+  lightbox.hidden = !open;
+  lightbox.setAttribute("aria-hidden", open ? "false" : "true");
+  lightbox.style.pointerEvents = open ? "auto" : "none";
+  lightbox.style.zIndex = open ? String(LIGHTBOX_Z_INDEX) : "";
+  lightbox.style.display = open ? "" : "none";
+
+  if (!open) {
+    const lightboxImg = document.getElementById("lightbox-img");
+    if (lightboxImg instanceof HTMLImageElement) {
+      lightboxImg.src = "";
+      lightboxImg.alt = "";
+    }
+
+    lightbox.classList.remove("is-open");
+    document.documentElement.classList.remove("lightbox-open");
+  }
+}
+
+function bringToFront(el: HTMLElement, zIndex: number) {
+  el.style.zIndex = String(zIndex);
+}
+
 function openModal(modal: HTMLElement) {
+  setModalLayer(modal, true);
   modal.classList.add("is-open");
   lockScroll(true);
 
@@ -31,27 +61,16 @@ function openModal(modal: HTMLElement) {
 
 function closeModal(modal: HTMLElement) {
   modal.classList.remove("is-open");
+  setModalLayer(modal, false);
 
-  const lightboxImg = document.getElementById("lightbox-img");
-  if (lightboxImg instanceof HTMLImageElement) {
-    lightboxImg.src = "";
-    lightboxImg.alt = "";
+  if (modal.id === "modal-lightbox") {
+    setLightboxLayer(false);
   }
 
   const remainingOpen = getOpenModals().filter((el) => el !== modal);
+
   if (remainingOpen.length === 0) {
-    document.documentElement.classList.remove("lightbox-open");
     lockScroll(false);
-  }
-}
-
-function parseStep(value: string | undefined): ProcessStep | null {
-  if (!value) return null;
-
-  try {
-    return JSON.parse(value) as ProcessStep;
-  } catch {
-    return null;
   }
 }
 
@@ -65,25 +84,10 @@ export function initModalSystem() {
   const lightboxNextBtn = document.querySelector<HTMLButtonElement>("[data-lightbox-next]");
   const lightboxCounter = document.getElementById("lightbox-counter");
 
-  const processModal = document.getElementById("modal-process") as HTMLElement | null;
-  const processNumber = processModal?.querySelector<HTMLElement>("[data-process-number]") ?? null;
-  const processTitle = processModal?.querySelector<HTMLElement>("[data-process-title]") ?? null;
-  const processDescription =
-    processModal?.querySelector<HTMLElement>("[data-process-description]") ?? null;
-  const processBullets =
-    processModal?.querySelector<HTMLUListElement>("[data-process-bullets]") ?? null;
-  const processDeliverable =
-    processModal?.querySelector<HTMLElement>("[data-process-deliverable]") ?? null;
-  const processPrevBtn =
-    processModal?.querySelector<HTMLButtonElement>("[data-process-prev]") ?? null;
-  const processNextBtn =
-    processModal?.querySelector<HTMLButtonElement>("[data-process-next]") ?? null;
+  setLightboxLayer(false);
 
   let images: LightboxItem[] = [];
   let currentIndex = 0;
-
-  let processTriggers: HTMLElement[] = [];
-  let currentProcessIndex = 0;
 
   function updateLightbox() {
     if (!(lightboxImg instanceof HTMLImageElement)) return;
@@ -136,53 +140,17 @@ export function initModalSystem() {
     }
 
     updateLightbox();
+
+    document
+      .querySelectorAll<HTMLElement>(".modal-overlay.is-open:not(#modal-lightbox)")
+      .forEach((modal) => {
+        bringToFront(modal, MODAL_Z_INDEX);
+      });
+
+    setLightboxLayer(true);
     lightbox.classList.add("is-open");
     document.documentElement.classList.add("lightbox-open");
     lockScroll(true);
-  }
-
-  function renderProcessStep(step: ProcessStep) {
-    if (processNumber) processNumber.textContent = step.number;
-    if (processTitle) processTitle.textContent = step.title;
-    if (processDescription) processDescription.textContent = step.description;
-    if (processDeliverable) processDeliverable.textContent = step.deliverable;
-
-    if (processBullets) {
-      processBullets.innerHTML = "";
-      step.bullets.forEach((bullet) => {
-        const li = document.createElement("li");
-        li.textContent = bullet;
-        processBullets.appendChild(li);
-      });
-    }
-
-    if (processPrevBtn) processPrevBtn.disabled = processTriggers.length <= 1;
-    if (processNextBtn) processNextBtn.disabled = processTriggers.length <= 1;
-  }
-
-  function openProcessFromTrigger(trigger: HTMLElement) {
-    if (!processModal) return;
-
-    processTriggers = Array.from(document.querySelectorAll<HTMLElement>("[data-process-open]"));
-
-    const step = parseStep(trigger.dataset.processStep);
-    if (!step) return;
-
-    currentProcessIndex = Math.max(0, processTriggers.indexOf(trigger));
-    renderProcessStep(step);
-    openModal(processModal);
-  }
-
-  function openProcessStepAt(index: number) {
-    if (!processModal || processTriggers.length === 0) return;
-
-    currentProcessIndex = (index + processTriggers.length) % processTriggers.length;
-
-    const trigger = processTriggers[currentProcessIndex];
-    const step = parseStep(trigger.dataset.processStep);
-    if (!step) return;
-
-    renderProcessStep(step);
   }
 
   document.addEventListener(
@@ -195,18 +163,12 @@ export function initModalSystem() {
       const openTrigger = target.closest<HTMLElement>("[data-modal-open]");
       if (openTrigger) {
         e.preventDefault();
+
         const id = openTrigger.dataset.modalOpen;
         if (!id) return;
 
         const modal = document.getElementById(id);
         if (modal instanceof HTMLElement) openModal(modal);
-        return;
-      }
-
-      const processTrigger = target.closest<HTMLElement>("[data-process-open]");
-      if (processTrigger) {
-        e.preventDefault();
-        openProcessFromTrigger(processTrigger);
         return;
       }
 
@@ -242,12 +204,6 @@ export function initModalSystem() {
       return;
     }
 
-    if (processModal?.classList.contains("is-open")) {
-      if (e.key === "ArrowLeft") openProcessStepAt(currentProcessIndex - 1);
-      if (e.key === "ArrowRight") openProcessStepAt(currentProcessIndex + 1);
-      return;
-    }
-
     if (!lightbox?.classList.contains("is-open") || images.length <= 1) return;
 
     if (e.key === "ArrowLeft") {
@@ -271,14 +227,6 @@ export function initModalSystem() {
     if (images.length <= 1) return;
     currentIndex = (currentIndex + 1) % images.length;
     updateLightbox();
-  });
-
-  processPrevBtn?.addEventListener("click", () => {
-    openProcessStepAt(currentProcessIndex - 1);
-  });
-
-  processNextBtn?.addEventListener("click", () => {
-    openProcessStepAt(currentProcessIndex + 1);
   });
 }
 

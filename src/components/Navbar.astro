@@ -33,14 +33,12 @@ import logoIcon from "../assets/logo-o.svg?raw";
         </ul>
 
         <div class="flex items-center gap-4">
-          <ThemeToggle class="theme-toggle" />
-          <Button href="#contact" variant="outline" size="sm"> Hablemos </Button>
+          <ThemeToggle className="theme-toggle" />
+          <Button href="#contact" variant="outline" size="sm">Hablemos</Button>
         </div>
       </div>
 
       <div class="flex items-center gap-2 md:hidden">
-        <ThemeToggle class="theme-toggle" />
-
         <button
           id="nav-toggle"
           aria-controls="mobile-menu"
@@ -64,7 +62,7 @@ import logoIcon from "../assets/logo-o.svg?raw";
 
   <div
     id="mobile-menu"
-    class="mobile-menu pointer-events-none fixed inset-0 z-40 opacity-0 transition-all duration-300 md:hidden"
+    class="mobile-menu pointer-events-none fixed inset-0 z-60 opacity-0 transition-all duration-300 md:hidden"
     role="dialog"
     aria-modal="true"
     aria-labelledby="nav-toggle"
@@ -75,7 +73,7 @@ import logoIcon from "../assets/logo-o.svg?raw";
     <div id="mobile-backdrop" class="mobile-backdrop bg-bg backdrop-blur-sm" aria-hidden="true">
     </div>
 
-    <div class="relative z-10 h-full w-full backdrop-blur-2xl">
+    <div class="relative z-10 h-full w-full pt-16 backdrop-blur-2xl">
       <div
         class="bg-bg mx-auto flex max-h-[calc(100dvh-64px)] w-full flex-col gap-4 overflow-y-auto px-4 py-6 sm:px-6"
       >
@@ -107,18 +105,48 @@ import logoIcon from "../assets/logo-o.svg?raw";
         </div>
 
         <nav class="font-body flex flex-col gap-2" aria-label="Menú móvil">
-          <a href="#about" class="nav-link block rounded-md px-3 py-3">Acerca de mí</a>
-          <a href="#services" class="nav-link block rounded-md px-3 py-3">Servicios</a>
-          <a href="#projects" class="nav-link block rounded-md px-3 py-3">Proyectos</a>
-          <a href="#process" class="nav-link block rounded-md px-3 py-3">Proceso</a>
-          <a href="#contact" class="nav-link block rounded-md px-3 py-3">Contacto</a>
+          <a
+            href="#about"
+            class="nav-link block w-full rounded-md px-4 py-4 text-left"
+            style="display: flex; min-height: 3.25rem; width: 100%; align-items: center;"
+          >
+            Acerca de mí
+          </a>
+          <a
+            href="#services"
+            class="nav-link block w-full rounded-md px-4 py-4 text-left"
+            style="display: flex; min-height: 3.25rem; width: 100%; align-items: center;"
+          >
+            Servicios
+          </a>
+          <a
+            href="#projects"
+            class="nav-link block w-full rounded-md px-4 py-4 text-left"
+            style="display: flex; min-height: 3.25rem; width: 100%; align-items: center;"
+          >
+            Proyectos
+          </a>
+          <a
+            href="#process"
+            class="nav-link block w-full rounded-md px-4 py-4 text-left"
+            style="display: flex; min-height: 3.25rem; width: 100%; align-items: center;"
+          >
+            Proceso
+          </a>
+          <a
+            href="#contact"
+            class="nav-link block w-full rounded-md px-4 py-4 text-left"
+            style="display: flex; min-height: 3.25rem; width: 100%; align-items: center;"
+          >
+            Contacto
+          </a>
         </nav>
 
         <div class="mt-2 flex flex-col gap-3 border-t border-[rgba(255,255,255,0.08)] pt-2">
-          <Button href="#contact" variant="outline" size="sm"> Hablemos </Button>
+          <Button href="#contact" variant="outline" size="sm">Hablemos</Button>
 
           <div class="flex items-center justify-start">
-            <ThemeToggle class="theme-toggle" />
+            <ThemeToggle className="theme-toggle" />
           </div>
         </div>
       </div>
@@ -229,8 +257,10 @@ import logoIcon from "../assets/logo-o.svg?raw";
       const openMenu = () => {
         nav.classList.add("menu-open");
         toggleBtn?.setAttribute("aria-expanded", "true");
+
         if (mobileMenu) {
           mobileMenu.hidden = false;
+          mobileMenu.style.pointerEvents = "auto";
           requestAnimationFrame(() => {
             mobileMenu.inert = false;
             mobileMenu.setAttribute("aria-hidden", "false");
@@ -247,6 +277,8 @@ import logoIcon from "../assets/logo-o.svg?raw";
         if (mobileMenu) {
           mobileMenu.setAttribute("aria-hidden", "true");
           mobileMenu.inert = true;
+          mobileMenu.style.pointerEvents = "none";
+
           setTimeout(() => {
             mobileMenu.hidden = true;
           }, 300);

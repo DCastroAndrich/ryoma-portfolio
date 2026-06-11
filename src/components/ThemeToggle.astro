@@ -3,7 +3,7 @@ const { className = "" } = Astro.props;
 ---
 
 <button
-  id="theme-toggle"
+  data-theme-toggle
   type="button"
   role="switch"
   aria-checked="false"
@@ -72,7 +72,7 @@ const { className = "" } = Astro.props;
 
 <script is:inline>
   const root = document.documentElement;
-  const btn = document.getElementById("theme-toggle");
+  const buttons = document.querySelectorAll("[data-theme-toggle]");
   const mq = window.matchMedia("(prefers-color-scheme: dark)");
 
   const getStoredTheme = () => {
@@ -87,9 +87,13 @@ const { className = "" } = Astro.props;
     const isDark = theme === "dark";
 
     root.classList.toggle("dark", isDark);
-    btn?.classList.toggle("dark", isDark);
-    btn?.classList.toggle("light", !isDark);
-    btn?.setAttribute("aria-checked", String(isDark));
+    root.style.colorScheme = isDark ? "dark" : "light";
+
+    buttons.forEach((btn) => {
+      btn.setAttribute("aria-checked", String(isDark));
+      btn.classList.toggle("dark", isDark);
+      btn.classList.toggle("light", !isDark);
+    });
 
     try {
       localStorage.setItem("theme", theme);
@@ -99,15 +103,16 @@ const { className = "" } = Astro.props;
   const initialTheme = getStoredTheme() ?? (mq.matches ? "dark" : "light");
   applyTheme(initialTheme);
 
-  btn?.addEventListener("click", () => {
-    const nextTheme = root.classList.contains("dark") ? "light" : "dark";
-    applyTheme(nextTheme);
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const nextTheme = root.classList.contains("dark") ? "light" : "dark";
+      applyTheme(nextTheme);
+    });
   });
 
   if (getStoredTheme() === null) {
     const onChange = (event) => {
-      const stored = getStoredTheme();
-      if (stored === null) {
+      if (getStoredTheme() === null) {
         applyTheme(event.matches ? "dark" : "light");
       }
     };
