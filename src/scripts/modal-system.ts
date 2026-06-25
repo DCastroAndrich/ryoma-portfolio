@@ -8,6 +8,8 @@ type LightboxItem = {
   alt: string;
 };
 
+let lastFocusedElement: HTMLElement | null = null;
+
 function getOpenModals(): HTMLElement[] {
   return Array.from(document.querySelectorAll<HTMLElement>(".modal-overlay.is-open"));
 }
@@ -16,12 +18,16 @@ function lockScroll(lock: boolean) {
   document.documentElement.style.overflow = lock ? "hidden" : "";
 }
 
+function bringToFront(el: HTMLElement, zIndex: number) {
+  el.style.zIndex = String(zIndex);
+}
+
 function setModalLayer(modal: HTMLElement, open: boolean) {
   modal.hidden = !open;
   modal.setAttribute("aria-hidden", open ? "false" : "true");
   modal.style.pointerEvents = open ? "auto" : "none";
   modal.style.zIndex = open ? String(MODAL_Z_INDEX) : "";
-  modal.style.display = open ? "" : "";
+  modal.style.display = open ? "" : "none";
 }
 
 function setLightboxLayer(open: boolean) {
@@ -46,11 +52,35 @@ function setLightboxLayer(open: boolean) {
   }
 }
 
-function bringToFront(el: HTMLElement, zIndex: number) {
-  el.style.zIndex = String(zIndex);
+function ensureModalFromTemplate(id: string): HTMLElement | null {
+  const existing = document.getElementById(id) as HTMLElement | null;
+  if (existing) return existing;
+
+  const template = document.querySelector<HTMLTemplateElement>(
+    `template[data-modal-template="${id}"]`,
+  );
+  if (!template) return null;
+
+  const fragment = document.importNode(template.content, true);
+  const modal = fragment.querySelector<HTMLElement>(`#${id}`);
+  if (!modal) return null;
+
+  modal.dataset.injectedModal = "true";
+  modal.hidden = true;
+  modal.setAttribute("aria-hidden", "true");
+  modal.style.pointerEvents = "none";
+  modal.style.zIndex = "";
+  modal.style.display = "none";
+
+  document.body.appendChild(fragment);
+
+  return document.getElementById(id) as HTMLElement | null;
 }
 
 function openModal(modal: HTMLElement) {
+  lastFocusedElement =
+    document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
   setModalLayer(modal, true);
   modal.classList.add("is-open");
   lockScroll(true);
@@ -59,7 +89,19 @@ function openModal(modal: HTMLElement) {
   closeBtn?.focus();
 }
 
-function closeModal(modal: HTMLElement) {
+function removeInjectedModalAfterClose(modal: HTMLElement) {
+  if (modal.dataset.injectedModal !== "true") return;
+
+  window.setTimeout(() => {
+    if (!modal.classList.contains("is-open")) {
+      modal.remove();
+    }
+  }, 350);
+}
+
+function closeModal(modal: HTMLElement, options: { restoreFocus?: boolean } = {}) {
+  const { restoreFocus = true } = options;
+
   modal.classList.remove("is-open");
   setModalLayer(modal, false);
 
@@ -71,7 +113,13 @@ function closeModal(modal: HTMLElement) {
 
   if (remainingOpen.length === 0) {
     lockScroll(false);
+
+    if (restoreFocus) {
+      lastFocusedElement?.focus({ preventScroll: true });
+    }
   }
+
+  removeInjectedModalAfterClose(modal);
 }
 
 export function initModalSystem() {
@@ -167,8 +215,11 @@ export function initModalSystem() {
         const id = openTrigger.dataset.modalOpen;
         if (!id) return;
 
-        const modal = document.getElementById(id);
-        if (modal instanceof HTMLElement) openModal(modal);
+        const modal = ensureModalFromTemplate(id);
+        if (modal instanceof HTMLElement) {
+          openModal(modal);
+        }
+
         return;
       }
 
@@ -177,7 +228,24 @@ export function initModalSystem() {
         e.preventDefault();
 
         const modal = closeTrigger.closest<HTMLElement>(".modal-overlay");
-        if (modal) closeModal(modal);
+        if (!modal) return;
+
+        const targetId =
+          closeTrigger.dataset.scrollTarget ||
+          (closeTrigger.getAttribute("href")?.startsWith("#")
+            ? closeTrigger.getAttribute("href")!.slice(1)
+            : null);
+
+        closeModal(modal, { restoreFocus: !targetId });
+
+        if (targetId) {
+          history.pushState(null, "", `#${targetId}`);
+          window.requestAnimationFrame(() => {
+            const targetEl = document.getElementById(targetId);
+            targetEl?.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        }
+
         return;
       }
 

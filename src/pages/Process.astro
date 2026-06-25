@@ -4,7 +4,6 @@ import ProcessIcon from "../components/ProcessIcon.tsx";
 import Button from "../components/Button";
 
 import ProcessModal from "../components/modal-process/ProcessModal.astro";
-import { number } from "astro:schema";
 
 const steps = [
   {
@@ -63,7 +62,7 @@ const steps = [
 ---
 
 <Layout>
-  <section id="process" class="py-16 md:py-24">
+  <section id="process" class="bg-bg py-16 md:py-24">
     <div class="mx-auto flex max-w-7xl flex-col gap-12 px-4 sm:px-6 md:gap-16 lg:px-8">
       <header class="mx-auto flex max-w-2xl flex-col gap-4 text-center">
         <h2
@@ -81,7 +80,7 @@ const steps = [
         <div class="flex flex-col gap-6 md:gap-8">
           {
             steps.map((step, index) => (
-              <article class="relative w-full min-w-0 overflow-hidden rounded-[28px] border border-white/10 bg-white/3 p-5 md:p-8">
+              <article class="border-primary/10 bg-accent/3 relative w-full min-w-0 overflow-hidden rounded-[28px] border p-5 md:p-8">
                 <div class="grid grid-cols-1 md:grid-cols-[2rem_1fr] md:gap-x-5">
                   <div class="relative hidden md:block" aria-hidden="true">
                     <span class="process-dot" />
@@ -127,14 +126,13 @@ const steps = [
                       <strong>Entregable:</strong> {step.deliverable}
                     </p>
 
-                    <div class="w-full pt-1">
+                    <div class="pt-1">
                       <Button
                         type="button"
                         variant="link"
                         size="sm"
                         fullWidth
                         data-process-open={index}
-                        data-modal-open="modal-process"
                       >
                         Ver como la aplicamos
                       </Button>
@@ -147,10 +145,13 @@ const steps = [
         </div>
       </div>
 
-      <ProcessModal />
-      <script>
-        import "../scripts/process-modal";
-      </script>
+      <template data-process-template="modal-process">
+        <ProcessModal />
+      </template>
     </div>
   </section>
+
+  <script>
+    import "../scripts/process-modal";
+  </script>
 </Layout>

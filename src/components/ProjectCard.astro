@@ -46,7 +46,7 @@ const badgeClasses: Record<Props["status"], string> = {
 
 <article
   class:list={[
-    "group relative overflow-hidden rounded-[28px] border border-white/10 bg-white/3 backdrop-blur-sm transition-all duration-300 hover:border-white/20",
+    "group border-accent/10 relative overflow-hidden rounded-[28px] border bg-white/3 backdrop-blur-sm transition-all duration-300 hover:border-white/20",
     "min-h-128",
     variant === "default" ? "lg:min-h-136" : "lg:min-h-120",
   ]}
@@ -64,7 +64,7 @@ const badgeClasses: Record<Props["status"], string> = {
         decoding="async"
       />
     </div>
-    <div class="absolute inset-0 bg-linear-to-r from-black/55 via-black/35 to-black/10"></div>
+    <div class="from-bg/55 via-bg/35 to-bg/10 absolute inset-0 bg-linear-to-r"></div>
   </div>
 
   <!-- content -->

@@ -14,8 +14,8 @@ const { icon, title, subtitle, description, ctaLabel, modalId, featured = false 
 
 <article
   class:list={[
-    "relative w-full min-w-0 overflow-hidden rounded-[28px] border border-white/10 bg-white/3 backdrop-blur-sm transition-all duration-300",
-    "hover:border-[--color-cyan]/40 hover:shadow-[0_0_40px_rgba(0,151,192,0.12)]",
+    "border-accent/10 bg-accent/3 relative w-full min-w-0 overflow-hidden rounded-[28px] border backdrop-blur-sm transition-all duration-300",
+    "hover:border-[--color-primary]/40 hover:shadow-[0_0_40px_rgba(0,151,192,0.12)]",
     featured ? "flex flex-col gap-8 p-6 md:p-10" : "flex h-full flex-col gap-6 p-6",
   ]}
 >
@@ -31,7 +31,7 @@ const { icon, title, subtitle, description, ctaLabel, modalId, featured = false 
   </div>
 
   <!-- icon -->
-  <span class="relative z-10 h-8 w-8 text-[--color-cyan]" set:html={icon} aria-hidden="true" />
+  <span class="relative z-10 h-8 w-8 text-[--color-accent]" set:html={icon} aria-hidden="true" />
 
   <!-- content -->
   <div class="relative z-10 flex flex-1 flex-col gap-5">

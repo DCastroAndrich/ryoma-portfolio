@@ -1,6 +1,7 @@
 ---
 import ServiceCard from "../components/ServiceCard.astro";
 import Layout from "../layout/Layout.astro";
+
 import rocketIcon from "../assets/services-icons/rocket.svg?raw";
 import workflowIcon from "../assets/services-icons/workflow.svg?raw";
 import layersIcon from "../assets/services-icons/layers.svg?raw";
@@ -13,9 +14,8 @@ import SystemServiceModal from "../components/modal-services/SystemServiceModal.
 ---
 
 <Layout>
-  <section id="services" class="py-16 md:p-24">
+  <section id="services" class="bg-bg py-16 md:p-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
-      <!-- Header -->
       <div class="mx-auto flex max-w-2xl flex-col gap-4 text-center">
         <h2 class="font-heading text-3xl font-bold md:text-4xl">Mis servicios</h2>
 
@@ -24,9 +24,7 @@ import SystemServiceModal from "../components/modal-services/SystemServiceModal.
         </p>
       </div>
 
-      <!-- content -->
       <div class="mt-12 flex flex-col gap-12 md:mt-16">
-        <!-- featured -->
         <div>
           <ServiceCard
             icon={rocketIcon}
@@ -42,7 +40,6 @@ import SystemServiceModal from "../components/modal-services/SystemServiceModal.
           />
         </div>
 
-        <!-- grid -->
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <ServiceCard
             icon={workflowIcon}
@@ -55,6 +52,7 @@ import SystemServiceModal from "../components/modal-services/SystemServiceModal.
             ctaLabel="VER ENFOQUE"
             modalId="modal-system"
           />
+
           <ServiceCard
             icon={layersIcon}
             title="Backend diseñado para escalar"
@@ -66,6 +64,7 @@ import SystemServiceModal from "../components/modal-services/SystemServiceModal.
             ctaLabel="VER ARQUITECTURA"
             modalId="modal-backend"
           />
+
           <ServiceCard
             icon={brainIcon}
             title="Integraciones que funcionan de verdad"
@@ -82,8 +81,19 @@ import SystemServiceModal from "../components/modal-services/SystemServiceModal.
     </div>
   </section>
 
-  <WebServiceModal />
-  <BackendServiceModal />
-  <IntegrationsServiceModal />
-  <SystemServiceModal />
+  <template data-modal-template="modal-web">
+    <WebServiceModal />
+  </template>
+
+  <template data-modal-template="modal-backend">
+    <BackendServiceModal />
+  </template>
+
+  <template data-modal-template="modal-integrations">
+    <IntegrationsServiceModal />
+  </template>
+
+  <template data-modal-template="modal-system">
+    <SystemServiceModal />
+  </template>
 </Layout>

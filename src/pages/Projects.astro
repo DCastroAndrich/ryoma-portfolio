@@ -1,18 +1,14 @@
 ---
 import Layout from "../layout/Layout.astro";
-
 import greenGlowImg from "../assets/projects/GreenGlow.webp";
 import caAutomotoresImg from "../assets/projects/CAAutomotores.webp";
 import c_aImg from "../assets/projects/C&A.webp";
-
 import ProjectCard from "../components/ProjectCard.astro";
 import FeaturedProjectCard from "../components/FeaturedProjectCard.astro";
-
 import astroIconRaw from "../assets/tech-icons/astro.svg?raw";
 import reactIconRaw from "../assets/tech-icons/react.svg?raw";
 import tsIconRaw from "../assets/tech-icons/typescript.svg?raw";
 import tailwindIconRaw from "../assets/tech-icons/tailwind.svg?raw";
-
 import CaseStudyGreenGlow from "../components/case-studies/CaseStudyGreenGlow.astro";
 
 const featuredTech = [
@@ -31,9 +27,8 @@ const upcomingTech = [
 ---
 
 <Layout>
-  <section id="projects" class="py-16 md:py-24">
+  <section id="projects" class="bg-surface py-16 md:py-24">
     <div class="mx-auto flex max-w-7xl flex-col gap-16 px-4 sm:px-6 md:gap-20 lg:px-8">
-      <!-- Featured -->
       <header class="mx-auto flex max-w-2xl flex-col gap-4 text-center">
         <h2
           class="font-heading tracking-heading-lg leading-heading-lg text-3xl font-bold md:text-4xl"
@@ -68,7 +63,6 @@ const upcomingTech = [
         modalId="modal-greenglow"
       />
 
-      <!-- upcoming -->
       <section class="flex flex-col gap-8">
         <header class="mx-auto flex max-w-2xl flex-col gap-4 text-center">
           <h2
@@ -130,6 +124,9 @@ const upcomingTech = [
         </div>
       </section>
     </div>
-    <CaseStudyGreenGlow />
+
+    <template data-modal-template="modal-greenglow">
+      <CaseStudyGreenGlow />
+    </template>
   </section>
 </Layout>

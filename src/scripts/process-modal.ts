@@ -58,14 +58,51 @@ const processCases: ProcessCase[] = [
 let currentStep = -1;
 let direction: "next" | "prev" = "next";
 let initialized = false;
+let lastFocusedElement: HTMLElement | null = null;
 
-function getModal(): HTMLElement | null {
+function lockScroll(lock: boolean) {
+  document.documentElement.style.overflow = lock ? "hidden" : "";
+}
+
+function setModalLayer(modal: HTMLElement, open: boolean) {
+  modal.hidden = !open;
+  modal.setAttribute("aria-hidden", open ? "false" : "true");
+  modal.style.pointerEvents = open ? "auto" : "none";
+  modal.style.display = open ? "" : "none";
+}
+
+function ensureProcessModal(): HTMLElement | null {
+  const existing = document.getElementById("modal-process") as HTMLElement | null;
+  if (existing) return existing;
+
+  const template = document.querySelector<HTMLTemplateElement>(
+    'template[data-process-template="modal-process"]',
+  );
+  if (!template) return null;
+
+  const fragment = document.importNode(template.content, true);
+  const modal = fragment.querySelector<HTMLElement>("#modal-process");
+  if (!modal) return null;
+
+  modal.dataset.injectedModal = "true";
+  modal.hidden = true;
+  modal.setAttribute("aria-hidden", "true");
+  modal.style.pointerEvents = "none";
+  modal.style.display = "none";
+
+  document.body.appendChild(fragment);
+
   return document.getElementById("modal-process") as HTMLElement | null;
 }
 
-function setText(modal: HTMLElement, selector: string, value: string) {
-  const el = modal.querySelector<HTMLElement>(selector);
-  if (el) el.textContent = value;
+function removeInjectedModalAfterClose(modal: HTMLElement) {
+  if (modal.dataset.injectedModal !== "true") return;
+
+  window.setTimeout(() => {
+    if (!modal.classList.contains("is-open")) {
+      modal.remove();
+    }
+  }, 350);
 }
 
 function updateNav(modal: HTMLElement) {
@@ -76,23 +113,31 @@ function updateNav(modal: HTMLElement) {
   if (next) next.disabled = currentStep >= processCases.length - 1;
 }
 
-function renderStep(index: number) {
-  const modal = getModal();
+function renderStep(index: number, modal: HTMLElement) {
   const data = processCases[index];
-  if (!modal || !data) return;
+  if (!data) return;
 
   modal.setAttribute("data-direction", direction);
   modal.classList.add("is-switching");
 
   window.setTimeout(() => {
-    setText(modal, "#process-step-badge", data.badge);
-    setText(modal, "#process-step-title", data.title);
-    setText(modal, "#process-step-intro", data.intro);
-    setText(modal, "#process-step-problem", data.problem);
-    setText(modal, "#process-step-decision", data.decision);
-    setText(modal, "#process-step-impact", data.impact);
-
+    const badgeEl = modal.querySelector<HTMLElement>("#process-step-badge");
+    const titleEl = modal.querySelector<HTMLElement>("#process-step-title");
+    const introEl = modal.querySelector<HTMLElement>("#process-step-intro");
+    const problemEl = modal.querySelector<HTMLElement>("#process-step-problem");
+    const decisionEl = modal.querySelector<HTMLElement>("#process-step-decision");
+    const impactEl = modal.querySelector<HTMLElement>("#process-step-impact");
     const actionList = modal.querySelector<HTMLUListElement>("#process-step-actions");
+    const currentEl = modal.querySelector<HTMLElement>("#process-current");
+    const totalEl = modal.querySelector<HTMLElement>("#process-total");
+
+    if (badgeEl) badgeEl.textContent = data.badge;
+    if (titleEl) titleEl.textContent = data.title;
+    if (introEl) introEl.textContent = data.intro;
+    if (problemEl) problemEl.textContent = data.problem;
+    if (decisionEl) decisionEl.textContent = data.decision;
+    if (impactEl) impactEl.textContent = data.impact;
+
     if (actionList) {
       actionList.innerHTML = "";
       data.actions.forEach((item) => {
@@ -102,10 +147,7 @@ function renderStep(index: number) {
       });
     }
 
-    const currentEl = modal.querySelector<HTMLElement>("#process-current");
     if (currentEl) currentEl.textContent = String(index + 1);
-
-    const totalEl = modal.querySelector<HTMLElement>("#process-total");
     if (totalEl) totalEl.textContent = String(processCases.length);
 
     updateNav(modal);
@@ -113,16 +155,36 @@ function renderStep(index: number) {
   }, 300);
 }
 
-function openProcess(index: number) {
-  const modal = getModal();
+function openProcessModal(index: number) {
+  const modal = ensureProcessModal();
   if (!modal) return;
 
+  lastFocusedElement =
+    document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
   currentStep = index;
-  renderStep(currentStep);
+  renderStep(currentStep, modal);
+  updateNav(modal);
 
   modal.classList.add("is-open");
-  document.documentElement.style.overflow = "hidden";
-  updateNav(modal);
+  setModalLayer(modal, true);
+  lockScroll(true);
+
+  const closeBtn = modal.querySelector<HTMLElement>("[data-modal-close]");
+  closeBtn?.focus();
+}
+
+function closeProcessModal(modal: HTMLElement, restoreFocus = true) {
+  modal.classList.remove("is-open");
+  setModalLayer(modal, false);
+
+  lockScroll(false);
+
+  if (restoreFocus) {
+    lastFocusedElement?.focus({ preventScroll: true });
+  }
+
+  removeInjectedModalAfterClose(modal);
 }
 
 export function initProcessModal() {
@@ -134,57 +196,77 @@ export function initProcessModal() {
     (e) => {
       if (!(e.target instanceof Element)) return;
 
-      const trigger = e.target.closest<HTMLElement>("[data-process-open]");
-      if (!trigger) return;
+      const target = e.target;
 
-      const index = Number(trigger.dataset.processOpen);
-      if (Number.isNaN(index)) return;
+      const openTrigger = target.closest<HTMLElement>("[data-process-open]");
+      if (openTrigger) {
+        e.preventDefault();
 
-      e.preventDefault();
-      openProcess(index);
+        const index = Number(openTrigger.dataset.processOpen);
+        if (Number.isNaN(index)) return;
+
+        openProcessModal(index);
+        return;
+      }
+
+      const processModal = target.closest<HTMLElement>("#modal-process");
+      if (!processModal) return;
+
+      const closeTrigger = target.closest<HTMLElement>("[data-modal-close]");
+      if (closeTrigger) {
+        e.preventDefault();
+        closeProcessModal(processModal);
+        return;
+      }
+
+      const prevBtn = target.closest<HTMLElement>("#process-prev");
+      if (prevBtn) {
+        e.preventDefault();
+        if (currentStep > 0) {
+          currentStep -= 1;
+          direction = "prev";
+          renderStep(currentStep, processModal);
+        }
+        return;
+      }
+
+      const nextBtn = target.closest<HTMLElement>("#process-next");
+      if (nextBtn) {
+        e.preventDefault();
+        if (currentStep < processCases.length - 1) {
+          currentStep += 1;
+          direction = "next";
+          renderStep(currentStep, processModal);
+        }
+        return;
+      }
+
+      if (target === processModal) {
+        closeProcessModal(processModal);
+      }
     },
     true,
   );
 
   document.addEventListener("keydown", (e) => {
-    const modal = getModal();
-    if (!modal || !modal.classList.contains("is-open")) return;
+    const processModal = document.getElementById("modal-process") as HTMLElement | null;
+    if (!processModal || !processModal.classList.contains("is-open")) return;
 
     if (e.key === "Escape") {
-      modal.classList.remove("is-open");
-      document.documentElement.style.overflow = "";
+      closeProcessModal(processModal);
       return;
     }
 
     if (e.key === "ArrowLeft" && currentStep > 0) {
       currentStep -= 1;
       direction = "prev";
-      renderStep(currentStep);
+      renderStep(currentStep, processModal);
     }
 
     if (e.key === "ArrowRight" && currentStep < processCases.length - 1) {
       currentStep += 1;
       direction = "next";
-      renderStep(currentStep);
-    }
-  });
-
-  const modal = getModal();
-  if (!modal) return;
-
-  modal.querySelector("#process-prev")?.addEventListener("click", () => {
-    if (currentStep > 0) {
-      currentStep -= 1;
-      direction = "prev";
-      renderStep(currentStep);
-    }
-  });
-
-  modal.querySelector("#process-next")?.addEventListener("click", () => {
-    if (currentStep < processCases.length - 1) {
-      currentStep += 1;
-      direction = "next";
-      renderStep(currentStep);
+      renderStep(currentStep, processModal);
     }
   });
 }

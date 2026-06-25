@@ -31,7 +31,7 @@ const techStack = [
 ---
 
 <Layout>
-  <section class="relative isolate w-full overflow-hidden py-20 md:py-32">
+  <section class="bg-bg relative isolate w-full overflow-hidden py-20 md:py-32">
     <div class="mx-auto flex max-w-7xl flex-col items-center gap-12 px-4 text-center sm:px-6">
       <!-- glow -->
       <div aria-hidden="true" class="glow-layer">
@@ -60,7 +60,8 @@ const techStack = [
         <Button href="#contact" variant="primary" weight={500}> HABLEMOS </Button>
         <Button href="#contact" variant="outline" weight={500}> PROYECTOS </Button>
       </div>
-      <TechStack items={techStack} client:load />
+
+      <TechStack items={techStack} />
     </div>
   </section>
 </Layout>

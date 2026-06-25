@@ -96,15 +96,14 @@ const techStack = [
         </div>
         <div class="modal-case-section">
           <h3 class="modal-case-section-title">Tecnologías</h3>
-          <div class="modal-case-tech">
+
+          <div class="modal-tech-grid">
             {
-              techStack.map(({ name, icon }, index) => (
-                <>
-                  <TechIcon name={name} icon={icon} size="sm" client:load />
-                  {index < techStack.length - 1 && (
-                    <span class="project-card-tech-dot" aria-hidden="true" />
-                  )}
-                </>
+              techStack.map(({ name, icon }) => (
+                <div class="modal-tech-item" aria-label={name}>
+                  <span class="modal-tech-icon" aria-hidden="true" set:html={icon} />
+                  <span class="modal-tech-name">{name}</span>
+                </div>
               ))
             }
           </div>
@@ -173,3 +172,54 @@ const techStack = [
     </div>
   </article>
 </Modal>
+
+<style>
+  .modal-tech-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .modal-tech-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+  }
+
+  .modal-tech-icon {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+  }
+  .modal-tech-name {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .modal-tech-icon :global(svg) {
+    width: 18px;
+    height: 18px;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .modal-tech-icon :global(svg),
+  .modal-tech-icon :global(svg[width]),
+  .modal-tech-icon :global(svg[height]) {
+    width: 18px !important;
+    height: 18px !important;
+    max-width: 18px !important;
+    max-height: 18px !important;
+  }
+</style>

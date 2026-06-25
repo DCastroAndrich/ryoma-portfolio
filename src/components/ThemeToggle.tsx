@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
@@ -8,31 +8,43 @@ interface ThemeToggleProps {
 
 const STORAGE_KEY = "theme";
 
-function getInitialTheme(): Theme {
-  if (typeof window === "undefined") return "light";
+function readThemeFromStorage(): Theme | null {
+  if (typeof window === "undefined") return null;
 
   try {
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    if (stored === "dark" || stored === "light") return stored;
+    if (stored === "light" || stored === "dark") return stored;
   } catch {
     // ignore
   }
 
-  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  return null;
+}
+
+function getPreferredTheme(): Theme {
+  if (typeof window === "undefined") return "light";
+
+  const stored = readThemeFromStorage();
+  if (stored) return stored;
+
+  return window.matchMedia?.("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
 }
 
 export default function ThemeToggle({ className = "" }: ThemeToggleProps) {
-  const [mounted, setMounted] = useState(false);
   const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
-    setTheme(getInitialTheme());
-    setMounted(true);
+    const initialTheme = getPreferredTheme();
+    setTheme(initialTheme);
+
+    const root = document.documentElement;
+    root.classList.toggle("dark", initialTheme === "dark");
+    root.style.colorScheme = initialTheme === "dark" ? "dark" : "light";
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
-
     const root = document.documentElement;
     const isDark = theme === "dark";
 
@@ -44,20 +56,17 @@ export default function ThemeToggle({ className = "" }: ThemeToggleProps) {
     } catch {
       // ignore
     }
-  }, [mounted, theme]);
+  }, [theme]);
 
   useEffect(() => {
-    if (!mounted || typeof window === "undefined" || !window.matchMedia) return;
+    if (typeof window === "undefined" || !window.matchMedia) return;
 
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
 
     const onChange = (event: MediaQueryListEvent) => {
-      try {
-        const stored = window.localStorage.getItem(STORAGE_KEY);
-        if (stored === null) {
-          setTheme(event.matches ? "dark" : "light");
-        }
-      } catch {
+      const stored = readThemeFromStorage();
+
+      if (stored === null) {
         setTheme(event.matches ? "dark" : "light");
       }
     };
@@ -67,33 +76,13 @@ export default function ThemeToggle({ className = "" }: ThemeToggleProps) {
       return () => mq.removeEventListener("change", onChange);
     }
 
-    mq.onchange = onChange;
-    return () => {
-      mq.onchange = null;
-    };
-  }, [mounted]);
+    mq.addEventListener?.("change", onChange);
+    return () => mq.removeEventListener?.("change", onChange);
+  }, []);
 
   const toggle = () => {
     setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
-
-  const rootClassName = useMemo(
-    () => `theme-switch ${theme} ${className}`.trim(),
-    [theme, className],
-  );
-
-  if (!mounted) {
-    return (
-      <button
-        type="button"
-        role="switch"
-        aria-checked="false"
-        aria-label="Alternar tema"
-        className={rootClassName}
-        style={{ touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }}
-      />
-    );
-  }
 
   return (
     <button
@@ -101,7 +90,7 @@ export default function ThemeToggle({ className = "" }: ThemeToggleProps) {
       role="switch"
       aria-checked={theme === "dark"}
       aria-label="Alternar tema"
-      className={rootClassName}
+      className={`theme-switch ${theme} ${className}`.trim()}
       onClick={toggle}
       style={{ touchAction: "manipulation", WebkitTapHighlightColor: "transparent" }}
     >
