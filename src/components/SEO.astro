@@ -1,0 +1,147 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+
+  image?: string;
+  canonicalURL?: string | URL;
+
+  type?: "website" | "article";
+  noindex?: boolean;
+}
+
+const SITE_NAME = "Ryōma Development";
+const AUTHOR_NAME = "Ryōma";
+const LOCALE = "es_AR";
+const TWITTER_CARD = "summary_large_image";
+
+const DEFAULT_TITLE = "Ryōma — Desarrollador Web Full Stack";
+const DEFAULT_DESCRIPTION =
+  "Desarrollo software con precisión metódica. Plataformas web de alto rendimiento con Astro y Next.js, APIs modulares con NestJS y TypeScript. Trabajo remoto, español e inglés.";
+const DEFAULT_OG_IMAGE = "/og-image.png";
+
+const {
+  title = DEFAULT_TITLE,
+  description = DEFAULT_DESCRIPTION,
+  image = DEFAULT_OG_IMAGE,
+  canonicalURL = Astro.url,
+  type = "website",
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(canonicalURL, Astro.url).href;
+const siteOrigin = Astro.url.origin;
+const absoluteImage = image.startsWith("http") ? image : new URL(image, siteOrigin).href;
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": `${siteOrigin}/#person`,
+  name: AUTHOR_NAME,
+  url: siteOrigin,
+  email: "hola@ryomadev.com",
+  jobTitle: "Desarrollador Web Full Stack",
+  description: DEFAULT_DESCRIPTION,
+  knowsLanguage: ["es", "en"],
+  knowsAbout: [
+    "Astro",
+    "Next.js",
+    "NestJS",
+    "TypeScript",
+    "React",
+    "Node.js",
+    "PostgreSQL",
+    "Prisma ORM",
+    "MongoDB",
+    "Desarrollo Web",
+    "Arquitectura de Software",
+  ],
+  sameAs: ["https://linkedin.com/in/dcastroandrich", "https://github.com/DCastroAndrich"],
+  image: absoluteImage,
+  offers: {
+    "@type": "Offer",
+    description:
+      "Desarrollo web freelance: plataformas de alto rendimiento, sistemas a medida, APIs modulares e integraciones.",
+    availableLanguage: ["Spanish", "English"],
+  },
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": `${siteOrigin}/#website`,
+  url: siteOrigin,
+  name: SITE_NAME,
+  description: DEFAULT_DESCRIPTION,
+  author: { "@id": `${siteOrigin}/#person` },
+  inLanguage: "es-AR",
+};
+
+const isHomePage = Astro.url.pathname === "/";
+const profilePageSchema = isHomePage
+  ? {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "@id": `${siteOrigin}/#profilepage`,
+      url: siteOrigin,
+      name: `Portafolio de ${AUTHOR_NAME}`,
+      description: DEFAULT_DESCRIPTION,
+      about: { "@id": `${siteOrigin}/#person` },
+      mainEntity: { "@id": `${siteOrigin}/#person` },
+    }
+  : null;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="author" content={AUTHOR_NAME} />
+<meta name="generator" content={Astro.generator} />
+<link rel="canonical" href={canonical} />
+{
+  noindex ? (
+    <meta name="robots" content="noindex, nofollow" />
+  ) : (
+    <meta
+      name="robots"
+      content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+    />
+  )
+}
+
+<meta name="theme-color" content="#0f0e12" />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="Ryōma Development" />
+
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={absoluteImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={`${AUTHOR_NAME} — ${SITE_NAME}`} />
+<meta property="og:locale" content={LOCALE} />
+<meta property="og:site_name" content={SITE_NAME} />
+
+<meta name="twitter:card" content={TWITTER_CARD} />
+<meta name="twitter:url" content={canonical} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={absoluteImage} />
+
+<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+{
+  profilePageSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(profilePageSchema)} />
+  )
+}

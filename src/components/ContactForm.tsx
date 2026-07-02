@@ -23,6 +23,7 @@ type FormState = {
   timeline: Timeline;
   message: string;
   privacyAccepted: boolean;
+  _honeypot: string;
 };
 
 type FormErrors = Partial<Record<keyof FormState, string>>;
@@ -100,11 +101,13 @@ export default function ContactForm() {
     timeline: "",
     message: "",
     privacyAccepted: false,
+    _honeypot: "",
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
@@ -125,10 +128,13 @@ export default function ContactForm() {
         [name]: undefined,
       }));
     }
+
+    if (submitError) setSubmitError(null);
   }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setSubmitError(null);
 
     const newErrors = validate(formData);
     if (Object.keys(newErrors).length > 0) {
@@ -138,10 +144,29 @@ export default function ContactForm() {
 
     setIsSubmitting(true);
 
-    await new Promise((resolve) => window.setTimeout(resolve, 900));
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    setIsSubmitting(false);
-    setSubmitted(true);
+      const data = (await response.json()) as { success?: boolean; error?: string };
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error ?? "Error al enviar el mensaje. Intentá de nuevo.");
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setSubmitError(
+        err instanceof Error
+          ? err.message
+          : "Ocurrió un error inesperado. Intentá de nuevo o escribime directamente a hola@ryomadev.com.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   if (submitted) {
@@ -164,7 +189,26 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+
+      <input
+        type="text"
+        name="_honeypot"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        value={formData._honeypot}
+        onChange={handleChange}
+        style={{
+          position: "absolute",
+          left: "-9999px",
+          opacity: 0,
+          height: 0,
+          width: 0,
+          pointerEvents: "none",
+        }}
+      />
+
       <div className="grid gap-5 md:grid-cols-2">
         <div className="flex flex-col gap-2">
           <label htmlFor="name" className={labelClassName()}>
@@ -333,7 +377,7 @@ export default function ContactForm() {
               rel="noreferrer"
               className="font-body underline decoration-white/35 underline-offset-2 hover:decoration-accent"
             >
-              Pólitica de privacidad.
+              Política de privacidad.
             </a>
           </span>
         </label>
@@ -344,6 +388,17 @@ export default function ContactForm() {
           </span>
         )}
       </div>
+
+      {/* Error general del servidor */}
+      {submitError && (
+        <div
+          className="rounded-2xl border border-red-400/30 bg-red-400/5 px-4 py-3"
+          role="alert"
+          aria-live="assertive"
+        >
+          <p className="font-body text-sm text-red-300">{submitError}</p>
+        </div>
+      )}
 
       <div className="pt-2">
         <Button

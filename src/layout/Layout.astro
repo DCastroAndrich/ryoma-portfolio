@@ -1,16 +1,29 @@
 ---
 import "../styles/global.css";
-const {
-  title = "Ryōma Portfolio",
-  description = "Portafolio de Ryōma, desarrollador web. Explora mis proyectos y habilidades en desarrollo web y más.",
-} = Astro.props;
-
+import SEO from "../components/SEO.astro";
 import Modal from "../components/Modal.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string | URL;
+  noindex?: boolean;
+}
+
+const { title, description, image, canonicalURL, noindex } = Astro.props;
 ---
 
 <html lang="es">
   <head>
-    <meta charset="utf-8" />
+    <SEO
+      title={title}
+      description={description}
+      image={image}
+      canonicalURL={canonicalURL}
+      noindex={noindex}
+    />
+
     <link
       rel="preload"
       href="/fonts/Panchang-Variable.woff2"
@@ -25,13 +38,8 @@ import Modal from "../components/Modal.astro";
       type="font/woff2"
       crossorigin
     />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
-    <title>{title}</title>
+
     <script>
-      /* theme Init */
       (function () {
         try {
           const stored = localStorage.getItem("theme");
