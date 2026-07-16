@@ -1,0 +1,12 @@
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=(), payment=()
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+/api/*
+  Access-Control-Allow-Origin: https://ryomadev.com
+  Access-Control-Allow-Methods: POST, OPTIONS
+  Access-Control-Allow-Headers: Content-Type
+  Cache-Control: no-store
