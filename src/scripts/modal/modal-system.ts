@@ -1,12 +1,9 @@
+import { LightboxController } from "./lightbox-controller";
+
 let initialized = false;
 
 const MODAL_Z_INDEX = 1000;
 const LIGHTBOX_Z_INDEX = 2000;
-
-type LightboxItem = {
-  src: string;
-  alt: string;
-};
 
 let lastFocusedElement: HTMLElement | null = null;
 
@@ -133,26 +130,36 @@ export function initModalSystem() {
   const lightboxCounter = document.getElementById("lightbox-counter");
 
   setLightboxLayer(false);
-
-  let images: LightboxItem[] = [];
-  let currentIndex = 0;
+  const lightboxController = lightbox instanceof HTMLElement ? new LightboxController() : null;
 
   function updateLightbox() {
     if (!(lightboxImg instanceof HTMLImageElement)) return;
+    if (!lightboxController) return;
 
-    const current = images[currentIndex];
+    const current = lightboxController.getCurrentItem();
+
     if (!current) return;
+
+    const gallery = lightboxController.getGallery();
 
     lightboxImg.src = current.src;
     lightboxImg.alt = current.alt || "";
 
-    const showNav = images.length > 1;
+    const showNav = gallery.images.length > 1;
 
-    if (lightboxPrevBtn) lightboxPrevBtn.hidden = !showNav;
-    if (lightboxNextBtn) lightboxNextBtn.hidden = !showNav;
+    if (lightboxPrevBtn) {
+      lightboxPrevBtn.hidden = !showNav;
+    }
+
+    if (lightboxNextBtn) {
+      lightboxNextBtn.hidden = !showNav;
+    }
 
     if (lightboxCounter) {
-      lightboxCounter.textContent = showNav ? `${currentIndex + 1} / ${images.length}` : "";
+      lightboxCounter.textContent = showNav
+        ? `${gallery.index + 1} / ${gallery.images.length}`
+        : "";
+
       lightboxCounter.style.display = showNav ? "block" : "none";
     }
   }
@@ -171,20 +178,26 @@ export function initModalSystem() {
         document.querySelectorAll<HTMLElement>(`[data-lightbox-group="${group}"]`),
       );
 
-      images = groupItems
-        .map((el) => ({
-          src: el.dataset.lightboxSrc || "",
-          alt: el.dataset.lightboxAlt || "",
-        }))
-        .filter((item) => item.src);
+      const gallery = {
+        images: groupItems
+          .map((el) => ({
+            src: el.dataset.lightboxSrc || "",
+            alt: el.dataset.lightboxAlt || "",
+          }))
+          .filter((item) => item.src),
 
-      currentIndex = Math.max(
-        0,
-        images.findIndex((item) => item.src === src),
-      );
+        index: Math.max(
+          0,
+          groupItems.findIndex((el) => el.dataset.lightboxSrc === src),
+        ),
+      };
+
+      lightboxController?.setGallery(gallery);
     } else {
-      images = [{ src, alt }];
-      currentIndex = 0;
+      lightboxController?.setGallery({
+        images: [{ src, alt }],
+        index: 0,
+      });
     }
 
     updateLightbox();
@@ -268,32 +281,39 @@ export function initModalSystem() {
     if (!open) return;
 
     if (e.key === "Escape") {
-      closeModal(open);
+      const targetModal = lightbox?.classList.contains("is-open") ? lightbox : open;
+
+      if (targetModal) {
+        closeModal(targetModal);
+      }
+
       return;
     }
 
-    if (!lightbox?.classList.contains("is-open") || images.length <= 1) return;
+    if (!lightbox?.classList.contains("is-open")) return;
+
+    const gallery = lightboxController?.getGallery();
+
+    if (!gallery || gallery.images.length <= 1) return;
 
     if (e.key === "ArrowLeft") {
-      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      lightboxController?.previous();
       updateLightbox();
     }
 
     if (e.key === "ArrowRight") {
-      currentIndex = (currentIndex + 1) % images.length;
+      lightboxController?.next();
       updateLightbox();
     }
   });
 
   lightboxPrevBtn?.addEventListener("click", () => {
-    if (images.length <= 1) return;
-    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    lightboxController?.previous();
     updateLightbox();
   });
 
   lightboxNextBtn?.addEventListener("click", () => {
-    if (images.length <= 1) return;
-    currentIndex = (currentIndex + 1) % images.length;
+    lightboxController?.next();
     updateLightbox();
   });
 }
