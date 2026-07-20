@@ -5,11 +5,28 @@ export const prerender = false;
 
 const FROM_ADDRESS = "Formulario Ryōma <hola@ryomadev.com>";
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "https://ryomadev.com",
   };
+
+  const runtime = (locals as App.Locals).runtime;
+  const env = runtime?.env ?? import.meta.env;
+
+  const RESEND_API_KEY = env.RESEND_API_KEY;
+  const CONTACT_EMAIL = env.CONTACT_EMAIL;
+
+  if (!RESEND_API_KEY || !CONTACT_EMAIL) {
+    console.error("[contact] Variables de entorno faltantes:", {
+      hasKey: !!RESEND_API_KEY,
+      hasEmail: !!CONTACT_EMAIL,
+    });
+    return new Response(JSON.stringify({ error: "Configuración del servidor incompleta." }), {
+      status: 500,
+      headers,
+    });
+  }
 
   let body: Record<string, string>;
   try {
@@ -45,12 +62,12 @@ export const POST: APIRoute = async ({ request }) => {
     });
   }
 
-  const resend = new Resend(import.meta.env.RESEND_API_KEY);
-
   try {
+    const resend = new Resend(RESEND_API_KEY);
+
     const { error } = await resend.emails.send({
       from: FROM_ADDRESS,
-      to: [import.meta.env.CONTACT_EMAIL],
+      to: [CONTACT_EMAIL],
       replyTo: email,
       subject: `Consulta de ${s(name)} — ${s(projectType)}`,
       html: buildEmailHtml({ name, email, company, projectType, budget, timeline, message }),
@@ -110,12 +127,10 @@ function buildEmailHtml(d: EmailData): string {
     <head><meta charset="utf-8"><title>Nueva consulta</title></head>
     <body style="margin:0;padding:24px;background:#080710;font-family:'Segoe UI',system-ui,sans-serif;">
       <div style="max-width:600px;margin:0 auto;background:#0f0e12;border-radius:12px;overflow:hidden;border:1px solid #1e1e2e;">
-
         <div style="background:linear-gradient(135deg,#c026d3 0%,#06b6d4 100%);padding:28px 32px;">
           <p style="margin:0 0 4px;font-size:12px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.1em;">ryomadev.com</p>
           <h1 style="margin:0;font-size:22px;font-weight:700;color:#fff;letter-spacing:-.02em;">Nueva consulta recibida</h1>
         </div>
-
         <div style="padding:32px;">
           <table style="width:100%;border-collapse:collapse;">
             ${row("Nombre", s(d.name))}
@@ -127,13 +142,11 @@ function buildEmailHtml(d: EmailData): string {
             ${d.message?.trim() ? row("Mensaje", `<span style="white-space:pre-wrap;">${s(d.message)}</span>`) : ""}
           </table>
         </div>
-
         <div style="padding:16px 32px 24px;border-top:1px solid #1e1e2e;">
           <p style="margin:0;font-size:12px;color:#606070;">
             Respondé directamente a este email para contactar a ${s(d.name)}.
           </p>
         </div>
-
       </div>
     </body>
     </html>

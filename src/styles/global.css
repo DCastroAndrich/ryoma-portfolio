@@ -1967,7 +1967,7 @@
     border: none;
     box-shadow: none;
     padding: 0;
-    overflow: hidden;
+    overflow: visible;
   }
   .modal-container.modal-lightbox::after {
     display: none;
@@ -1977,6 +1977,115 @@
     min-height: 0;
     display: block;
   }
+  .lightbox {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 1rem;
+  }
+
+  .lightbox-viewer {
+    flex: 1;
+
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 0;
+  }
+
+  .lightbox-stage {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .lightbox-image {
+    display: block;
+
+    max-width: min(90vw, 1100px);
+    max-height: min(80vh, 780px);
+
+    object-fit: contain;
+
+    border-radius: 12px;
+  }
+
+  .lightbox-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+  }
+
+  .lightbox-counter {
+    font-family: var(--font-heading);
+
+    font-size: 0.8rem;
+    font-weight: 600;
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    background: color-mix(in srgb, var(--color-bg) 70%, transparent);
+
+    backdrop-filter: blur(6px);
+
+    color: var(--color-text-muted);
+  }
+
+  .lightbox-close {
+    position: absolute;
+
+    top: 1rem;
+    right: 1rem;
+
+    z-index: 100;
+
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 999px;
+
+    cursor: pointer;
+
+    color: var(--color-cyan);
+
+    background: color-mix(in srgb, var(--color-bg) 82%, transparent);
+
+    backdrop-filter: blur(12px);
+
+    pointer-events: auto;
+  }
+
+  .lightbox-close:hover {
+    transform: scale(1.05);
+  }
+
+  .lightbox-close:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
   .modal-lightbox-content {
     position: relative;
     display: flex;
@@ -1986,22 +2095,22 @@
     min-height: 0;
   }
   html.lightbox-open #modal-lightbox.is-open .modal-lightbox-content,
-  html.lightbox-open #modal-lightbox.is-open .modal-lightbox-img {
+  html.lightbox-open #modal-lightbox.is-open .lightbox-image {
     cursor: zoom-out;
   }
-  html.lightbox-open #modal-lightbox.is-open .modal-lightbox-nav {
+  html.lightbox-open #modal-lightbox.is-open .lightbox-nav {
     cursor: pointer;
   }
-  .modal-lightbox-stage {
+  .lightbox-stage {
     position: relative;
-    width: min(100%, 1100px);
-    display: flex;
+
+    display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    overflow: visible;
+    margin: 0;
   }
-  .modal-lightbox-nav {
+  .lightbox-nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -2032,38 +2141,38 @@
       background-color 180ms ease;
   }
 
-  .modal-lightbox-nav:hover {
+  .lightbox-nav:hover {
     transform: translateY(-50%) scale(1.06);
   }
 
-  .modal-lightbox-nav:focus-visible {
+  .lightbox-nav:focus-visible {
     outline: 2px solid var(--color-primary);
     outline-offset: 2px;
   }
 
-  .modal-lightbox-prev {
-    left: -72px;
+  .lightbox-prev {
+    left: 1rem;
   }
 
-  .modal-lightbox-next {
-    right: -72px;
+  .lightbox-next {
+    right: 1rem;
   }
-  .modal-lightbox-img.is-changing {
+  .lightbox-image.is-changing {
     opacity: 0;
     transform: scale(0.96);
   }
   @media (max-width: 640px) {
-    .modal-lightbox-nav {
+    .lightbox-nav {
       width: 48px;
       height: 48px;
     }
 
-    .modal-lightbox-prev {
-      left: 8px;
+    .lightbox-prev {
+      left: 0.5rem;
     }
 
-    .modal-lightbox-next {
-      right: 8px;
+    .lightbox-next {
+      right: 0.5rem;
     }
   }
 
@@ -2204,10 +2313,10 @@
     .modal-case-footer {
       padding: 1rem 1.5rem;
     }
-    .modal-lightbox-prev {
+    .lightbox-prev {
       left: 0.5rem;
     }
-    .modal-lightbox-next {
+    .lightbox-next {
       left: 0.5rem;
     }
   }
