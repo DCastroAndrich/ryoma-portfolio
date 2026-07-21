@@ -84,29 +84,28 @@ const { title, description, image, canonicalURL, noindex } = Astro.props;
           </svg>
         </button>
         <div class="lightbox-viewer">
-          <figure class="lightbox-stage">
-            <button
-              type="button"
-              class="lightbox-nav lightbox-prev"
-              data-lightbox-prev
-              aria-label="Imagen anterior"
+          <button
+            type="button"
+            class="lightbox-nav lightbox-prev"
+            data-lightbox-prev
+            aria-label="Imagen anterior"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d="m15 18-6-6 6-6"></path>
-              </svg>
-            </button>
-
+              <path d="m15 18-6-6 6-6"></path>
+            </svg>
+          </button>
+          <figure class="lightbox-stage">
             <img
               id="lightbox-img"
               class="lightbox-image"
@@ -116,29 +115,28 @@ const { title, description, image, canonicalURL, noindex } = Astro.props;
               decoding="async"
               draggable="false"
             />
-
-            <button
-              type="button"
-              class="lightbox-nav lightbox-next"
-              data-lightbox-next
-              aria-label="Imagen siguiente"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                aria-hidden="true"
-              >
-                <path d="m9 18 6-6-6-6"></path>
-              </svg>
-            </button>
           </figure>
+          <button
+            type="button"
+            class="lightbox-nav lightbox-next"
+            data-lightbox-next
+            aria-label="Imagen siguiente"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m9 18 6-6-6-6"></path>
+            </svg>
+          </button>
         </div>
 
         <footer class="lightbox-footer">
