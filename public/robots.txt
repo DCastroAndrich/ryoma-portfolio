@@ -1,4 +1,4 @@
-https://ryomadev.com/robots.txt  ← reemplazá con tu dominio real
+https://ryomadev.com/robots.txt
 
 User-agent: *
 Allow: /
@@ -6,5 +6,5 @@ Allow: /
 Disallow: /privacy
 Disallow: /terms
 
-# Descomentá esta línea cuando lo instales:
+
 Sitemap: https://ryomadev.com/sitemap-index.xml
