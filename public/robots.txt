@@ -1,5 +1,3 @@
-https://ryomadev.com/robots.txt
-
 User-agent: *
 Allow: /
 
