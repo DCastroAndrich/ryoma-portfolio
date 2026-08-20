@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "check": "astro check",
     "preview": "astro preview",
     "astro": "astro"
   },
@@ -21,11 +22,13 @@
     "wrangler": "^4.106.0"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "autoprefixer": "^10.4.24",
     "postcss": "^8.5.6",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.8.0",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.2.1",
+    "typescript": "^6"
   }
 }

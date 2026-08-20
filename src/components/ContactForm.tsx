@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, type FormEvent } from "react";
+import { useState, type ChangeEvent, type SubmitEvent } from "react";
 import { CheckCircle2 } from "lucide-react";
 import Button from "./Button";
 
@@ -132,7 +132,7 @@ export default function ContactForm() {
     if (submitError) setSubmitError(null);
   }
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     setSubmitError(null);
 

@@ -146,7 +146,7 @@ import logoIcon from "../assets/logo-o.svg?raw";
     </div>
   </div>
 
-  <script type="module">
+  <script>
     (() => {
       const nav = document.getElementById("site-navbar");
       if (!nav) return;
@@ -159,53 +159,67 @@ import logoIcon from "../assets/logo-o.svg?raw";
 
       const navContainer = document.getElementById("nav-container");
       const pill = document.getElementById("nav-pill");
-      const navLinks = navContainer?.querySelectorAll(".nav-link") || [];
-      const sections = document.querySelectorAll("section[id]");
+      const navLinks = navContainer?.querySelectorAll<HTMLElement>(".nav-link") ?? [];
+      const sections = document.querySelectorAll<HTMLElement>("section[id]");
 
-      let activeLink = null;
-      let hoverTimeout = null;
+      let activeLink: HTMLElement | null = null;
+      let hoverTimeout: ReturnType<typeof setTimeout> | null = null;
+      let pillX = 0;
 
-      const movePill = (el) => {
-        if (!el || !pill || !navContainer) return;
+      const clearHoverTimeout = (): void => {
+        if (hoverTimeout !== null) {
+          clearTimeout(hoverTimeout);
+          hoverTimeout = null;
+        }
+      };
+
+      const movePill = (element: HTMLElement): void => {
+        if (!pill || !navContainer) return;
+
         const containerRect = navContainer.getBoundingClientRect();
-        const rect = el.getBoundingClientRect();
+        const rect = element.getBoundingClientRect();
         const x = rect.left - containerRect.left;
 
-        const currentX = pill._x || 0;
-        const distance = Math.abs(x - currentX);
+        const distance = Math.abs(x - pillX);
         const duration = Math.min(Math.max(distance * 0.4, 220), 420);
 
         pill.style.transitionDuration = `${duration}ms`;
         pill.style.width = `${rect.width}px`;
         pill.style.transform = `translateX(${x}px)`;
         pill.style.opacity = "1";
-        pill._x = x;
+
+        pillX = x;
       };
 
-      const hidePill = () => {
+      const hidePill = (): void => {
         if (!pill) return;
+
         pill.style.opacity = "0";
       };
 
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const id = entry.target.getAttribute("id");
-              const link = [...navLinks].find((l) => l.getAttribute("href") === `#${id}`);
+            if (!entry.isIntersecting) return;
 
-              if (link) {
-                activeLink = link;
-                movePill(link);
+            const id = entry.target.getAttribute("id");
 
-                navLinks.forEach((l) => l.classList.remove("active"));
-                link.classList.add("active");
+            const link = [...navLinks].find((navLink) => navLink.getAttribute("href") === `#${id}`);
 
-                document.querySelectorAll(".mobile-menu .nav-link").forEach((l) => {
-                  l.classList.toggle("active", l.getAttribute("href") === `#${id}`);
-                });
-              }
-            }
+            if (!link) return;
+
+            activeLink = link;
+            movePill(link);
+
+            navLinks.forEach((navLink) => {
+              navLink.classList.remove("active");
+            });
+
+            link.classList.add("active");
+
+            document.querySelectorAll<HTMLElement>(".mobile-menu .nav-link").forEach((navLink) => {
+              navLink.classList.toggle("active", navLink.getAttribute("href") === `#${id}`);
+            });
           });
         },
         {
@@ -214,13 +228,18 @@ import logoIcon from "../assets/logo-o.svg?raw";
         },
       );
 
-      sections.forEach((section) => observer.observe(section));
+      sections.forEach((section) => {
+        observer.observe(section);
+      });
 
-      const handleScroll = () => {
+      const handleScroll = (): void => {
         const y = window.scrollY || window.pageYOffset;
 
-        if (y > threshold) nav.classList.add("scrolled");
-        else nav.classList.remove("scrolled");
+        if (y > threshold) {
+          nav.classList.add("scrolled");
+        } else {
+          nav.classList.remove("scrolled");
+        }
 
         if (y < 80) {
           activeLink = null;
@@ -232,28 +251,34 @@ import logoIcon from "../assets/logo-o.svg?raw";
 
       navLinks.forEach((link) => {
         link.addEventListener("mouseenter", () => {
-          clearTimeout(hoverTimeout);
+          clearHoverTimeout();
+
           hoverTimeout = setTimeout(() => {
             movePill(link);
           }, 90);
         });
 
         link.addEventListener("mouseleave", () => {
-          clearTimeout(hoverTimeout);
+          clearHoverTimeout();
+
           hoverTimeout = setTimeout(() => {
-            if (activeLink) movePill(activeLink);
-            else hidePill();
+            if (activeLink) {
+              movePill(activeLink);
+            } else {
+              hidePill();
+            }
           }, 100);
         });
       });
 
-      const openMenu = () => {
+      const openMenu = (): void => {
         nav.classList.add("menu-open");
         toggleBtn?.setAttribute("aria-expanded", "true");
 
         if (mobileMenu) {
           mobileMenu.hidden = false;
           mobileMenu.style.pointerEvents = "auto";
+
           requestAnimationFrame(() => {
             mobileMenu.inert = false;
             mobileMenu.setAttribute("aria-hidden", "false");
@@ -263,7 +288,7 @@ import logoIcon from "../assets/logo-o.svg?raw";
         document.documentElement.style.overflow = "hidden";
       };
 
-      const closeMenu = () => {
+      const closeMenu = (): void => {
         nav.classList.remove("menu-open");
         toggleBtn?.setAttribute("aria-expanded", "false");
 
@@ -271,6 +296,7 @@ import logoIcon from "../assets/logo-o.svg?raw";
           mobileMenu.setAttribute("aria-hidden", "true");
           mobileMenu.inert = true;
           mobileMenu.style.pointerEvents = "none";
+
           setTimeout(() => {
             mobileMenu.hidden = true;
           }, 300);
@@ -279,25 +305,38 @@ import logoIcon from "../assets/logo-o.svg?raw";
         document.documentElement.style.overflow = "";
       };
 
-      const toggleMenu = () => (nav.classList.contains("menu-open") ? closeMenu() : openMenu());
+      const toggleMenu = (): void => {
+        if (nav.classList.contains("menu-open")) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      };
 
       handleScroll();
-      window.addEventListener("scroll", handleScroll, { passive: true });
+
+      window.addEventListener("scroll", handleScroll, {
+        passive: true,
+      });
 
       mobileBackdrop?.addEventListener("click", closeMenu);
       closeBtn?.addEventListener("click", closeMenu);
       toggleBtn?.addEventListener("click", toggleMenu);
 
-      mobileMenu?.querySelectorAll("a[href^='#']").forEach((a) => {
-        a.addEventListener("click", closeMenu);
+      mobileMenu?.querySelectorAll<HTMLElement>("a[href^='#']").forEach((link) => {
+        link.addEventListener("click", closeMenu);
       });
 
-      window.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeMenu();
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeMenu();
+        }
       });
 
       window.addEventListener("resize", () => {
-        if (window.innerWidth >= 768) closeMenu();
+        if (window.innerWidth >= 768) {
+          closeMenu();
+        }
       });
     })();
   </script>

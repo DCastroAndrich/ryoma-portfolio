@@ -1,5 +1,3 @@
-import type { CSSProperties } from "react";
-
 export interface TechIconProps {
   name: string;
   icon: string;
