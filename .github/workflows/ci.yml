@@ -3,12 +3,12 @@ name: CI
 on:
   push:
     branches:
-      - main
+      - master
       - 2do-Refactor
 
   pull_request:
     branches:
-      - main
+      - master
       - 2do-Refactor
 
 jobs:
