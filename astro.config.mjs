@@ -14,7 +14,13 @@ export default defineConfig({
     platformProxy: { enabled: true },
   }),
 
-  integrations: [react(), sitemap()],
+  integrations: [
+    react(),
+    sitemap({
+      filter: (page) =>
+        page !== "https://ryomadev.com/privacy/" && page !== "https://ryomadev.com/terms/",
+    }),
+  ],
 
   vite: {
     plugins: [tailwindcss()],
